@@ -10,7 +10,7 @@
 @section('body')
     <div class="register-box">
         <div class="register-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', 'GenLab System') !!}</a>
+            <a href="/">{!! config('adminlte.logo', 'GenLab System') !!}</a>
         </div>
 
         <div class="register-box-body">
@@ -25,6 +25,16 @@
                     @if ($errors->has('name'))
                         <span class="help-block">
                             <strong>{{ $errors->first('name') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                <div class="form-group has-feedback {{ $errors->has('id_no') ? 'has-error' : '' }}">
+                    <input type="text" name="id_no" class="form-control" value="{{ old('id_no') }}"
+                           placeholder="ID Number">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    @if ($errors->has('id_no'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('id_no') }}</strong>
                         </span>
                     @endif
                 </div>
