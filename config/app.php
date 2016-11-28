@@ -169,6 +169,10 @@ return [
 
         //AdminLTE
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
+        //scaffold + crud by amranidev
+        Amranidev\ScaffoldInterface\ScaffoldInterfaceServiceProvider::class,
+        Amranidev\Ajaxis\AjaxisServiceProvider::class,
+        Vinkla\Pusher\PusherServiceProvider::class,
 
         /*
          * Application Service Providers...
