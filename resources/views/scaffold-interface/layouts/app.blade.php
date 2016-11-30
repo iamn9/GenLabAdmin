@@ -28,11 +28,11 @@
 		<div class="wrapper">
 			<header class="main-header">
 				<!-- Logo -->
-				<a href="{{url('dashboard')}}" class="logo">
+				<a href="{{url('home')}}" class="logo">
 					<!-- mini logo for sidebar mini 50x50 pixels -->
-					<span class="logo-mini"><b>E</b>CM</span>
+					<span class="logo-mini">GLS</span>
 					<!-- logo for regular state and mobile devices -->
-					<span class="logo-lg"><b>Admin</b>LTE</span>
+					<span class="logo-lg">GenLab System</span>
 				</a>
 				<!-- Header Navbar: style can be found in header.less -->
 				<nav class="navbar navbar-static-top">
@@ -114,10 +114,10 @@
 								<i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
 							</a>
 						</li>
-						<li class="header">ADMINISTRATOR</li>
-						<li class="treeview"><a href="{{url('/users')}}"><i class="fa fa-users"></i> <span>Users</span></a></li>
-						<li class="treeview"><a href="{{url('/roles')}}"><i class="fa fa-user-plus"></i> <span>Role</span></a></li>
-						<li class="treeview"><a href="{{url('/permissions')}}"><i class="fa fa-key"></i> <span>Permissions</span></a></li>
+						<li class="header">TRANSACTIONS</li>
+						<li class="treeview"><a href="{{url('/users')}}"><i class="fa fa-circle-o"></i> <span>Pending</span></a></li>
+						<li class="treeview"><a href="{{url('/roles')}}"><i class="fa fa-circle-o"></i> <span>Disbursed</span></a></li>
+						<li class="treeview"><a href="{{url('/permissions')}}"><i class="fa fa-circle-o"></i> <span>Completed</span></a></li>
 					</ul>
 				</section>
 				<!-- /.sidebar -->

@@ -1,5 +1,4 @@
-@extends('layouts.app')
-
+@extends('scaffold-interface.layouts.app')
 @section('content')
 <div class="container">
     <div class="row">
