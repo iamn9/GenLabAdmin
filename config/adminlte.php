@@ -111,7 +111,7 @@ return [
         'MAIN NAVIGATION',
         [
             'text'        => 'Items',
-            'url'         => 'items',
+            'url'         => 'item',
             'icon'        => 'flask',
             'label_color' => 'success',
         ],

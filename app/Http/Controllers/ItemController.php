@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Item;
@@ -26,7 +27,11 @@ class ItemController extends Controller
     {
         $title = 'Index - item';
         $items = Item::paginate(6);
-        return view('item.index',compact('items','title'));
+
+        if(Auth::user()->isAdmin)
+            return view('item.index',compact('items','title')); 
+        else
+            return view('item.user_index',compact('items','title')); 
     }
 
     /**

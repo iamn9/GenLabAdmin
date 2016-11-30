@@ -79,7 +79,6 @@
                         <a href="{{ url('/register') }}">Register</a>
                     @endif
                     <a href="/about">About</a>
-                    <a href="/items">Items</a>
                 </div>
             </div>
         </div>
