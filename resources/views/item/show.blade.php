@@ -8,7 +8,7 @@
         Show item
     </h1>
     <br>
-    <form method = 'get' action = '{!!url("item")!!}'>
+    <form method = 'get' action = '{!!url("items")!!}'>
         <button class = 'btn btn-primary'>item Index</button>
     </form>
     <br>

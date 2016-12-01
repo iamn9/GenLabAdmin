@@ -19,6 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+//Users
+Route::resource('admin/users', 'ScaffoldInterface\UserController');
+Route::post('admin/users/store/','ScaffoldInterface\UserController@store');
+Route::post('admin/users/update/','ScaffoldInterface\UserController@update');
+Route::get('admin/users/edit/{id}','ScaffoldInterface\UserController@edit');
+Route::get('admin/users/delete/{id}','ScaffoldInterface\UserController@destroy');
 
 //item Routes
 Route::group(['middleware'=> 'web'],function(){

@@ -110,10 +110,12 @@
 					<ul class="sidebar-menu">
 						<li class="header">MAIN NAVIGATION</li>
 						<li class="active treeview">
-							<a href="{{url('dashboard')}}">
-								<i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
+							<a href="{{url('home')}}">
+								<i class="fa fa-dashboard"></i> <span>Home</span></i>
 							</a>
 						</li>
+						<li class="header">FEATURES</li>
+						<li class="treeview"><a href="{{url('/item')}}"><i class="fa fa-circle-o"></i> <span>Items</span></a></li>
 						<li class="header">TRANSACTIONS</li>
 						<li class="treeview"><a href="{{url('/users')}}"><i class="fa fa-circle-o"></i> <span>Pending</span></a></li>
 						<li class="treeview"><a href="{{url('/roles')}}"><i class="fa fa-circle-o"></i> <span>Disbursed</span></a></li>
