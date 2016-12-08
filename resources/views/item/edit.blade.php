@@ -1,4 +1,3 @@
-@extends('scaffold-interface.layouts.app')
 @extends('adminlte::page')
 @section('title','Edit')
 @section('content')

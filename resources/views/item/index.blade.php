@@ -1,4 +1,3 @@
-@extends('scaffold-interface.layouts.app')
 @extends('adminlte::page')
 @section('title','Index')
 @section('content')
@@ -33,6 +32,5 @@
         </tbody>
     </table>
     {!! $items->render() !!}
-
 </section>
 @endsection

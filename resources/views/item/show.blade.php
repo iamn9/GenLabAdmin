@@ -1,4 +1,3 @@
-@extends('scaffold-interface.layouts.app')
 @extends('adminlte::page')
 @section('title','Show')
 @section('content')
@@ -8,7 +7,7 @@
         Show item
     </h1>
     <br>
-    <form method = 'get' action = '{!!url("items")!!}'>
+    <form method = 'get' action = '{!!url("item")!!}'>
         <button class = 'btn btn-primary'>item Index</button>
     </form>
     <br>
