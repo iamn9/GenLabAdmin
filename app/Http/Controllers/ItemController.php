@@ -28,7 +28,7 @@ class ItemController extends Controller
         $title = 'Index - item';
         $items = Item::paginate(6);
 
-        if(Auth::user()->isAdmin)
+        if(Auth::check() && Auth::user()->isAdmin)
             return view('item.index',compact('items','title')); 
         else
             return view('item.user_index',compact('items','title')); 
