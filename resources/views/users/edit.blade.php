@@ -25,6 +25,21 @@
 					<label for="">Password</label>
 					<input type="password" name = "password" class = "form-control" placeholder = "password" required>
 				</div>
+				<div class="form-group">
+					<label for="isAdmin">Admin</label>
+					@if ($user->isAdmin())
+						<input type="checkbox" name="isAdmin" checked = "checked">
+					@else
+						<input type="checkbox" name="isAdmin">
+					@endif
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label for="isActivated">Activated</label>
+					@if ($user->isActivated())
+						<input type="checkbox" name="isActivated" checked = "checked">
+					@else
+						<input type="checkbox" name="isActivated">
+					@endif
+				</div>
 				<button class = "btn btn-primary" type="submit">Update</button>
 			</form>
 		</div>

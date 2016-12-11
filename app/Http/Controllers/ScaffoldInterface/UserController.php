@@ -82,7 +82,14 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->id_no = $request->id_no;
         $user->password = Hash::make($request->password);
-
+        if($request->isAdmin == 'on')
+            $user->isAdmin = 1;
+        else
+            $user->isAdmin = 0;
+        if ($request->isActivated == 'on')
+            $user->isActivated = 1;
+        else
+            $user->isActivated = 0;
         $user->save();
 
         return redirect('admin/users');
