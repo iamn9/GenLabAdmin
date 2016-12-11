@@ -13,6 +13,7 @@
         </div>
     </div>
 </div>
+
 <div class="box-body">
     <form class = 'col s3' method = 'get' action = '{!!url("item")!!}/create'>
         <button class = 'btn btn-primary' type = 'submit'>Create New item</button>
