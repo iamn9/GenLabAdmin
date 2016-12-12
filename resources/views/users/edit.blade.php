@@ -6,7 +6,7 @@
 			<h3>Edit User ({{$user->name}})</h3>
 		</div>
 		<div class="box-body">
-			<form action="{{url('admin/users/update')}}" method = "post">
+			<form action="{{url('users/update')}}" method = "post">
 				{!! csrf_field() !!}
 				<input type="hidden" name = "user_id" value = "{{$user->id}}">
 				<div class="form-group">

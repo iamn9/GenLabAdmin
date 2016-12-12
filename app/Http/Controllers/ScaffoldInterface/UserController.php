@@ -5,8 +5,9 @@ namespace App\Http\Controllers\ScaffoldInterface;
 use App\Http\Controllers\Controller;
 use Hash;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class UserController extends Controller
 {
@@ -17,9 +18,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = \App\User::all();
-
-        return view('users.index', compact('users'));
+        if(Auth::user()->isAdmin){
+            $users = \App\User::all();
+            return view('users.index', compact('users'));
+        }
+        else{
+            return redirect ('home');
+        }
     }
 
     /**
