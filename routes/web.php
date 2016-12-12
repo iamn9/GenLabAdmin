@@ -33,11 +33,3 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('item/{id}/delete','\App\Http\Controllers\ItemController@destroy');
   Route::get('item/{id}/deleteMsg','\App\Http\Controllers\ItemController@DeleteMsg');
 });
-
-//Listing Routes
-Route::group(['middleware'=> 'web'],function(){
-  Route::resource('listing','\App\Http\Controllers\ListingController');
-  Route::post('listing/{id}/update','\App\Http\Controllers\ListingController@update');
-  Route::get('listing/{id}/delete','\App\Http\Controllers\ListingController@destroy');
-  Route::get('listing/{id}/deleteMsg','\App\Http\Controllers\ListingController@DeleteMsg');
-});
