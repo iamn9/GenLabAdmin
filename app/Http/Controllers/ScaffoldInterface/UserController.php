@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
-{
+{    
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +55,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('admin/users');
+        return redirect('users');
     }
 
     /**
@@ -97,7 +97,7 @@ class UserController extends Controller
             $user->isActivated = 0;
         $user->save();
 
-        return redirect('admin/users');
+        return redirect('users');
     }
 
     /**
@@ -113,6 +113,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect('admin/users');
+        return redirect('users');
     }
 }
