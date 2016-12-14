@@ -1,14 +1,18 @@
-@extends('scaffold-interface.layouts.app')
+@extends('adminlte::page')
 @section('title','Edit')
 @section('content')
 
 <section class="content">
+<div class="box box-primary">
+<div class="box-header">
     <h1>
         Edit cart
     </h1>
     <form method = 'get' action = '{!!url("cart")!!}'>
         <button class = 'btn btn-danger'>cart Index</button>
     </form>
+</div>
+<div class="box-body">
     <br>
     <form method = 'POST' action = '{!! url("cart")!!}/{!!$cart->
         id!!}/update'> 
@@ -20,10 +24,17 @@
         </div>
         <div class="form-group">
             <label for="status">status</label>
-            <input id="status" name = "status" type="text" class="form-control" value="{!!$cart->
-            status!!}"> 
+
+            <select id="status" name="status" class="form-control">
+                <option>Draft</option>
+                <option>Pending</option>
+                <option>Disbursed</option>
+                <option>Completed</option>
+            </select>
         </div>
         <button class = 'btn btn-primary' type ='submit'>Update</button>
     </form>
+</div>
+</div>
 </section>
 @endsection

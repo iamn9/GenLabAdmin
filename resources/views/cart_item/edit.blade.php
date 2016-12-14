@@ -1,15 +1,16 @@
-@extends('scaffold-interface.layouts.app')
+@extends('adminlte::page')
 @section('title','Edit')
 @section('content')
 
 <section class="content">
-    <h1>
-        Edit cart_item
-    </h1>
+<div class="box box-primary">
+<div class="box-header">
+    <h1>Edit cart_item</h1>
     <form method = 'get' action = '{!!url("cart_item")!!}'>    <!--RETURN TO PREVIOUS PAGE-->
         <button type="button" class = 'btn btn-danger' onclick="javascript:history.back()">Back</button>
-        
     </form>
+</div>
+<div class="box-body">
     <br>
     <form method = 'POST' action = '{!! url("cart_item")!!}/{!!$cart_item->
         id!!}/update'> 
@@ -31,5 +32,7 @@
         </div>
         <button class = 'btn btn-primary' type ='submit'>Update</button>
     </form>
+</div>
+</div>
 </section>
 @endsection

@@ -5,13 +5,15 @@
 <section class="content">
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Item Index</h1>
+<h1>Item Index</h1>
+    <form method = 'POST' action = '{!!url("item")!!}'>
         <div class="input-group" >
-        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-        <div class="input-group-btn">
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+            <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <div class="box-body">

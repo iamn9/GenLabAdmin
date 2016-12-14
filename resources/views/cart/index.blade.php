@@ -1,14 +1,16 @@
-@extends('scaffold-interface.layouts.app')
+@extends('adminlte::page')
 @section('title','Index')
 @section('content')
 
 <section class="content">
-    <h1>
-        Cart Index
-    </h1>
+<div class="box box-primary">
+<div class="box-header">
+    <h1>Cart Index</h1>
     <form class = 'col s3' method = 'get' action = '{!!url("cart")!!}/create'>
         <button class = 'btn btn-primary' type = 'submit'>Create New cart</button>
     </form>
+</div>
+<div class="box-body">
     <br>
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
@@ -32,6 +34,7 @@
         </tbody>
     </table>
     {!! $carts->render() !!}
-
+</div>
+</div>
 </section>
 @endsection

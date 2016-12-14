@@ -3,12 +3,16 @@
 @section('content')
 
 <section class="content">
+<div class="box box-primary">
+<div class="box-header">
     <h1>
         Edit item
     </h1>
     <form method = 'get' action = '{!!url("item")!!}'>
         <button class = 'btn btn-danger'>item Index</button>
     </form>
+</div>
+<div class="box-body">
     <br>
     <form method = 'POST' action = '{!! url("item")!!}/{!!$item->
         id!!}/update'> 
@@ -25,5 +29,7 @@
         </div>
         <button class = 'btn btn-primary' type ='submit'>Update</button>
     </form>
+</div>
+</div>
 </section>
 @endsection
