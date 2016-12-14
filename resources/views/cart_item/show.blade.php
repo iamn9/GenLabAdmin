@@ -3,9 +3,11 @@
 @section('content')
 
 <section class="content">
-    <h1>
-        ADMIN: Show cart_item
-    </h1>
+<div class="box box-primary">
+<div class="box-header">
+    <h1>ADMIN: Show cart_item</h1>
+</div>
+<div class="box-body">
     <br>
     <form method = 'get' action = '{!!url("cart_item")!!}'>
         <button class = 'btn btn-primary'>cart_item Index</button>
@@ -37,5 +39,7 @@
             </tr>
         </tbody>
     </table>
+</div>
+</div>
 </section>
 @endsection

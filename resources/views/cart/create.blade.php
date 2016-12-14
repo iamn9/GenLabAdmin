@@ -1,14 +1,16 @@
-@extends('scaffold-interface.layouts.app')
+@extends('adminlte::page')
 @section('title','Create')
 @section('content')
 
 <section class="content">
-    <h1>
-        Create cart
-    </h1>
+<div class="box box-primary">
+<div class="box-header">
+    <h1>Create cart</h1>
     <form method = 'get' action = '{!!url("cart")!!}'>
         <button class = 'btn btn-danger'>cart Index</button>
     </form>
+</div>
+<div class="box-body">
     <br>
     <form method = 'POST' action = '{!!url("cart")!!}'>
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
@@ -28,5 +30,7 @@
         </div>
         <button class = 'btn btn-primary' type ='submit'>Create</button>
     </form>
+</div>
+</div>
 </section>
 @endsection

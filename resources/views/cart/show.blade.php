@@ -1,12 +1,11 @@
-@extends('scaffold-interface.layouts.app')
+@extends('adminlte::page')
 @section('title','Show')
 @section('content')
 
 <section class="content">
-    <h1>
-        Show cart
-    </h1>
-    <br>
+<div class="box box-primary">
+<div class="box-header">
+    <h1>Show cart</h1>
     <form method = 'get' action = '{!!url("cart")!!}'>
         <button class = 'btn btn-primary'>cart Index</button>
     </form>
@@ -31,6 +30,8 @@
             </tr>
         </tbody>
     </table>
+</div>
+<div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>item_id</th>
@@ -72,6 +73,7 @@
             @endforeach 
         </tbody>
     </table>    
-
+</div>
+</div>
 </section>
 @endsection
