@@ -84,6 +84,12 @@
                 <div class="navbar-custom-menu">
 
                     <ul class="nav navbar-nav">
+                        <li class="header">
+                                    <a href="#">
+                                        <i class="fa fa-user"></i>
+                                        {{Auth::user()->name}}
+                                    </a>
+                                </li>
                         <li>
                             @if(config('adminlte.logout_method') == 'GET' || !config('adminlte.logout_method') && version_compare(\Illuminate\Foundation\Application::VERSION, '5.3.0', '<'))
                                 <a href="{{ url(config('adminlte.logout_url', 'auth/logout')) }}">
@@ -117,7 +123,17 @@
 
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-
+                    <!-- search form -->
+                    <form action="#" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                    <!-- /.search form -->    
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
                     @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
@@ -159,8 +175,6 @@
         <!-- Compiled and minified JavaScript -->
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/js/app.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/js/demo.js"></script>
         <script> var baseURL = "{{ URL::to('/') }}"</script>
         <script src = "{{URL::asset('js/AjaxisBootstrap.js') }}"></script>
         <script src = "{{URL::asset('js/scaffold-interface-js/customA.js') }}"></script>

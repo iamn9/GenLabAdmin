@@ -30,4 +30,8 @@ class User extends Authenticatable
     public function isAdmin() {
         return $this->isAdmin; // ?? something like this! should return true or false
     }
+
+    public function isActivated(){
+        return $this->isActivated;
+    }
 }
