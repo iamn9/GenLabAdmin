@@ -6,7 +6,7 @@
 			<h3>Edit User ({{$user->name}})</h3>
 		</div>
 		<div class="box-body">
-			<form action="{{url('admin/users/update')}}" method = "post">
+			<form action="{{url('users/update')}}" method = "post">
 				{!! csrf_field() !!}
 				<input type="hidden" name = "user_id" value = "{{$user->id}}">
 				<div class="form-group">
@@ -24,6 +24,21 @@
 				<div class="form-group">
 					<label for="">Password</label>
 					<input type="password" name = "password" class = "form-control" placeholder = "password" required>
+				</div>
+				<div class="form-group">
+					<label for="isAdmin">Admin</label>
+					@if ($user->isAdmin())
+						<input type="checkbox" name="isAdmin" checked = "checked">
+					@else
+						<input type="checkbox" name="isAdmin">
+					@endif
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label for="isActivated">Activated</label>
+					@if ($user->isActivated())
+						<input type="checkbox" name="isActivated" checked = "checked">
+					@else
+						<input type="checkbox" name="isActivated">
+					@endif
 				</div>
 				<button class = "btn btn-primary" type="submit">Update</button>
 			</form>

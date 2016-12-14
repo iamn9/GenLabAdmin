@@ -1,85 +1,69 @@
 @extends('scaffold-interface.layouts.app')
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="">
-            <div class="panel panel-default">
-                <div class="panel-heading">You are logged in!</div>
+<h1>Hello {{Auth::user()->name}}!</h1>
+<div class="row ">
+              <!-- small box -->
+          <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-aqua">
+            <div class="inner">
+              <h3>150</h3>
+
+              <p>New Orders</p>
             </div>
+            <div class="icon">
+              <i class="fa fa-shopping-cart"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+    
+        <!-- small box -->
+          <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-red">
+            <div class="inner">
+              <h3>65</h3>
 
-             <style>
-            html, body {
-                background-color: #fff;
-                background-image: url("/img/bghome.jpg");
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+              <p>Unique Visitors</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
 
-            .full-height {
-                height: 90vh;
-            }
+          <!-- small box -->
+          <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-yellow">
+            <div class="inner">
+              <h3>44</h3>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+              <p>User Registrations</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
 
-            .position-ref {
-                position: fixed;
-                left: 30%;
-                top: 0%;
-            }
+          <!-- small box -->
+          <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-green">
+            <div class="inner">
+              <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+              <p>Bounce Rate</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">
+              More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
 
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-
-            <body>
-                <form>
-                    <div class="flex-center position-ref full-height">
-                        <div class="content">
-                        <img src="/img/upicon.png" style="width:128px;height:128px;">
-                        <img src="/img/intersoc.png" style="width:109px;height:128px">
-                            <div class="title m-b-md">
-                                 GenLab System
-                            </div>
-                            <div class="links">
-                            <input class="account" type="button" value="ACCOUNTABILITIES" onclick="window.location.href='http://facebook.com'"/>
-                            <input class="borrow" type="button" value="BORROW" onclick="window.location.href='/borrow'" />
-                        </div>
-                    </div>
-                </form>
-            </body> 
-        </div>
     </div>
+    <!--End of Boxes-->
 </div>
 @endsection

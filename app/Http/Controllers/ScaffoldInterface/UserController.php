@@ -5,11 +5,12 @@ namespace App\Http\Controllers\ScaffoldInterface;
 use App\Http\Controllers\Controller;
 use Hash;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class UserController extends Controller
-{
+{    
     /**
      * Display a listing of the resource.
      *
@@ -17,9 +18,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = \App\User::all();
-
-        return view('users.index', compact('users'));
+        if(Auth::user()->isAdmin){
+            $users = \App\User::all();
+            return view('users.index', compact('users'));
+        }
+        else{
+            return redirect ('home');
+        }
     }
 
     /**
@@ -50,7 +55,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('admin/users');
+        return redirect('users');
     }
 
     /**
@@ -82,10 +87,17 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->id_no = $request->id_no;
         $user->password = Hash::make($request->password);
-
+        if($request->isAdmin == 'on')
+            $user->isAdmin = 1;
+        else
+            $user->isAdmin = 0;
+        if ($request->isActivated == 'on')
+            $user->isActivated = 1;
+        else
+            $user->isActivated = 0;
         $user->save();
 
-        return redirect('admin/users');
+        return redirect('users');
     }
 
     /**
@@ -101,6 +113,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect('admin/users');
+        return redirect('users');
     }
 }
