@@ -174,18 +174,17 @@ class CartController extends Controller
     {
      	$cart = Cart::findOrfail($id);
      	$cart->delete();
-        return URL::to('cart');
     }
 
     public function addItem($itemID, Request $request){
             //get the id_no of user logged in
             $userid = Auth::user()->id_no;
 
-            //get the cart of user where status is draft //// NOT WORKING!!!!
+            //get the cart of user where status is draft
             $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
 
 
-            if(is_null($cart_id)){          //NOT WORKING    (IF CART DOES NOT EXIST)
+            if(is_null($cart_id)){
                 $cart_id = DB::table('carts')->insertGetId(
                     ['borrower_id' => $userid, 'status' => 'Draft']
                 );
@@ -194,7 +193,7 @@ class CartController extends Controller
                 ]);
                 return redirect('/home');
             }
-            else{               //NO NEED TO CREATE CART, JUST INSERT IT TO CART ITEMS WITH APPROPRIATE CART ID
+            else{
                 DB::table('cart_items')->insert(
                     ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1]
                 );

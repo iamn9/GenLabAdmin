@@ -25,7 +25,7 @@
                 <td>{!!$cart->borrower_id!!}</td>
                 <td>{!!$cart->status!!}</td>
                 <td>
-                    <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart/{!!$cart->id!!}/deleteMsg" ><i class = 'material-icons'>delete</i></a>
+                    <a href = '{!!url("/cart")!!}' data-link = '/cart/{!!$cart->id!!}/delete' class='delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
                     <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}/edit'><i class = 'material-icons'>edit</i></a>
                     <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class = 'material-icons'>info</i></a>
                 </td>

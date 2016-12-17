@@ -26,7 +26,7 @@
                 <td>{!!$cart_item->item_id!!}</td>
                 <td>{!!$cart_item->qty!!}</td>
                 <td>
-                    <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart_item/{!!$cart_item->id!!}/deleteMsg" ><i class = 'material-icons'>delete</i></a>
+                    <a href = '{!!url("/cart_item")!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
                     <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
                     <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}'><i class = 'material-icons'>info</i></a>
                 </td>

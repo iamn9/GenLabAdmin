@@ -30,7 +30,7 @@ class Carts extends Migration
          * Foreignkeys section
          */
         
-        
+        $table->foreign('borrower_id')->references('id_no')->on('users');
         
         // type your addition here
 

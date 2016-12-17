@@ -167,6 +167,5 @@ class Cart_itemController extends Controller
      	$cart_item = Cart_item::findOrfail($id);
         $cart = $cart_item->cart_id;
      	$cart_item->delete();
-        return URL::to('/cart/'.$cart);
     }
 }
