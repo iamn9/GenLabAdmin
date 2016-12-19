@@ -2,7 +2,6 @@
 @section('title','Create')
 @section('content')
 
-<section class="content">
 <div class="box box-primary">
 <div class="box-header">
     <h1>Create cart_item</h1>
@@ -30,5 +29,4 @@
     </form>
 </div>
 </div>
-</section>
 @endsection

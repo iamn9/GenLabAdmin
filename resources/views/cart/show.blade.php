@@ -2,10 +2,18 @@
 @section('title','Show')
 @section('content')
 
-<section class="content">
 <div class="box box-primary">
 <div class="box-header">
     <h1>Show cart</h1>
+    <form method = 'GET'>
+        <div class="input-group" >
+            <input type="text" name="search" class="form-control pull-right" placeholder="Search">
+            <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </form>
+    <br>
     <form method = 'get' action = '{!!url("cart")!!}'>
         <button class = 'btn btn-primary'>cart Index</button>
     </form>
@@ -72,8 +80,8 @@
             </tr>
             @endforeach 
         </tbody>
-    </table>    
+    </table>
+    <div class='text-center'>{!! $cart_items->render() !!}</div>
 </div>
 </div>
-</section>
 @endsection

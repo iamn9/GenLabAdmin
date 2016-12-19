@@ -2,7 +2,6 @@
 @section('title','Edit')
 @section('content')
 
-<section class="content">
 <div class="box box-primary">
 <div class="box-header">
     <h1>
@@ -31,5 +30,4 @@
     </form>
 </div>
 </div>
-</section>
 @endsection

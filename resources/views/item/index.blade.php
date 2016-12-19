@@ -2,13 +2,12 @@
 @section('title','Index')
 @section('content')
 
-<section class="content">
 <div class="box box-primary">
 <div class="box-header">
 <h1>Item Index</h1>
-    <form method = 'POST' action = '{!!url("item")!!}'>
+    <form method = 'GET'>
         <div class="input-group" >
-            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+            <input type="text" name="search" class="form-control pull-right" placeholder="Search">
             <div class="input-group-btn">
                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
@@ -41,8 +40,7 @@
             @endforeach 
         </tbody>
     </table>
-    {!! $items->render() !!}
+    <div class='text-center'>{!! $items->render() !!}</div>
 </div>
 </div>
-</section>
 @endsection

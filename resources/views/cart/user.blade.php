@@ -2,16 +2,18 @@
 @section('title','Show')
 @section('content')
 
-<section class="content">
+<section class='content'>
 <div class="box box-primary">
 <div class="box-header">
     <h1>USER CART</h1>
-    <div class="input-group" >
-        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-        <div class="input-group-btn">
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+    <form method = 'GET'>
+        <div class="input-group" >
+            <input type="text" name="search" class="form-control pull-right" placeholder="Search">
+            <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
@@ -55,8 +57,7 @@
             @endforeach 
         </tbody>
     </table>    
-    <br>
-    
+    <div class='text-center'>{!! $cart_items->render() !!}</div>
 </div>
 </section>
 @endsection

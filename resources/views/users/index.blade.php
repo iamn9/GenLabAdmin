@@ -1,15 +1,17 @@
 @extends('adminlte::page')
 @section('content')
-<section class="content">
+
 <div class="box box-primary">
 <div class="box-header">
 	<h1>All Users</h1>
+	<form method = 'GET'>
 	<div class="input-group" >
-        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+        <input type="text" name="search" class="form-control pull-right" placeholder="Search">
         <div class="input-group-btn">
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
         </div>
     </div>
+    </form>
 </div>
 	<div class="box-body">
 		<a href="{{url('users/create')}}" class = "btn btn-success"><i class="fa fa-plus fa-md" aria-hidden="true"></i> New</a>
@@ -43,7 +45,8 @@
 			@endforeach
 		</tbody>
 	</table>
+	<div class='text-center'>{!! $users->render() !!}</div>
 </div>
 </div>
-</section>
+
 @endsection

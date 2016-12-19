@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('content')
-<section class="content">
+
 	<div class="box box-primary">
 		<div class="box-header">
 			<h3>Edit User ({{$user->name}})</h3>
@@ -44,5 +44,5 @@
 			</form>
 		</div>
 	</div>
-</section>
+
 @endsection
