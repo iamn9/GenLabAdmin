@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('content')
-<section class="content">
+
 	<div class="box box-primary">
 		<div class="box-header">
 			<h3>Create new user</h3>
@@ -36,5 +36,4 @@
 			</form>
 		</div>
 	</div>
-</section>
 @endsection

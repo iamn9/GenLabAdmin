@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Cart_item;
@@ -25,7 +26,9 @@ class Cart_itemController extends Controller
     public function index()
     {
         $title = 'Index - cart_item';
-        $cart_items = Cart_item::paginate(6);
+        $searchWord = \Request::get('search');
+        $cart_items = Cart_item::where('id','like','%'.$searchWord.'%')->orWhere('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+
         return view('cart_item.index',compact('cart_items','title'));
     }
 
@@ -167,6 +170,5 @@ class Cart_itemController extends Controller
      	$cart_item = Cart_item::findOrfail($id);
         $cart = $cart_item->cart_id;
      	$cart_item->delete();
-        return URL::to('/cart/'.$cart);
     }
 }

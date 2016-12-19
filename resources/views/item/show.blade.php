@@ -2,7 +2,6 @@
 @section('title','Show')
 @section('content')
 
-<section class="content">
     <div class="box box-primary">
         <div class="box-header">
             <h1>
@@ -37,6 +36,5 @@
             </table>
         </div>
     </div>
-</section>
 
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Item;
@@ -26,7 +27,9 @@ class ItemController extends Controller
     public function index()
     {
         $title = 'Index - item';
-        $items = Item::paginate(6);
+
+        $searchWord = \Request::get('search');
+        $items = Item::where('name','like','%'.$searchWord.'%')->orderBy('name')->paginate(5)->appends(Input::except('page'));
 
         if(Auth::check() && Auth::user()->isAdmin)
             return view('item.index',compact('items','title')); 

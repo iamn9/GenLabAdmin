@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ScaffoldInterface;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,9 @@ class UserController extends Controller
     public function index()
     {
         if(Auth::user()->isAdmin){
-            $users = \App\User::all();
+            $searchWord = \Request::get('search');
+            $users = \App\User::where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
+
             return view('users.index', compact('users'));
         }
         else{

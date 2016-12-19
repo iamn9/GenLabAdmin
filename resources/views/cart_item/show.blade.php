@@ -2,7 +2,6 @@
 @section('title','Show')
 @section('content')
 
-<section class="content">
 <div class="box box-primary">
 <div class="box-header">
     <h1>ADMIN: Show cart_item</h1>
@@ -41,5 +40,4 @@
     </table>
 </div>
 </div>
-</section>
 @endsection

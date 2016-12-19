@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Cart;
@@ -28,14 +29,16 @@ class CartController extends Controller
     public function index()
     {
         $title = 'Index - cart';
+        $searchWord = \Request::get('search');
+
         if(Auth::user()->isAdmin){
-            $carts = Cart::paginate(6);
+            $carts = Cart::where('borrower_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title'));
         }
         else{
             $userid = Auth::user()->id_no;
             $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
-            $cart_items = DB::table('cart_items')->where('cart_id','=', $cart_id)->get();
+            $cart_items = Cart_item::where('cart_id','=',$cart_id)->where('item_id','like','%'.$searchWord.'%')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
             return view('cart.user',compact('cart','title','cart_items'));
         }
     }
@@ -102,8 +105,9 @@ class CartController extends Controller
         }
 
         $cart = Cart::findOrfail($id);
-        $cart_items = DB::table('cart_items')->where('cart_id','=', $id)->get();
-        //$cart_items = Cart_Item::where('cart_id','>', $id); 
+
+        $searchWord = \Request::get('search');
+        $cart_items = Cart_item::where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
         return view('cart.show',compact('title','cart','cart_items'));
     }
 
@@ -121,7 +125,6 @@ class CartController extends Controller
             return URL::to('cart/'. $id . '/edit');
         }
 
-        
         $cart = Cart::findOrfail($id);
         return view('cart.edit',compact('title','cart'  ));
     }
@@ -174,18 +177,17 @@ class CartController extends Controller
     {
      	$cart = Cart::findOrfail($id);
      	$cart->delete();
-        return URL::to('cart');
     }
 
     public function addItem($itemID, Request $request){
             //get the id_no of user logged in
             $userid = Auth::user()->id_no;
 
-            //get the cart of user where status is draft //// NOT WORKING!!!!
+            //get the cart of user where status is draft
             $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
 
 
-            if(is_null($cart_id)){          //NOT WORKING    (IF CART DOES NOT EXIST)
+            if(is_null($cart_id)){
                 $cart_id = DB::table('carts')->insertGetId(
                     ['borrower_id' => $userid, 'status' => 'Draft']
                 );
@@ -194,7 +196,7 @@ class CartController extends Controller
                 ]);
                 return redirect('/home');
             }
-            else{               //NO NEED TO CREATE CART, JUST INSERT IT TO CART ITEMS WITH APPROPRIATE CART ID
+            else{
                 DB::table('cart_items')->insert(
                     ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1]
                 );
