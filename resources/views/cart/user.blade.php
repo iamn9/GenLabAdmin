@@ -15,7 +15,7 @@
         </div>
     </form>
 </div>
-    <br>
+<div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>item_id</th>
@@ -56,8 +56,15 @@
             </tr>
             @endforeach 
         </tbody>
-    </table>    
+    </table>
     <div class='text-center'>{!! $cart_items->render() !!}</div>
+        <br>
+    @if(!is_null($cart_id))    
+    <form method = 'GET' action = '/cart/{{$cart_id}}/checkout'>
+        <button class = 'btn btn-success'>CHECKOUT</button>
+    </form>
+    @endif
+</div>
 </div>
 </section>
 @endsection

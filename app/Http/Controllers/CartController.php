@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Cart;
-use App\Cart_item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Amranidev\Ajaxis\Ajaxis;
 use URL;
+use App\Cart;
+use App\Cart_item;
+use App\Transaction;
 
 /**
  * Class CartController.
@@ -39,7 +40,7 @@ class CartController extends Controller
             $userid = Auth::user()->id_no;
             $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
             $cart_items = Cart_item::where('cart_id','=',$cart_id)->where('item_id','like','%'.$searchWord.'%')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
-            return view('cart.user',compact('cart','title','cart_items'));
+            return view('cart.user',compact('cart','title','cart_id','cart_items'));
         }
     }
 
@@ -202,5 +203,20 @@ class CartController extends Controller
                 );
                 return redirect('/item');   
             }
+    }
+
+    public function checkout($cart_id, Request $request){
+        //get the id_no of user logged in
+        $userid = Auth::user()->id_no;
+        //get the current time and date (needs to fix timezone)
+        $date = date('Y-m-d H:i:s');
+
+        $transaction_id = DB::table('transactions')->insertGetId(
+            ['cart_id' => $cart_id, 'submitted_at' => $date]
+        );
+        DB::table('carts')
+            ->where('id', $cart_id)
+            ->update(['status' => 'Pending']);
+        return redirect('/home');
     }
 }
