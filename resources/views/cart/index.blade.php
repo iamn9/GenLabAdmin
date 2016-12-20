@@ -7,7 +7,7 @@
     <h1>Cart Index</h1>
     <form method = 'GET'>
         <div class="input-group" >
-            <input type="text" name="search" class="form-control pull-right" placeholder="Search">
+            <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
             <div class="input-group-btn">
                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
@@ -29,11 +29,23 @@
             @foreach($carts as $cart) 
             <tr>
                 <td>{!!$cart->borrower_id!!}</td>
-                <td>{!!$cart->status!!}</td>
                 <td>
-                    <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/delete' class='delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
-                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}/edit'><i class = 'material-icons'>edit</i></a>
-                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class = 'material-icons'>info</i></a>
+                    @if($cart->status == "Draft")
+                        <span class="label label-primary">
+                    @elseif($cart->status == "Pending")
+                        <span class="label label-danger">
+                    @elseif($cart->status == "Disbursed")
+                        <span class="label label-warning">
+                    @elseif($cart->status == "Completed")
+                        <span class="label label-success">
+                    @else
+                        <span class="label label-info">
+                    @endif
+                {!!$cart->status!!}</span></td>
+                <td>
+                    <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/delete' class='delete btn btn-danger btn-xs'><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
+                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
+                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
                 </td>
             </tr>
             @endforeach 

@@ -21,9 +21,9 @@ class UserController extends Controller
     {
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
-            $users = \App\User::where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
+            $users = \App\User::where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
 
-            return view('users.index', compact('users'));
+            return view('users.index', compact('users','searchWord'));
         }
         else{
             return redirect ('home');
@@ -55,7 +55,14 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->id_no = $request->id_no;
         $user->password = Hash::make($request->password);
-
+        if($request->isAdmin == 'on')
+            $user->isAdmin = 1;
+        else
+            $user->isAdmin = 0;
+        if ($request->isActivated == 'on')
+            $user->isActivated = 1;
+        else
+            $user->isActivated = 0;
         $user->save();
 
         return redirect('users');

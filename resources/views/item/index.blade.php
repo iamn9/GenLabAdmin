@@ -4,10 +4,10 @@
 
 <div class="box box-primary">
 <div class="box-header">
-<h1>Item Index</h1>
+    <h1>Item Index</h1>
     <form method = 'GET'>
         <div class="input-group" >
-            <input type="text" name="search" class="form-control pull-right" placeholder="Search">
+            <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
             <div class="input-group-btn">
                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
@@ -32,9 +32,9 @@
                 <td>{!!$item->name!!}</td>
                 <td>{!!$item->description!!}</td>
                 <td>
-                    <a href= '/item' class = 'delete btn btn-danger btn-xs' data-link = "/item/{!!$item->id!!}/delete" ><i class = 'material-icons'>delete</i></a>
-                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/item/{!!$item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
-                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/item/{!!$item->id!!}'><i class = 'material-icons'>info</i></a>
+                    <a href= '/item' class = 'delete btn btn-danger btn-xs' data-link = "/item/{!!$item->id!!}/delete" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
+                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/item/{!!$item->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
+                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/item/{!!$item->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>
             </tr>
             @endforeach 

@@ -7,7 +7,7 @@
     <h1>ADMIN: Cart_item Index</h1>
     <form method = 'GET'>
         <div class="input-group" >
-            <input type="text" name="search" class="form-control pull-right" placeholder="Search">
+            <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
             <div class="input-group-btn">
                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>

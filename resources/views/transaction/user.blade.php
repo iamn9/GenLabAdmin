@@ -4,7 +4,7 @@
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Transaction Index</h1>
+    <h1>Previous Transactions</h1>
     <form method = 'GET'>
         <div class="input-group" >
             <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
@@ -30,13 +30,11 @@
         <tbody>
             @foreach($transactions as $transaction) 
             <tr>
-                <td>{!!$transaction->cart_id!!}</td>
+                <td><a href="#">{!!$transaction->cart_id!!}</a></td>
                 <td>{!!$transaction->submitted_at!!}</td>
                 <td>{!!$transaction->disbursed_at!!}</td>
                 <td>{!!$transaction->completed_at!!}</td>
                 <td>
-                    <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/transaction/{!!$transaction->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
                     <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>
             </tr>

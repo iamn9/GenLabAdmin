@@ -29,7 +29,7 @@ class Cart_itemController extends Controller
         $searchWord = \Request::get('search');
         $cart_items = Cart_item::where('id','like','%'.$searchWord.'%')->orWhere('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
 
-        return view('cart_item.index',compact('cart_items','title'));
+        return view('cart_item.index',compact('cart_items','title','searchWord'));
     }
 
     /**
@@ -151,7 +151,8 @@ class Cart_itemController extends Controller
      */
     public function DeleteMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/cart_item/'. $id . '/delete');
+
+        $msg = Ajaxis::BtDeleting('Remove Item','Would you like to remove this item from the cart?','/cart_item/'. $id . '/delete');
 
         if($request->ajax())
         {

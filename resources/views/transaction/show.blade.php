@@ -1,15 +1,17 @@
-@extends('scaffold-interface.layouts.app')
+@extends('adminlte::page')
 @section('title','Show')
 @section('content')
 
-<section class="content">
-    <h1>
-        Show transaction
-    </h1>
+<div class="box box-primary">
+<div class="box-header">
+    <h1>Show transaction</h1>
     <br>
+</div>
+<div class="box-body">
     <form method = 'get' action = '{!!url("transaction")!!}'>
         <button class = 'btn btn-primary'>transaction Index</button>
     </form>
+
     <br>
     <table class = 'table table-bordered'>
         <thead>
@@ -43,5 +45,6 @@
             </tr>
         </tbody>
     </table>
-</section>
+</div>
+</div>
 @endsection

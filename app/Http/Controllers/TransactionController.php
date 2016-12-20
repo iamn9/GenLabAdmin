@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Transaction;
@@ -25,8 +28,9 @@ class TransactionController extends Controller
     public function index()
     {
         $title = 'Index - transaction';
-        $transactions = Transaction::paginate(6);
-        return view('transaction.index',compact('transactions','title'));
+        $searchWord = \Request::get('search');
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        return view('transaction.index',compact('transactions','title','searchWord'));
     }
 
     /**
@@ -172,5 +176,13 @@ class TransactionController extends Controller
      	$transaction = Transaction::findOrfail($id);
      	$transaction->delete();
         return URL::to('transaction');
+    }
+
+    public function userHistory(){
+        $userid = Auth::user()->id_no;
+        $title = 'Index - transaction';
+        $searchWord = \Request::get('search');
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        return view('transaction.index',compact('transactions','title','searchWord'));
     }
 }

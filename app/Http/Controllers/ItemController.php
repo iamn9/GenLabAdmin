@@ -32,9 +32,9 @@ class ItemController extends Controller
         $items = Item::where('name','like','%'.$searchWord.'%')->orderBy('name')->paginate(5)->appends(Input::except('page'));
 
         if(Auth::check() && Auth::user()->isAdmin)
-            return view('item.index',compact('items','title')); 
+            return view('item.index',compact('items','title','searchWord')); 
         else
-            return view('item.user_index',compact('items','title')); 
+            return view('item.user_index',compact('items','title','searchWord')); 
     }
 
     /**
@@ -100,6 +100,16 @@ class ItemController extends Controller
 
         $item = Item::findOrfail($id);
         return view('item.show',compact('title','item'));
+    }
+
+    public function showModal($id, Request $request){
+        $item = Item::findOrfail($id);
+        $msg = Ajaxis::btShow('Item Name: '.$item->name, $item->description);
+
+        if($request->ajax())
+        {
+            return $msg;
+        }
     }
 
     /**
