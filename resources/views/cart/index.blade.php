@@ -45,7 +45,7 @@
                 <td>
                     <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/delete' class='delete btn btn-danger btn-xs'><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
                     <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
-                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
+                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>
             </tr>
             @endforeach 

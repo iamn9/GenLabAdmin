@@ -101,7 +101,7 @@ class CartController extends Controller
 
         $searchWord = \Request::get('search');
         $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
-        return view('cart.show',compact('title','cart','cart_items'));
+        return view('cart.show',compact('searchWord','title','cart','cart_items'));
     }
 
     /**

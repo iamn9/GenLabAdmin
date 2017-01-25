@@ -55,7 +55,7 @@
                     <a href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
                     <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
 
-                    <button type="button" class="viewShow btn btn-warning btn-xs" data-toggle="modal" data-target="#showItemInfo">Item Info</button>
+                    <button type="button" class="viewShow btn btn-warning btn-xs" data-toggle="modal" data-target="#showItemInfo">Info</button>
 
                     <!-- Modal -->
                     <div id="showItemInfo" class="modal fade" role="dialog">
