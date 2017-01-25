@@ -4,20 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Item;
+use App\Transaction;
 use Amranidev\Ajaxis\Ajaxis;
 use URL;
 
 /**
- * Class ItemController.
+ * Class TransactionController.
  *
- * @author  The scaffold-interface created at 2016-11-30 06:49:55am
+ * @author  The scaffold-interface created at 2016-12-19 04:15:40am
  * @link  https://github.com/amranidev/scaffold-interface
  */
-class ItemController extends Controller
+class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,15 +27,10 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $title = 'Index - item';
-
+        $title = 'Index - transaction';
         $searchWord = \Request::get('search');
-        $items = Item::where('name','like','%'.$searchWord.'%')->orderBy('name')->paginate(5)->appends(Input::except('page'));
-
-        if(Auth::check() && Auth::user()->isAdmin)
-            return view('item.index',compact('items','title','searchWord')); 
-        else
-            return view('item.user_index',compact('items','title','searchWord')); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        return view('transaction.index',compact('transactions','title','searchWord'));
     }
 
     /**
@@ -44,9 +40,9 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $title = 'Create - item';
+        $title = 'Create - transaction';
         
-        return view('item.create');
+        return view('transaction.create');
     }
 
     /**
@@ -57,17 +53,23 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $item = new Item();
+        $transaction = new Transaction();
 
         
-        $item->name = $request->name;
+        $transaction->cart_id = $request->cart_id;
 
         
-        $item->description = $request->description;
+        $transaction->submitted_at = $request->submitted_at;
+
+        
+        $transaction->disbursed_at = $request->disbursed_at;
+
+        
+        $transaction->completed_at = $request->completed_at;
 
         
         
-        $item->save();
+        $transaction->save();
 
         $pusher = App::make('pusher');
 
@@ -77,9 +79,9 @@ class ItemController extends Controller
         //you can modify anything you want or use it wherever.
         $pusher->trigger('test-channel',
                          'test-event',
-                        ['message' => 'A new item has been created !!']);
+                        ['message' => 'A new transaction has been created !!']);
 
-        return redirect('item');
+        return redirect('transaction');
     }
 
     /**
@@ -91,25 +93,15 @@ class ItemController extends Controller
      */
     public function show($id,Request $request)
     {
-        $title = 'Show - item';
+        $title = 'Show - transaction';
 
         if($request->ajax())
         {
-            return URL::to('item/'.$id);
+            return URL::to('transaction/'.$id);
         }
 
-        $item = Item::findOrfail($id);
-        return view('item.show',compact('title','item'));
-    }
-
-    public function showModal($id, Request $request){
-        $item = Item::findOrfail($id);
-        $msg = Ajaxis::btShow('Item Name: '.$item->name, $item->description);
-
-        if($request->ajax())
-        {
-            return $msg;
-        }
+        $transaction = Transaction::findOrfail($id);
+        return view('transaction.show',compact('title','transaction'));
     }
 
     /**
@@ -120,15 +112,15 @@ class ItemController extends Controller
      */
     public function edit($id,Request $request)
     {
-        $title = 'Edit - item';
+        $title = 'Edit - transaction';
         if($request->ajax())
         {
-            return URL::to('item/'. $id . '/edit');
+            return URL::to('transaction/'. $id . '/edit');
         }
 
         
-        $item = Item::findOrfail($id);
-        return view('item.edit',compact('title','item'  ));
+        $transaction = Transaction::findOrfail($id);
+        return view('transaction.edit',compact('title','transaction'  ));
     }
 
     /**
@@ -140,16 +132,20 @@ class ItemController extends Controller
      */
     public function update($id,Request $request)
     {
-        $item = Item::findOrfail($id);
+        $transaction = Transaction::findOrfail($id);
     	
-        $item->name = $request->name;
+        $transaction->cart_id = $request->cart_id;
         
-        $item->description = $request->description;
+        $transaction->submitted_at = $request->submitted_at;
+        
+        $transaction->disbursed_at = $request->disbursed_at;
+        
+        $transaction->completed_at = $request->completed_at;
         
         
-        $item->save();
+        $transaction->save();
 
-        return redirect('item');
+        return redirect('transaction');
     }
 
     /**
@@ -161,7 +157,7 @@ class ItemController extends Controller
      */
     public function DeleteMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/item/'. $id . '/delete');
+        $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/transaction/'. $id . '/delete');
 
         if($request->ajax())
         {
@@ -177,8 +173,16 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-     	$item = Item::findOrfail($id);
-     	$item->delete();
-        return URL::to('item');
+     	$transaction = Transaction::findOrfail($id);
+     	$transaction->delete();
+        return URL::to('transaction');
+    }
+
+    public function userHistory(){
+        $userid = Auth::user()->id_no;
+        $title = 'Index - transaction';
+        $searchWord = \Request::get('search');
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        return view('transaction.index',compact('transactions','title','searchWord'));
     }
 }

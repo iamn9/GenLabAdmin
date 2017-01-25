@@ -8,7 +8,7 @@
     <h1>Item Index</h1>
     <form method = 'GET'>
         <div class="input-group" >
-            <input type="text" name="search" class="form-control pull-right" placeholder="Search">
+            <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
             <div class="input-group-btn">
                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
@@ -30,31 +30,9 @@
                 <td>{!!$item->name!!}</td>
                 <td>{!!$item->description!!}</td>
                 <td>
+                    <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-success btn-xs' data-link = "/cart/add/{!!$item->id!!}/addItemMsg" ><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
 
-                    <button type="button" class="viewShow btn btn-warning btn-xs" data-toggle="modal" data-target="#addToListing">Add to Listing</button>
-
-                    <!-- Modal -->
-                    <div id="addToListing" class="modal fade" role="dialog">
-                      <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Add to Listing</h4>
-                          </div>
-                          <div class="modal-body">
-                            <p>You are adding {!!$item->name!!}</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <a href = '/cart/add/{!!$item->id!!}' class = 'viewShow btn btn-primary btn-xs'><i class = 'material-icons'>Add to Cart</i></a>
-
-                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/item/{!!$item->id!!}'><i class = 'material-icons'>info</i></a>
+                    <a href = '#' class = 'viewShow btn btn-primary btn-xs' data-link = '/item/{!!$item->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>
             </tr>
             @endforeach 

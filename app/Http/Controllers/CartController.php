@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Cart;
-use App\Cart_item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Amranidev\Ajaxis\Ajaxis;
 use URL;
+use App\Cart;
+use App\Cart_item;
+use App\Transaction;
 
 /**
  * Class CartController.
@@ -32,14 +33,14 @@ class CartController extends Controller
         $searchWord = \Request::get('search');
 
         if(Auth::user()->isAdmin){
-            $carts = Cart::where('borrower_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
-            return view('cart.index',compact('carts','title'));
+            $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
         }
         else{
             $userid = Auth::user()->id_no;
             $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
-            $cart_items = Cart_item::where('cart_id','=',$cart_id)->where('item_id','like','%'.$searchWord.'%')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
-            return view('cart.user',compact('cart','title','cart_items'));
+            $cart_items = DB::table('cart_items')->where('cart_id','=',$cart_id)->where('item_id','like','%'.$searchWord.'%')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+            return view('cart.user',compact('title','searchWord','cart_id','cart_items'));
         }
     }
 
@@ -64,17 +65,9 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $cart = new Cart();
-
-        
         $cart->borrower_id = $request->borrower_id;
-
-        
         $cart->status = $request->status;
-
-        
-        
         $cart->save();
-
         $pusher = App::make('pusher');
 
         //default pusher notification.
@@ -107,8 +100,8 @@ class CartController extends Controller
         $cart = Cart::findOrfail($id);
 
         $searchWord = \Request::get('search');
-        $cart_items = Cart_item::where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
-        return view('cart.show',compact('title','cart','cart_items'));
+        $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+        return view('cart.show',compact('searchWord','title','cart','cart_items'));
     }
 
     /**
@@ -179,6 +172,16 @@ class CartController extends Controller
      	$cart->delete();
     }
 
+    public function addItemMsg($id,Request $request)
+    {
+        $msg = Ajaxis::BtDeleting('Add Item','Would you like to add this item to your cart?','/cart/add/'. $id);
+
+        if($request->ajax())
+        {
+            return $msg;
+        }
+    }
+
     public function addItem($itemID, Request $request){
             //get the id_no of user logged in
             $userid = Auth::user()->id_no;
@@ -190,17 +193,33 @@ class CartController extends Controller
             if(is_null($cart_id)){
                 $cart_id = DB::table('carts')->insertGetId(
                     ['borrower_id' => $userid, 'status' => 'Draft']
-                );
-                DB::table('cart_items')->insert([
-                    ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1]
-                ]);
-                return redirect('/home');
+                );                
             }
+            $countQtyItem = DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $itemID)->count();
+
+            if($countQtyItem == 0){
+                    DB::table('cart_items')->insert([
+                    ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1]
+                    ]);
+                }
+
             else{
-                DB::table('cart_items')->insert(
-                    ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1]
-                );
-                return redirect('/item');   
+                DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $itemID)->increment('qty');
             }
+    }
+
+    public function checkout($cart_id, Request $request){
+        //get the id_no of user logged in
+        $userid = Auth::user()->id_no;
+        //get the current time and date (needs to fix timezone)
+        $date = date('Y-m-d H:i:s');
+
+        $transaction_id = DB::table('transactions')->insertGetId(
+            ['cart_id' => $cart_id, 'submitted_at' => $date]
+        );
+        DB::table('carts')
+            ->where('id', $cart_id)
+            ->update(['status' => 'Pending']);
+        return redirect('/home');
     }
 }

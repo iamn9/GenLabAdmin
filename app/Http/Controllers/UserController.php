@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\ScaffoldInterface;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
-use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Hash;
 
 
 class UserController extends Controller
@@ -19,11 +18,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        $title = "User Index";
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
             $users = \App\User::where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
-
-            return view('users.index', compact('users','searchWord'));
+            return view('users.index', compact('title','users','searchWord'));
         }
         else{
             return redirect ('home');
@@ -125,4 +124,31 @@ class UserController extends Controller
 
         return redirect('users');
     }
+
+    public function showUnactivated(){
+        $title = 'Unactivated Users';
+        if(Auth::user()->isAdmin){
+            $searchWord = \Request::get('search');
+            //$users = \App\User::where('isActivated',0)->where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
+            $users = \App\User::where('isActivated',0)->paginate(5);
+
+            return view('users.index', compact('title','users','searchWord'));
+        }
+        else{
+            return redirect ('home');
+        }
+    }
+
+    public function showAdmins(){
+        $title = 'Admin Users';
+        if(Auth::user()->isAdmin){
+            $searchWord = \Request::get('search');
+            $users = \App\User::where('isAdmin',1)->paginate(5);
+            //->where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
+            return view('users.index', compact('title', 'users','searchWord'));
+        }
+        else{
+            return redirect ('home');
+        }
+    }    
 }

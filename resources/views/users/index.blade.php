@@ -6,7 +6,7 @@
 	<h1>All Users</h1>
 	<form method = 'GET'>
 	<div class="input-group" >
-        <input type="text" name="search" class="form-control pull-right" placeholder="Search">
+        <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
         <div class="input-group-btn">
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
         </div>
@@ -17,6 +17,7 @@
 		<a href="{{url('users/create')}}" class = "btn btn-success"><i class="fa fa-plus fa-md" aria-hidden="true"></i> New</a>
 		<table class = "table table-hover">
 		<thead>
+			<th>ID Number</th>
 			<th>Name</th>
 			<th>Email</th>
 			<th>Status</th>
@@ -25,6 +26,7 @@
 		<tbody>
 			@foreach($users as $user)
 			<tr>
+				<td>{{$user->id_no}}</td>
 				<td>{{$user->name}}</td>
 				<td>{{$user->email}}</td>
 				<td>

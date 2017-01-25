@@ -32,6 +32,7 @@ Route::group(['middleware'=> 'web'],function(){
   Route::post('item/{id}/update','\App\Http\Controllers\ItemController@update');
   Route::get('item/{id}/delete','\App\Http\Controllers\ItemController@destroy');
   Route::get('item/{id}/deleteMsg','\App\Http\Controllers\ItemController@DeleteMsg');
+  Route::get('item/{id}/showModal','\App\Http\Controllers\ItemController@showModal');
 });
 
 //cart Routes
@@ -41,6 +42,8 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('cart/{id}/delete','\App\Http\Controllers\CartController@destroy');
   Route::get('cart/{id}/deleteMsg','\App\Http\Controllers\CartController@DeleteMsg');
   Route::get('cart/add/{id}','\App\Http\Controllers\CartController@addItem');
+  Route::get('cart/add/{id}/addItemMsg','\App\Http\Controllers\CartController@addItemMsg');
+  Route::get('cart/{id}/checkout','\App\Http\Controllers\CartController@checkout');
 });
 
 //cart_item Routes
@@ -49,4 +52,13 @@ Route::group(['middleware'=> 'web'],function(){
   Route::post('cart_item/{id}/update','\App\Http\Controllers\Cart_itemController@update');
   Route::get('cart_item/{id}/delete','\App\Http\Controllers\Cart_itemController@destroy');
   Route::get('cart_item/{id}/deleteMsg','\App\Http\Controllers\Cart_itemController@DeleteMsg');
+});
+
+//transaction Routes
+Route::group(['middleware'=> 'web'],function(){
+  Route::resource('transaction','\App\Http\Controllers\TransactionController');
+  Route::post('transaction/{id}/update','\App\Http\Controllers\TransactionController@update');
+  Route::get('transaction/{id}/delete','\App\Http\Controllers\TransactionController@destroy');
+  Route::get('transaction/{id}/deleteMsg','\App\Http\Controllers\TransactionController@DeleteMsg');
+  Route::get('transaction/history','\App\Http\Controllers\TransactionController@DuserHistory');
 });

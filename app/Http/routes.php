@@ -22,3 +22,10 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('cart_item/{id}/delete','\App\Http\Controllers\Cart_itemController@destroy');
   Route::get('cart_item/{id}/deleteMsg','\App\Http\Controllers\Cart_itemController@DeleteMsg');
 });
+//transaction Routes
+Route::group(['middleware'=> 'web'],function(){
+  Route::resource('transaction','\App\Http\Controllers\TransactionController');
+  Route::post('transaction/{id}/update','\App\Http\Controllers\TransactionController@update');
+  Route::get('transaction/{id}/delete','\App\Http\Controllers\TransactionController@destroy');
+  Route::get('transaction/{id}/deleteMsg','\App\Http\Controllers\TransactionController@DeleteMsg');
+});
