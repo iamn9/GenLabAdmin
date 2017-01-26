@@ -39,7 +39,9 @@ class CartController extends Controller
         else{
             $userid = Auth::user()->id_no;
             $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
-            $cart_items = DB::table('cart_items')->where('cart_id','=',$cart_id)->where('item_id','like','%'.$searchWord.'%')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+            $cart_items = $cart_items = DB::table('cart_items')->join('items', function($join){
+                $join->on('cart_items.item_id', '=', 'items.id');
+            })->where('cart_id','=',$cart_id)->where('item_id','like','%'.$searchWord.'%')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
             return view('cart.user',compact('title','searchWord','cart_id','cart_items'));
         }
     }
@@ -91,6 +93,7 @@ class CartController extends Controller
     public function show($id,Request $request)
     {
         $title = 'Show - cart';
+        if(Auth::user()->isAdmin){
 
         if($request->ajax())
         {
@@ -102,6 +105,22 @@ class CartController extends Controller
         $searchWord = \Request::get('search');
         $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
         return view('cart.show',compact('searchWord','title','cart','cart_items'));
+    }
+        else{
+              if($request->ajax())
+        {
+            return URL::to('cart/'.$id);
+        }
+
+        $cart = Cart::findOrfail($id);
+
+        $searchWord = \Request::get('search');
+        $cart_items = DB::table('cart_items')->join('items', function($join){
+                $join->on('cart_items.item_id', '=', 'items.id');
+            })->where('cart_id', '=', $id)->paginate(5)->appends(Input::except('page'));
+        return view('cart.user_show',compact('searchWord','title','cart','cart_items'));
+        }
+
     }
 
     /**
@@ -222,4 +241,14 @@ class CartController extends Controller
             ->update(['status' => 'Pending']);
         return redirect('/home');
     }
+    public function user_transaction(){
+
+        $title = 'Index - cart';
+            $userid = Auth::user()->id_no;
+            $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->value('id');
+            $carts = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '!=', 'Draft')->paginate(5)->appends(Input::except('page'));
+            $cart_items = DB::table('cart_items')->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+            return view('cart.user_transaction',compact('title','carts','cart_items'));
+    }
+
 }
