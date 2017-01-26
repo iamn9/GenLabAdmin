@@ -101,7 +101,10 @@ class TransactionController extends Controller
         }
 
         $transaction = Transaction::findOrfail($id);
-        return view('transaction.show',compact('title','transaction'));
+        //return view('transaction.show',compact('title','transaction'));
+        $cart_items = DB::table('cart_items')->where('cart_id',$transaction->cart_id)->get(); 
+        //$user= DB::table('carts')->join('users','carts.borrower_id','=','users.id_no')->join(select('') 
+        return view('transaction.show',compact('title','transaction','cart_items'));
     }
 
     /**
@@ -178,11 +181,63 @@ class TransactionController extends Controller
         return URL::to('transaction');
     }
 
-    public function userHistory(){
+     public function userHistory(Request $request){ 
         $userid = Auth::user()->id_no;
         $title = 'Index - transaction';
         $searchWord = \Request::get('search');
         $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
         return view('transaction.index',compact('transactions','title','searchWord'));
     }
+
+
+    public function index_pending(){ 
+        $title = 'Pending Transactions'; 
+        $searchWord = \Request::get('search'); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('disbursed_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        return view('transaction.index_pending',compact('transactions','title','searchWord')); 
+    } 
+ 
+    public function index_disbursed(){ 
+        $title = 'Disbursed Transactions'; 
+        $searchWord = \Request::get('search'); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('disbursed_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        return view('transaction.index_disbursed',compact('transactions','title','searchWord')); 
+    } 
+ 
+    public function index_completed(){ 
+        $title = 'Completed Transactions'; 
+        $searchWord = \Request::get('search'); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('disbursed_at')->whereNotNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        return view('transaction.index_completed',compact('transactions','title','searchWord')); 
+    } 
+ 
+    public function disburse($id, Request $Request){ 
+        $date = date('Y-m-d H:i:s'); 
+        $cart_id = DB::table('transactions')->value('cart_id'); 
+ 
+        DB::table('carts') 
+            ->where('id', $cart_id) 
+            ->update(['status' => 'Disbursed']); 
+         
+        DB::table('transactions') 
+            ->where('id',$id) 
+            ->update(['disbursed_at' => $date]); 
+ 
+        return redirect('transaction/pending'); 
+    } 
+ 
+    public function complete($id, Request $Request){ 
+        $date = date('Y-m-d H:i:s'); 
+        $cart_id = DB::table('transactions')->value('cart_id'); 
+ 
+        DB::table('carts') 
+            ->where('id', $cart_id) 
+            ->update(['status' => 'Completed']); 
+         
+        DB::table('transactions') 
+            ->where('id',$id) 
+            ->update(['completed_at' => $date]); 
+ 
+        return redirect('transaction/completed'); 
+    } 
 }

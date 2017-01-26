@@ -86,9 +86,6 @@
 					<li class="treeview"><a href="{{url('/listing')}}"><i class="fa fa-shopping-cart"></i> <span>Listings</span></a></li>
 					<li class="treeview"><a href="{{url('/cart')}}"><i class="fa fa-shopping-cart"></i> <span>Cart</span></a></li>
 					<li class="treeview"><a href="{{url('/users')}}"><i class="fa fa-history"></i> <span>History</span></a></li>
-					<li class="header">MY ACCOUNT</li>
-					<li class="treeview"><a href="{{url('/users')}}"><i class="fa fa-user"></i> <span>Profile</span></a></li>
-					<li class="treeview"><a href="{{url('/users')}}"><i class="fa fa-wrench"></i> <span>Account Details</span></a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
