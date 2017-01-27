@@ -39,11 +39,12 @@ class CartController extends Controller
         else{
             $userid = Auth::user()->id_no;
             $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
-            $cart_items = DB::table('cart_items')->where('cart_id','=',$cart_id)->where('item_id','like','%'.$searchWord.'%')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+            $cart_items = $cart_items = DB::table('cart_items')->join('items', function($join){
+                $join->on('cart_items.item_id', '=', 'items.id');
+            })->where('cart_id','=',$cart_id)->where('name','like','%'.$searchWord.'%')->where('item_id','like','%'.$searchWord.'%')->select('cart_items.*','items.name')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
             return view('cart.user',compact('title','searchWord','cart_id','cart_items'));
         }
     }
-
     /**
      * Show the form for creating a new resource.
      *

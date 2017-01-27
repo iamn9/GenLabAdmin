@@ -240,4 +240,13 @@ class TransactionController extends Controller
  
         return redirect('transaction/completed'); 
     } 
+
+    public function user_active(){ 
+        $title = 'Active Transaction'; 
+        $userid = Auth::user()->id_no; 
+        $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->value('id'); 
+        $carts = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '!=', 'Draft')->paginate(5)->appends(Input::except('page')); 
+        $cart_items = DB::table('cart_items')->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page')); 
+        return view('transaction.user_active',compact('title','carts','cart_items')); 
+    } 
 }

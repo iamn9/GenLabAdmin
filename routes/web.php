@@ -31,6 +31,8 @@ Route::get('transaction/disbursed','\App\Http\Controllers\TransactionController@
 Route::get('transaction/completed','\App\Http\Controllers\TransactionController@index_completed');
 Route::get('transaction/{id}/disburse','\App\Http\Controllers\TransactionController@disburse');
 Route::get('transaction/{id}/complete','\App\Http\Controllers\TransactionController@complete');
+Route::get('transaction/user/active','\App\Http\Controllers\TransactionController@user_active');
+Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_history');
 
 //item Routes
 Route::group(['middleware'=> 'web'],function(){
@@ -58,6 +60,7 @@ Route::group(['middleware'=> 'web'],function(){
   Route::post('cart_item/{id}/update','\App\Http\Controllers\Cart_itemController@update');
   Route::get('cart_item/{id}/delete','\App\Http\Controllers\Cart_itemController@destroy');
   Route::get('cart_item/{id}/deleteMsg','\App\Http\Controllers\Cart_itemController@DeleteMsg');
+  Route::get('cart_item/{id}/edit','\App\Http\Controllers\Cart_itemController@edit');
 });
 
 //transaction Routes
