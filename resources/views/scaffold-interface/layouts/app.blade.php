@@ -85,8 +85,7 @@
 					<li class="header">TRANSACTIONS</li>
 					<li class="treeview"><a href="{{url('/transaction/active')}}"><i class="fa fa-shopping-cart"></i> <span>Active Transaction</span></a></li>
 					<li class="treeview"><a href="{{url('/cart')}}"><i class="fa fa-shopping-cart"></i> <span>Cart</span></a></li>
-					<li class="treeview"><a href="{{url('/users')}}"><i class="fa fa-history"></i> <span>History</span></a></li>
-					a></li>
+					<li class="treeview"><a href="{{url('/transaction/history')}}"><i class="fa fa-history"></i> <span>History</span></a></li>
 				</ul>
 			</section>
 			<!-- /.sidebar -->

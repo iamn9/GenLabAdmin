@@ -140,32 +140,27 @@ return [
             'icon' => 'folder-o',
             'submenu'   =>[
                 [
+                    'text'       => 'Show All',
+                    'icon_color' => 'white',
+                    'url'         => 'transaction/',
+                ],
+                [
                     'text'       => 'Pending',
                     'icon_color' => 'orange',
+                    'url'         => 'transaction/pending',
                 ],
                 [
                     'text'       => 'Disbursed',
                     'icon_color' => 'aqua',
+                    'url'         => 'transaction/disbursed',
                 ],
                 [
                     'text'       => 'Completed',
                     'icon_color' => 'green',
+                    'url'         => 'transaction/completed',
                 ],
             ]
-        ],
-        
-        'MY ACCOUNT',
-        [
-            'text' => 'Profile',
-            'url'  => 'admin/info',
-            'icon' => 'user',
-        ],
-        [
-            'text' => 'Account Details',
-            'url'  => 'admin/password',
-            'icon' => 'lock',
-        ],
-        
+        ],        
     ],
 
     /*

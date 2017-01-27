@@ -27,6 +27,12 @@ Route::post('users/update/','ScaffoldInterface\UserController@update');
 Route::get('users/edit/{id}','ScaffoldInterface\UserController@edit');
 Route::get('users/delete/{id}','ScaffoldInterface\UserController@destroy');
 
+Route::get('transaction/pending','\App\Http\Controllers\TransactionController@index_pending');
+Route::get('transaction/disbursed','\App\Http\Controllers\TransactionController@index_disbursed');
+Route::get('transaction/completed','\App\Http\Controllers\TransactionController@index_completed');
+Route::get('transaction/{id}/disburse','\App\Http\Controllers\TransactionController@disburse');
+Route::get('transaction/{id}/complete','\App\Http\Controllers\TransactionController@complete');
+
 //item Routes
 Route::group(['middleware'=> 'web'],function(){
   Route::resource('item','\App\Http\Controllers\ItemController');

@@ -1,7 +1,8 @@
-@extends('adminlte::page')
+@extends('scaffold-interface.layouts.app')
 @section('title','Show')
 @section('content')
 
+<section class='content'>
 <div class="box box-primary">
 <div class="box-header">
     <h1>Show cart</h1>
@@ -53,28 +54,8 @@
                 <td>{!!$cart_item->qty!!}</td>
                 <td>
                     <a href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
-                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
-
-                    <button type="button" class="viewShow btn btn-warning btn-xs" data-toggle="modal" data-target="#showItemInfo">Info</button>
-
-                    <!-- Modal -->
-                    <div id="showItemInfo" class="modal fade" role="dialog">
-                      <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Item Info</h4>
-                          </div>
-                          <div class="modal-body">
-                            <p></p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <a href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
+                    <a href = '/item/{!!$cart_item->id!!}' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-primary btn-xs' data-link = "/item/{!!$cart_item->id!!}/showModal" ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
 
                 </td>
             </tr>
@@ -84,4 +65,5 @@
     <div class='text-center'>{!! $cart_items->render() !!}</div>
 </div>
 </div>
+</section>
 @endsection

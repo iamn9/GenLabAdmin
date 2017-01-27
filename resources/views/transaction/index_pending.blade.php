@@ -15,27 +15,23 @@
     </form>
 </div>
 <div class="box-body">
-    <form class = 'col s3' method = 'get' action = '{!!url("transaction")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create New transaction</button>
-    </form>
-    <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>cart_id</th>
-            <th>submitted_at</th>
-            <th>disbursed_at</th>
-            <th>completed_at</th>
-            <th>actions</th>
+            <th>Borrower</th>
+            <th>Cart ID</th>
+            <th>Requested at</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             @foreach($transactions as $transaction) 
             <tr>
-                <td><a href="#">{!!$transaction->cart_id!!}</a></td>
+                <td>Borrower Name</td>
+                <td>{!!$transaction->cart_id!!}</td>
                 <td>{!!$transaction->submitted_at!!}</td>
-                <td>{!!$transaction->disbursed_at!!}</td>
-                <td>{!!$transaction->completed_at!!}</td>
                 <td>
-                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+                    <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    <a href = '#' class = 'viewShow btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>
+                    <a class = 'viewEdit btn btn-success xs' href = '/transaction/{!!$transaction->id!!}/disburse'><i class="fa fa-check" aria-hidden="true"></i>  Disburse</a>
                 </td>
             </tr>
             @endforeach 
