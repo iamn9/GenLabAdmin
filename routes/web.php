@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+ Route::get('transaction/active','\App\Http\Controllers\CartController@user_transaction');
 
 //Users
 Route::resource('users', 'ScaffoldInterface\UserController');
