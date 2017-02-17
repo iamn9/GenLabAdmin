@@ -20,11 +20,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 //Users
-Route::resource('users', 'ScaffoldInterface\UserController');
-Route::post('users/store/','ScaffoldInterface\UserController@store');
-Route::post('users/update/','ScaffoldInterface\UserController@update');
-Route::get('users/edit/{id}','ScaffoldInterface\UserController@edit');
-Route::get('users/delete/{id}','ScaffoldInterface\UserController@destroy');
+Route::get('users/unactivated','\App\Http\Controllers\UserController@showUnactivated');
+Route::get('users/admins','\App\Http\Controllers\UserController@showAdmins');
+Route::resource('users', '\App\Http\Controllers\UserController');
+Route::post('users/store/','\App\Http\Controllers\UserController@store');
+Route::post('users/update/','\App\Http\Controllers\UserController@update');
+Route::get('users/edit/{id}','\App\Http\Controllers\UserController@edit');
+Route::get('users/delete/{id}','\App\Http\Controllers\UserController@destroy');
 
 Route::get('transaction/pending','\App\Http\Controllers\TransactionController@index_pending');
 Route::get('transaction/disbursed','\App\Http\Controllers\TransactionController@index_disbursed');

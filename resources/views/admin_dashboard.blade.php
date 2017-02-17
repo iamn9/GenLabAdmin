@@ -23,14 +23,14 @@
 
       <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-yellow">
         <div class="inner">
-          <h3>{!!$count_pendingUsers!!}</h3>
+          <h3>{!!$count_unactivatedUsers!!}</h3>
 
           <p>User Registrations</p>
         </div>
         <div class="icon">
           <i class="ion ion-person-add"></i>
         </div>
-        <a href="#" class="small-box-footer">
+        <a href="users/unactivated" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
         </a>
       </div>
