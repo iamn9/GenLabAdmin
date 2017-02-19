@@ -21,8 +21,8 @@
             <input id="submitted_at" name = "submitted_at" type="text" class="form-control">
         </div>
         <div class="form-group">
-            <label for="disbursed_at">disbursed_at</label>
-            <input id="disbursed_at" name = "disbursed_at" type="text" class="form-control">
+            <label for="released_at">released_at</label>
+            <input id="released_at" name = "released_at" type="text" class="form-control">
         </div>
         <div class="form-group">
             <label for="completed_at">completed_at</label>

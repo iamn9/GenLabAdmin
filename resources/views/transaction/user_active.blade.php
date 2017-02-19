@@ -31,7 +31,7 @@
           <address>
             <strong>Name</strong><br>
             Email<br>
-            Student NUmber<br>
+            Student Number<br>
             Phone: (555) 539-1037<br>
           </address>
         </div>
@@ -42,7 +42,7 @@
         <strong>Transaction Details</strong><br>
           <address>
             Submitted: <br>
-            Disbursed: <br>
+            Released: <br>
             Completed: <br>
           </address>
         </div>
@@ -73,7 +73,7 @@
             <tr>
               <td>{!!$cart_item->qty!!}</td>
               <td>{!!$cart_item->item_id!!}</td>
-              <td>El snort testosterone trophy driving gloves handsome</td>
+              <td>Work hard step by step until you reach your goals.</td>
             </tr>
             @endforeach
             </tbody>

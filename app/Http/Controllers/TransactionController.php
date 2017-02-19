@@ -62,7 +62,7 @@ class TransactionController extends Controller
         $transaction->submitted_at = $request->submitted_at;
 
         
-        $transaction->disbursed_at = $request->disbursed_at;
+        $transaction->released_at = $request->released_at;
 
         
         $transaction->completed_at = $request->completed_at;
@@ -141,7 +141,7 @@ class TransactionController extends Controller
         
         $transaction->submitted_at = $request->submitted_at;
         
-        $transaction->disbursed_at = $request->disbursed_at;
+        $transaction->released_at = $request->released_at;
         
         $transaction->completed_at = $request->completed_at;
         
@@ -193,42 +193,42 @@ class TransactionController extends Controller
     public function index_pending(){ 
         $title = 'Pending Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('disbursed_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_pending',compact('transactions','title','searchWord')); 
     } 
  
-    public function index_disbursed(){ 
-        $title = 'Disbursed Transactions'; 
+    public function index_released(){ 
+        $title = 'Released Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('disbursed_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.index_disbursed',compact('transactions','title','searchWord')); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        return view('transaction.index_released',compact('transactions','title','searchWord')); 
     } 
  
     public function index_completed(){ 
         $title = 'Completed Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('disbursed_at')->whereNotNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_completed',compact('transactions','title','searchWord')); 
     } 
  
-    public function disburse($id, Request $Request){ 
+    public function release($id, Request $Request){ 
         $date = date('Y-m-d H:i:s'); 
-        $cart_id = DB::table('transactions')->value('cart_id'); 
+        $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
  
         DB::table('carts') 
             ->where('id', $cart_id) 
-            ->update(['status' => 'Disbursed']); 
+            ->update(['status' => 'Released']); 
          
         DB::table('transactions') 
             ->where('id',$id) 
-            ->update(['disbursed_at' => $date]); 
- 
+            ->update(['released_at' => $date]); 
+       
         return redirect('transaction/pending'); 
     } 
  
     public function complete($id, Request $Request){ 
         $date = date('Y-m-d H:i:s'); 
-        $cart_id = DB::table('transactions')->value('cart_id'); 
+        $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
  
         DB::table('carts') 
             ->where('id', $cart_id) 
@@ -238,6 +238,7 @@ class TransactionController extends Controller
             ->where('id',$id) 
             ->update(['completed_at' => $date]); 
  
+
         return redirect('transaction/completed'); 
     } 
 

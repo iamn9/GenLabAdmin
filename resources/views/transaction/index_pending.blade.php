@@ -31,7 +31,7 @@
                 <td>
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     <a href = '#' class = 'viewShow btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>
-                    <a class = 'viewEdit btn btn-success xs' href = '/transaction/{!!$transaction->id!!}/disburse'><i class="fa fa-check" aria-hidden="true"></i>  Disburse</a>
+                    <a class = 'viewEdit btn btn-success xs' href = '/transaction/{!!$transaction->id!!}/release'><i class="fa fa-check" aria-hidden="true"></i>  Release</a>
                 </td>
             </tr>
             @endforeach 

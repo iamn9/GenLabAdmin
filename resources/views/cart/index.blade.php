@@ -34,7 +34,7 @@
                         <span class="label label-primary">
                     @elseif($cart->status == "Pending")
                         <span class="label label-danger">
-                    @elseif($cart->status == "Disbursed")
+                    @elseif($cart->status == "released")
                         <span class="label label-warning">
                     @elseif($cart->status == "Completed")
                         <span class="label label-success">

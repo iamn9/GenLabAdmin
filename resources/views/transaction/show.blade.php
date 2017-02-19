@@ -32,7 +32,7 @@
           <address>
             <strong>Name</strong><br>
             Email<br>
-            Student NUmber<br>
+            Student Number<br>
             Phone: (555) 539-1037<br>
           </address>
         </div>
@@ -43,7 +43,7 @@
         <strong>Transaction Details</strong><br>
           <address>
             Submitted: {!!$transaction->submitted_at!!}<br>
-            Disbursed: {!!$transaction->disbursed_at!!}<br>
+            released: {!!$transaction->released_at!!}<br>
             Completed: {!!$transaction->completed_at!!}<br>
           </address>
         </div>

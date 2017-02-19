@@ -168,9 +168,9 @@ return [
                     'url'         => 'transaction/pending',
                 ],
                 [
-                    'text'       => 'Disbursed',
+                    'text'       => 'Released',
                     'icon_color' => 'aqua',
-                    'url'         => 'transaction/disbursed',
+                    'url'         => 'transaction/released',
                 ],
                 [
                     'text'       => 'Completed',

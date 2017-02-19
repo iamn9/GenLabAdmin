@@ -220,6 +220,7 @@ class CartController extends Controller
         );
         DB::table('carts')
             ->where('id', $cart_id)
+            ->where('borrower_id',$userid)
             ->update(['status' => 'Pending']);
         return redirect('/home');
     }
