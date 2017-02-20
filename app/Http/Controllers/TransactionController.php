@@ -182,11 +182,12 @@ class TransactionController extends Controller
     }
 
      public function userHistory(Request $request){ 
-        $userid = Auth::user()->id_no;
-        $title = 'Index - transaction';
-        $searchWord = \Request::get('search');
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
-        return view('transaction.index',compact('transactions','title','searchWord'));
+        $title = 'Active Transaction'; 
+        $userid = Auth::user()->id_no; 
+        $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '==', 'Completed')->value('id');
+        $user = DB::table('users')->where('id_no', '=', $userid)->first();
+        $transactions = Transaction::where('cart_id','==',$cart_id)->whereNotNull('submitted_at')->whereNotNull('disbursed_at')->whereNotNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        return view('transaction.user_history',compact('transactions','title')); 
     }
 
 
@@ -244,9 +245,10 @@ class TransactionController extends Controller
     public function user_active(){ 
         $title = 'Active Transaction'; 
         $userid = Auth::user()->id_no; 
-        $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->value('id'); 
-        $carts = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '!=', 'Draft')->paginate(5)->appends(Input::except('page')); 
-        $cart_items = DB::table('cart_items')->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.user_active',compact('title','carts','cart_items')); 
+        $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->value('id');
+        $user = DB::table('users')->where('id_no', '=', $userid)->first();
+        $carts = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->paginate(5)->appends(Input::except('page')); 
+        $cart_items = DB::table('cart_items')->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+        return view('transaction.user_active',compact('title','carts','cart_items', 'user')); 
     } 
 }
