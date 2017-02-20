@@ -29,9 +29,11 @@ Route::get('users/edit/{id}','\App\Http\Controllers\UserController@edit');
 Route::get('users/delete/{id}','\App\Http\Controllers\UserController@destroy');
 
 Route::get('transaction/pending','\App\Http\Controllers\TransactionController@index_pending');
+Route::get('transaction/prepared','\App\Http\Controllers\TransactionController@index_prepared');
 Route::get('transaction/released','\App\Http\Controllers\TransactionController@index_released');
 Route::get('transaction/completed','\App\Http\Controllers\TransactionController@index_completed');
 Route::get('transaction/{id}/release','\App\Http\Controllers\TransactionController@release');
+Route::get('transaction/{id}/prepare','\App\Http\Controllers\TransactionController@prepare');
 Route::get('transaction/{id}/complete','\App\Http\Controllers\TransactionController@complete');
 Route::get('transaction/user/active','\App\Http\Controllers\TransactionController@user_active');
 Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_history');

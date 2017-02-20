@@ -194,24 +194,46 @@ class TransactionController extends Controller
     public function index_pending(){ 
         $title = 'Pending Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_pending',compact('transactions','title','searchWord')); 
     } 
  
-    public function index_released(){ 
-        $title = 'Released Transactions'; 
+    public function index_prepared(){ 
+        $title = 'Prepared Carts'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('prepared_at')->paginate(5)->appends(Input::except('page')); 
+        return view('transaction.index_prepared',compact('transactions','title','searchWord')); 
+    } 
+
+    public function index_released(){ 
+        $title = 'Released Carts'; 
+        $searchWord = \Request::get('search'); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('released_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_released',compact('transactions','title','searchWord')); 
     } 
  
     public function index_completed(){ 
         $title = 'Completed Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('completed_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_completed',compact('transactions','title','searchWord')); 
     } 
  
+    public function prepare($id, Request $Request){ 
+        $date = date('Y-m-d H:i:s'); 
+        $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
+ 
+        DB::table('carts') 
+            ->where('id', $cart_id) 
+            ->update(['status' => 'Prepared']); 
+         
+        DB::table('transactions') 
+            ->where('id',$id) 
+            ->update(['prepared_at' => $date]); 
+       
+        return redirect('transaction/pending'); 
+    } 
+
     public function release($id, Request $Request){ 
         $date = date('Y-m-d H:i:s'); 
         $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
@@ -224,7 +246,7 @@ class TransactionController extends Controller
             ->where('id',$id) 
             ->update(['released_at' => $date]); 
        
-        return redirect('transaction/pending'); 
+        return redirect('transaction/prepared'); 
     } 
  
     public function complete($id, Request $Request){ 
@@ -240,7 +262,7 @@ class TransactionController extends Controller
             ->update(['completed_at' => $date]); 
  
 
-        return redirect('transaction/completed'); 
+        return redirect('transaction/released'); 
     } 
 
     public function user_active(){ 
