@@ -19,7 +19,7 @@
         <thead>
             <th>Borrower</th>
             <th>Cart ID</th>
-            <th>Disbursed at</th>
+            <th>Released at</th>
             <th>Actions</th>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
             <tr>
                 <td>Borrower Name</td>  
                 <td>{!!$transaction->cart_id!!}</td>
-                <td>{!!$transaction->disbursed_at!!}</td>
+                <td>{!!$transaction->released_at!!}</td>
                 <td>
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     <a href = '#' class = 'viewShow btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>

@@ -27,7 +27,7 @@
             <select id="status" name="status" class="form-control">
                 <option>Draft</option>
                 <option>Pending</option>
-                <option>Disbursed</option>
+                <option>released</option>
                 <option>Completed</option>
             </select>
         </div>

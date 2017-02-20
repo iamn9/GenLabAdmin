@@ -121,6 +121,24 @@ return [
             'url'         => 'users',
             'icon'        => 'users',
             'label_color' => 'success',
+            'submenu'   =>[
+                [
+                    'text'       => 'Show All',
+                    'icon_color' => 'white',
+                    'url'         => 'users/',
+                ],
+                [
+                    'text'       => 'Unactivated',
+                    'icon_color' => 'orange',
+                    'url'         => 'users/unactivated',
+                ],
+                                [
+                    'text'       => 'Admins',
+                    'icon_color' => 'green',
+                    'url'         => 'users/admins',
+                ]
+            ]
+
         ],
         [
             'text'        => 'Items',
@@ -150,9 +168,9 @@ return [
                     'url'         => 'transaction/pending',
                 ],
                 [
-                    'text'       => 'Disbursed',
+                    'text'       => 'Released',
                     'icon_color' => 'aqua',
-                    'url'         => 'transaction/disbursed',
+                    'url'         => 'transaction/released',
                 ],
                 [
                     'text'       => 'Completed',

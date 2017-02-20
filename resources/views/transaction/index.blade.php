@@ -23,7 +23,7 @@
         <thead>
             <th>cart_id</th>
             <th>submitted_at</th>
-            <th>disbursed_at</th>
+            <th>released_at</th>
             <th>completed_at</th>
             <th>actions</th>
         </thead>
@@ -32,12 +32,12 @@
             <tr>
                 <td>{!!$transaction->cart_id!!}</td>
                 <td>{!!$transaction->submitted_at!!}</td>
-                <td>{!!$transaction->disbursed_at!!}</td>
+                <td>{!!$transaction->released_at!!}</td>
                 <td>{!!$transaction->completed_at!!}</td>
                 <td>
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/transaction/{!!$transaction->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
-                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+                    <a href = '#' class = 'edit btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    <a href = '#' class = 'viewShow btn btn-warning xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i> </a>
                 </td>
             </tr>
             @endforeach 

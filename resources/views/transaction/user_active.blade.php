@@ -29,10 +29,9 @@
         
         <div class="col-sm-4 invoice-col">
           <address>
-            <strong>Name:  {!!$user->name!!}</strong><br>
+            <strong>Name: {!!$user->name!!}</strong><br>
             Email: {!!$user->email!!}<br>
             Student Number: {!!$user->id_no!!}<br>
-            Phone: (555) 539-1037<br>
           </address>
         </div>
         <!-- /.col -->
@@ -42,7 +41,7 @@
         <strong>Transaction Details</strong><br>
           <address>
             Submitted: <br>
-            Disbursed: <br>
+            Released: <br>
             Completed: <br>
           </address>
         </div>
@@ -73,7 +72,7 @@
             <tr>
               <td>{!!$cart_item->qty!!}</td>
               <td>{!!$cart_item->item_id!!}</td>
-              <td>El snort testosterone trophy driving gloves handsome</td>
+              <td>Work hard step by step until you reach your goals.</td>
             </tr>
             @endforeach
             </tbody>

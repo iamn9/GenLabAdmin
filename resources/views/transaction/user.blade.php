@@ -23,7 +23,7 @@
         <thead>
             <th>cart_id</th>
             <th>submitted_at</th>
-            <th>disbursed_at</th>
+            <th>released_at</th>
             <th>completed_at</th>
             <th>actions</th>
         </thead>
@@ -32,7 +32,7 @@
             <tr>
                 <td><a href="#">{!!$transaction->cart_id!!}</a></td>
                 <td>{!!$transaction->submitted_at!!}</td>
-                <td>{!!$transaction->disbursed_at!!}</td>
+                <td>{!!$transaction->released_at!!}</td>
                 <td>{!!$transaction->completed_at!!}</td>
                 <td>
                     <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>

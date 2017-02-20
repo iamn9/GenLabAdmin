@@ -2,7 +2,6 @@
 @section('title','Index')
 @section('content')
 
-<section class='content'>
 <div class="box box-primary">
 <div class="box-header">
     <h1>Item Index</h1>
@@ -44,5 +43,4 @@
     <div class='text-center'>{!! $items->render() !!}</div>
 </div>
 </div>
-</section>
 @endsection

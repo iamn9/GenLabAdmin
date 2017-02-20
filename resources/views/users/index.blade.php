@@ -3,7 +3,7 @@
 
 <div class="box box-primary">
 <div class="box-header">
-	<h1>All Users</h1>
+	<h1>{{$title}}</h1>
 	<form method = 'GET'>
 	<div class="input-group" >
         <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
@@ -14,7 +14,7 @@
     </form>
 </div>
 	<div class="box-body">
-		<a href="{{url('users/create')}}" class = "btn btn-success"><i class="fa fa-plus fa-md" aria-hidden="true"></i> New</a>
+		<a href="{{url('users/create')}}" class = "btn btn-success"><i class="fa fa-plus fa-md" aria-hidden="true"></i> New User</a>
 		<table class = "table table-hover">
 		<thead>
 			<th>ID Number</th>

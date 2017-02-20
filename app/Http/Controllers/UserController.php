@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $title = "User Index";
+        $title = "Users Index";
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
             $users = \App\User::where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
@@ -127,9 +127,9 @@ class UserController extends Controller
 
     public function showUnactivated(){
         $title = 'Unactivated Users';
+
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
-            //$users = \App\User::where('isActivated',0)->where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
             $users = \App\User::where('isActivated',0)->paginate(5);
 
             return view('users.index', compact('title','users','searchWord'));
@@ -144,7 +144,6 @@ class UserController extends Controller
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
             $users = \App\User::where('isAdmin',1)->paginate(5);
-            //->where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
             return view('users.index', compact('title', 'users','searchWord'));
         }
         else{
