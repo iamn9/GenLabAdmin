@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index');
 //Users
 Route::get('users/unactivated','\App\Http\Controllers\UserController@showUnactivated');
 Route::get('users/admins','\App\Http\Controllers\UserController@showAdmins');
+Route::get('users/regular','\App\Http\Controllers\UserController@showUsers');
 Route::resource('users', '\App\Http\Controllers\UserController');
 Route::post('users/store/','\App\Http\Controllers\UserController@store');
 Route::post('users/update/','\App\Http\Controllers\UserController@update');

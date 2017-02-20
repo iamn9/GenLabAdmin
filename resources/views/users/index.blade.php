@@ -35,6 +35,8 @@
 				<td>
 					@if($user->isAdmin)
 						<span class="label label-success">Admin</span>
+					@else
+						<span class="label label-info">User</span>
 					@endif
 					@if($user->isActivated)
 						<span class="label label-primary">Activated</span>
