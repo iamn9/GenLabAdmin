@@ -73,5 +73,5 @@ Route::group(['middleware'=> 'web'],function(){
   Route::post('transaction/{id}/update','\App\Http\Controllers\TransactionController@update');
   Route::get('transaction/{id}/delete','\App\Http\Controllers\TransactionController@destroy');
   Route::get('transaction/{id}/deleteMsg','\App\Http\Controllers\TransactionController@DeleteMsg');
-  Route::get('transaction/history','\App\Http\Controllers\TransactionController@DuserHistory');
+  Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@userHistory');
 });

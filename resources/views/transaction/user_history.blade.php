@@ -4,44 +4,29 @@
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>User History</h1>
-    <br>
-    <form class = 'col s3' method = 'get' action = '{!!url("cart")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create New cart</button>
-    </form>
+    <h1>{!!$title!!}</h1>
 </div>
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>id</th>
-            <th>status</th>
-            <th>actions</th>
+            <th>Cart ID</th>
+            <th>Completed at</th>
         </thead>
         <tbody>
-            @foreach($carts as $cart) 
+            @foreach($transactions as $transaction) 
             <tr>
-                <td>{!!$cart->id!!}</td>
+                <td>Borrower Name</td>
+                <td>{!!$transaction->cart_id!!}</td>
+                <td>{!!$transaction->completed_at!!}</td>
                 <td>
-                    @if($cart->status == "Draft")
-                        <span class="label label-primary">
-                    @elseif($cart->status == "Pending")
-                        <span class="label label-danger">
-                    @elseif($cart->status == "Released")
-                        <span class="label label-warning">
-                    @elseif($cart->status == "Completed")
-                        <span class="label label-success">
-                    @else
-                        <span class="label label-info">
-                    @endif
-                {!!$cart->status!!}</span></td>
-                <td>
-                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+                    <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    <a href = '#' class = 'viewShow btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>
                 </td>
             </tr>
             @endforeach 
         </tbody>
     </table>
-    <div class='text-center'>{!! $carts->render() !!}</div>
+    <div class='text-center'>{!! $transactions->render() !!}</div>
 </div>
 </div>
 @endsection

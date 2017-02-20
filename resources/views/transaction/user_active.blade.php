@@ -11,15 +11,13 @@
 </div>
 </div>
 
-
-
 <section class="invoice">
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
             <i class="fa fa-flask"></i> GenLab System
-            <small class="pull-right">Date: 2/10/2014</small>
+            <small class="pull-right">{!!$date!!}</small>
           </h2>
         </div>
         <!-- /.col -->
@@ -29,7 +27,8 @@
         
         <div class="col-sm-4 invoice-col">
           <address>
-            <strong>Name: {!!$user->name!!}</strong><br>
+            <strong>Borrower Details</strong><br>
+            Name: {!!$user->name!!}<br>
             Email: {!!$user->email!!}<br>
             Student Number: {!!$user->id_no!!}<br>
           </address>
@@ -40,16 +39,23 @@
         <div class="col-sm-4 invoice-col">
         <strong>Transaction Details</strong><br>
           <address>
-            Submitted: <br>
-            Released: <br>
-            Completed: <br>
+          @foreach($carts as $cart)
+            @if($cart->status == "Completed")
+                Submitted: {!!$cart->submitted_at!!} <br>
+                Prepared: {!!$cart->completed_at!!}<br>
+                Released: {!!$cart->released_at!!}<br>
+            @else
+                Submitted: {!!$cart->submitted_at!!} <br>
+                Status: <b>{!!$cart->status!!}</b>
+            @endif
+          @endforeach
           </address>
         </div>
         <!-- /.col -->
 
         <div class="col-sm-4 invoice-col">
-          <b>Transaction #:</b> <br>
-          <b>Cart ID:</b> <br>
+          <b>Transaction #:</b> {!!$cart->trans_id!!} <br>
+          <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
           <b>Processed by:</b> Name of Admin<br>
         </div>
         <!-- /.col -->
@@ -72,7 +78,8 @@
             <tr>
               <td>{!!$cart_item->qty!!}</td>
               <td>{!!$cart_item->item_id!!}</td>
-              <td>Work hard step by step until you reach your goals.</td>
+              <td>{!!$cart_item->name!!}</td>
+              <td>{!!$cart_item->description!!}</td>
             </tr>
             @endforeach
             </tbody>
