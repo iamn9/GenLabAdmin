@@ -6,6 +6,9 @@
 <div class="box-header">
     <h1>Cart Index</h1>
     <form method = 'GET'>
+        @if($searchWord != "")
+            Showing search results for "<b>{{$searchWord}}</b>".
+        @endif
         <div class="input-group" >
             <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
             <div class="input-group-btn">
@@ -31,13 +34,13 @@
                 <td>{!!$cart->borrower_id!!}</td>
                 <td>
                     @if($cart->status == "Draft")
-                        <span class="label label-primary">
+                        <span class="label label-info">
                     @elseif($cart->status == "Pending")
                         <span class="label label-danger">
-                    @elseif($cart->status == "Ready")
-                        <span class="label label-danger">
-                    @elseif($cart->status == "Released")
+                    @elseif($cart->status == "Prepared")
                         <span class="label label-warning">
+                    @elseif($cart->status == "Released")
+                        <span class="label label-primary">
                     @elseif($cart->status == "Completed")
                         <span class="label label-success">
                     @else

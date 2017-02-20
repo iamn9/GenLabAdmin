@@ -29,7 +29,7 @@ class ItemController extends Controller
         $title = 'Index - item';
 
         $searchWord = \Request::get('search');
-        $items = Item::where('name','like','%'.$searchWord.'%')->orderBy('name')->paginate(5)->appends(Input::except('page'));
+        $items = Item::where('name','like','%'.$searchWord.'%')->orWhere('description','like','%'.$searchWord.'%')->orderBy('name')->paginate(5)->appends(Input::except('page'));
 
         if(Auth::check() && Auth::user()->isAdmin)
             return view('item.index',compact('items','title','searchWord')); 
