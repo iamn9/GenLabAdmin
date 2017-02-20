@@ -19,7 +19,7 @@
         <thead>
             <th>Borrower</th>
             <th>Cart ID</th>
-            <th>Requested at</th>
+            <th>Prepared at</th>
             <th>Actions</th>
         </thead>
         <tbody>
@@ -27,11 +27,11 @@
             <tr>
                 <td>Borrower Name</td>
                 <td>{!!$transaction->cart_id!!}</td>
-                <td>{!!$transaction->submitted_at!!}</td>
+                <td>{!!$transaction->prepared_at!!}</td>
                 <td>
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     <a href = '#' class = 'viewShow btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>
-                    <a class = 'viewEdit btn btn-success xs' href = '/transaction/{!!$transaction->id!!}/prepare'><i class="fa fa-check" aria-hidden="true"></i>  Ready</a>
+                    <a class = 'viewEdit btn btn-success xs' href = '/transaction/{!!$transaction->id!!}/release'><i class="fa fa-check" aria-hidden="true"></i>  Release</a>
                 </td>
             </tr>
             @endforeach 

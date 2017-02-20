@@ -97,12 +97,14 @@ class CartController extends Controller
         {
             return URL::to('cart/'.$id);
         }
-
-        $cart = Cart::findOrfail($id);
-
-        $searchWord = \Request::get('search');
-        $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
-        return view('cart.show',compact('searchWord','title','cart','cart_items'));
+        if(Auth::user()->isAdmin){
+            $cart = Cart::findOrfail($id);
+            $searchWord = \Request::get('search');
+            $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+            return view('cart.show',compact('searchWord','title','cart','cart_items'));
+        }
+        else
+            return redirect('cart');
     }
 
     /**

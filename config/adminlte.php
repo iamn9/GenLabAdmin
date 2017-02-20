@@ -164,8 +164,13 @@ return [
                 ],
                 [
                     'text'       => 'Pending',
-                    'icon_color' => 'orange',
+                    'icon_color' => 'red',
                     'url'         => 'transaction/pending',
+                ],
+                [
+                    'text'       => 'Prepared',
+                    'icon_color' => 'orange',
+                    'url'         => 'transaction/prepared',
                 ],
                 [
                     'text'       => 'Released',

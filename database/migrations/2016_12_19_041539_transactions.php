@@ -23,6 +23,7 @@ class Transactions extends Migration
         $table->increments('id');
         $table->unsignedInteger('cart_id');
         $table->datetime('submitted_at')->nullable();
+        $table->datetime('prepared_at')->nullable();
         $table->datetime('released_at')->nullable();
         $table->datetime('completed_at')->nullable();
         
