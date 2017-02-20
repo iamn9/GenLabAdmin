@@ -29,10 +29,9 @@
         
         <div class="col-sm-4 invoice-col">
           <address>
-            <strong>Name</strong><br>
-            Email<br>
-            Student Number<br>
-            Phone: (555) 539-1037<br>
+            <strong>Name: {!!$user->name!!}</strong><br>
+            Email: {!!$user->email!!}<br>
+            Student Number: {!!$user->id_no!!}<br>
           </address>
         </div>
         <!-- /.col -->
