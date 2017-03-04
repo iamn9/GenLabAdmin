@@ -27,9 +27,9 @@
         <div class="col-sm-4 invoice-col">
           <address>
             <strong>Borrower Details</strong><br>
-            Name: {!!$user->name!!}<br>
-            Email: {!!$user->email!!}<br>
-            Student Number: {!!$user->id_no!!}<br>
+            Name:   <b>{!!$user->name!!}</b><br>
+            Email:   <b>{!!$user->email!!}</b><br>
+            Student Number:   <b>{!!$user->id_no!!}</b><br>
           </address>
         </div>
         <!-- /.col -->
@@ -69,6 +69,7 @@
             <tr>
               <th>Qty</th>
               <th>Item</th>
+              <th>Name</th>
               <th>Description</th>
             </tr>
             </thead>

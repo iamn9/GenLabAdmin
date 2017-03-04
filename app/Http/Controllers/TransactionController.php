@@ -181,12 +181,13 @@ class TransactionController extends Controller
         return URL::to('transaction');
     }
 
-     public function userHistory(Request $request){ 
-        $title = 'Active Transaction'; 
+     public function user_history(Request $request){ 
+        $title = 'Transaction History'; 
         $userid = Auth::user()->id_no; 
-        $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '=', 'Completed')->value('id');
         $user = DB::table('users')->where('id_no', '=', $userid)->first();
-        $transactions = Transaction::where('cart_id','=',$cart_id)->whereNotNull('submitted_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->where('borrower_id', '=', $userid)->where('status', '=', 'Completed')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.user_history',compact('transactions','title')); 
     }
 
@@ -277,6 +278,19 @@ class TransactionController extends Controller
         $cart_items = DB::table('cart_items')->join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
-        return view('transaction.user_active',compact('title','carts','cart_items', 'user', 'date')); 
+        return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
     } 
+    public function user_history_info($id, Request $Request){
+        $date = date('Y-m-d');
+        $title = 'Transaction History'; 
+        $userid = Auth::user()->id_no;
+        $user = DB::table('users')->where('id_no', '=', $userid)->first();
+        $carts = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->where('cart_id', '=', $id)->paginate(5)->appends(Input::except('page')); 
+        $cart_items = DB::table('cart_items')->join('items', function($join){
+                $join->on('cart_items.item_id', '=', 'items.id');
+            })->where('cart_id','=',$id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+        return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
+    }
 }
