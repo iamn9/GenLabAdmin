@@ -140,7 +140,7 @@ class UserController extends Controller
     }
 
     public function showAdmins(){
-        $title = 'Admin Users';
+        $title = 'Admin Accounts';
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
             $users = \App\User::where('isAdmin',1)->paginate(5);
@@ -150,4 +150,16 @@ class UserController extends Controller
             return redirect ('home');
         }
     }    
+
+    public function showUsers(){
+        $title = 'User Accounts';
+        if(Auth::user()->isAdmin){
+            $searchWord = \Request::get('search');
+            $users = \App\User::where('isAdmin',0)->paginate(5);
+            return view('users.index', compact('title', 'users','searchWord'));
+        }
+        else{
+            return redirect ('home');
+        }
+    }
 }

@@ -132,8 +132,13 @@ return [
                     'icon_color' => 'orange',
                     'url'         => 'users/unactivated',
                 ],
-                                [
-                    'text'       => 'Admins',
+                [
+                    'text'       => 'User Accounts',
+                    'icon_color' => 'aqua',
+                    'url'         => 'users/regular',
+                ],
+                [
+                    'text'       => 'Admin Accounts',
                     'icon_color' => 'green',
                     'url'         => 'users/admins',
                 ]

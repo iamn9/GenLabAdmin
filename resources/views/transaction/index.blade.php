@@ -6,6 +6,9 @@
 <div class="box-header">
     <h1>Transaction Index</h1>
     <form method = 'GET'>
+        @if($searchWord != "")
+            Showing search results for "<b>{{$searchWord}}</b>".
+        @endif
         <div class="input-group" >
             <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
             <div class="input-group-btn">
@@ -23,6 +26,7 @@
         <thead>
             <th>cart_id</th>
             <th>submitted_at</th>
+            <th>prepared_at</th>
             <th>released_at</th>
             <th>completed_at</th>
             <th>actions</th>
@@ -32,6 +36,7 @@
             <tr>
                 <td>{!!$transaction->cart_id!!}</td>
                 <td>{!!$transaction->submitted_at!!}</td>
+                <td>{!!$transaction->prepared_at!!}</td>
                 <td>{!!$transaction->released_at!!}</td>
                 <td>{!!$transaction->completed_at!!}</td>
                 <td>
