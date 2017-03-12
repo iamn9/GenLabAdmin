@@ -219,6 +219,19 @@ class TransactionController extends Controller
         return view('transaction.index_completed',compact('transactions','title','searchWord')); 
     } 
  
+    public function undo_submission($id, Request $Request){
+        $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
+
+        DB::table('carts') 
+            ->where('id', $cart_id) 
+            ->update(['status' => 'Draft']); 
+        DB::table('transactions') 
+            ->where('id',$id) 
+            ->update(['submitted_at' => null]);
+
+        return redirect('transaction/pending'); 
+    }
+
     public function prepare($id, Request $Request){ 
         $date = date('Y-m-d H:i:s'); 
         $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
@@ -232,7 +245,20 @@ class TransactionController extends Controller
             ->update(['prepared_at' => $date]); 
        
         return redirect('transaction/pending'); 
-    } 
+    }
+
+    public function undo_prepare($id, Request $Request){
+        $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
+
+        DB::table('carts') 
+            ->where('id', $cart_id) 
+            ->update(['status' => 'Pending']); 
+        DB::table('transactions') 
+            ->where('id',$id) 
+            ->update(['prepared_at' => null]);
+
+        return redirect('transaction/pending'); 
+    }
 
     public function release($id, Request $Request){ 
         $date = date('Y-m-d'); 
@@ -248,6 +274,20 @@ class TransactionController extends Controller
        
         return redirect('transaction/prepared'); 
     } 
+
+    public function undo_release($id, Request $Request){
+        $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
+
+       DB::table('transactions') 
+            ->where('id',$id) 
+            ->update(['released_at' => null]); 
+
+        DB::table('carts') 
+            ->where('id', $cart_id) 
+            ->update(['status' => 'Prepared']); 
+
+        return redirect('transaction/prepared');
+    }
  
     public function complete($id, Request $Request){ 
         $date = date('Y-m-d H:i:s'); 
@@ -261,9 +301,22 @@ class TransactionController extends Controller
             ->where('id',$id) 
             ->update(['completed_at' => $date]); 
  
-
         return redirect('transaction/released'); 
     } 
+
+    public function undo_complete($id, Request $Request){
+        $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
+
+        DB::table('transactions') 
+            ->where('id',$id) 
+            ->update(['completed_at' => null]); 
+
+        DB::table('carts') 
+            ->where('id', $cart_id) 
+            ->update(['status' => 'Released']); 
+
+        return redirect('transaction/released'); 
+    }
 
     public function user_active(){ 
         $date = date('Y-m-d');

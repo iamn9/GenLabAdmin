@@ -35,6 +35,7 @@
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     <a href = '#' class = 'viewShow btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>
                     <a class = 'viewEdit btn btn-success xs' href = '/transaction/{!!$transaction->id!!}/prepare'><i class="fa fa-check" aria-hidden="true"></i>  Ready</a>
+                    <a class = 'viewEdit btn btn-warning xs' href = '/transaction/{!!$transaction->id!!}/undo_submission'><i class="fa fa-undo" aria-hidden="true"></i>  Undo</a>
                 </td>
             </tr>
             @endforeach 

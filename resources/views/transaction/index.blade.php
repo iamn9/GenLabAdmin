@@ -26,6 +26,7 @@
         <thead>
             <th>cart_id</th>
             <th>submitted_at</th>
+            <th>prepared_at</th>
             <th>released_at</th>
             <th>completed_at</th>
             <th>actions</th>
@@ -35,6 +36,7 @@
             <tr>
                 <td>{!!$transaction->cart_id!!}</td>
                 <td>{!!$transaction->submitted_at!!}</td>
+                <td>{!!$transaction->prepared_at!!}</td>
                 <td>{!!$transaction->released_at!!}</td>
                 <td>{!!$transaction->completed_at!!}</td>
                 <td>
