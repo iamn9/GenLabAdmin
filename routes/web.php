@@ -18,7 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-
 //Users
 Route::get('users/unactivated','\App\Http\Controllers\UserController@showUnactivated');
 Route::get('users/admins','\App\Http\Controllers\UserController@showAdmins');
@@ -36,7 +35,7 @@ Route::get('transaction/{id}/release','\App\Http\Controllers\TransactionControll
 Route::get('transaction/{id}/prepare','\App\Http\Controllers\TransactionController@prepare');
 Route::get('transaction/{id}/complete','\App\Http\Controllers\TransactionController@complete');
 Route::get('transaction/user/active','\App\Http\Controllers\TransactionController@user_active');
-Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_history');
+//Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_history');
 
 //item Routes
 Route::group(['middleware'=> 'web'],function(){
@@ -70,8 +69,9 @@ Route::group(['middleware'=> 'web'],function(){
 //transaction Routes
 Route::group(['middleware'=> 'web'],function(){
   Route::resource('transaction','\App\Http\Controllers\TransactionController');
+  Route::get('transaction/{id}/show', '\App\Http\Controllers\TransactionController@user_history_info');
   Route::post('transaction/{id}/update','\App\Http\Controllers\TransactionController@update');
   Route::get('transaction/{id}/delete','\App\Http\Controllers\TransactionController@destroy');
   Route::get('transaction/{id}/deleteMsg','\App\Http\Controllers\TransactionController@DeleteMsg');
-  Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@userHistory');
+  Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_history');
 });

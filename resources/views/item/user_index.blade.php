@@ -20,6 +20,7 @@
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
+            <th>item id</th>
             <th>name</th>
             <th>description</th>
             <th>actions</th>
@@ -27,6 +28,7 @@
         <tbody>
             @foreach($items as $item) 
             <tr>
+                <td>{!!$item->id!!}</td>
                 <td>{!!$item->name!!}</td>
                 <td>{!!$item->description!!}</td>
                 <td>
