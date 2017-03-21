@@ -327,7 +327,7 @@ class TransactionController extends Controller
         $user = DB::table('users')->where('id_no', '=', $userid)->first();
         $carts = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->paginate(5)->appends(Input::except('page')); 
+        })->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->first(); 
         $cart_items = DB::table('cart_items')->join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
@@ -340,7 +340,7 @@ class TransactionController extends Controller
         $user = DB::table('users')->where('id_no', '=', $userid)->first();
         $carts = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('cart_id', '=', $id)->paginate(5)->appends(Input::except('page')); 
+        })->where('cart_id', '=', $id)->where('borrower_id', '=', $userid)->first();
         $cart_items = DB::table('cart_items')->join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));

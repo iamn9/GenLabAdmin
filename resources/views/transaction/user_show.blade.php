@@ -38,23 +38,21 @@
         <div class="col-sm-4 invoice-col">
         <strong>Transaction Details</strong><br>
           <address>
-          @foreach($carts as $cart)
-            @if($cart->status == "Completed")
-                Submitted: {!!$cart->submitted_at!!} <br>
-                Prepared: {!!$cart->completed_at!!}<br>
-                Released: {!!$cart->released_at!!}<br>
+            @if($carts->status == "Completed")
+                Submitted: {!!$carts->submitted_at!!} <br>
+                Prepared: {!!$carts->completed_at!!}<br>
+                Released: {!!$carts->released_at!!}<br>
             @else
-                Submitted: {!!$cart->submitted_at!!} <br>
-                Status: <b>{!!$cart->status!!}</b>
+                Submitted: {!!$carts->submitted_at!!} <br>
+                Status: <b>{!!$carts->status!!}</b>
             @endif
-          @endforeach
           </address>
         </div>
         <!-- /.col -->
 
         <div class="col-sm-4 invoice-col">
-          <b>Transaction #:</b> {!!$cart->trans_id!!} <br>
-          <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
+          <b>Transaction #:</b> {!!$carts->trans_id!!} <br>
+          <b>Cart ID:</b> {!!$carts->cart_id!!}<br>
           <b>Processed by:</b> Name of Admin<br>
         </div>
         <!-- /.col -->
