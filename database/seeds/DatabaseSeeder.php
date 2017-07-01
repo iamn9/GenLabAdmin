@@ -16,15 +16,15 @@ class DatabaseSeeder extends Seeder
             'id_no'=> '201400000',
             'email'=> 'admin@up.edu.ph',
             'password'=> bcrypt('sysadupvtc'),
-            'isAdmin'=> 1,
-            'isActivated'> 1,
+            'isAdmin'=> true,
+            'isActivated'=> true,
         ],
             ['name' =>  'User',
             'id_no'=> '201400001',
             'email'=> 'user@up.edu.ph',
             'password'=> bcrypt('201400001'),
-            'isAdmin'=> 0,
-            'isActivated'> 1,
+            'isAdmin'=> false,
+            'isActivated'=> true,
             ]
         ]);
     }
