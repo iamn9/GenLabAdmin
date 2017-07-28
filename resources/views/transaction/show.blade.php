@@ -67,6 +67,7 @@
               <th>Qty</th>
               <th>Item</th>
               <th>Description</th>
+              <th>Status</th>
             </tr>
             </thead>
             <tbody>
@@ -75,6 +76,7 @@
               <td>{!!$cart_item->qty!!}</td>
               <td>{!!$cart_item->item_id!!}</td>
               <td>El snort testosterone trophy driving gloves handsome</td>
+              <td>{!!\Helper::cartItemStatus($cart_item->status); !!} </td>
             </tr>
             @endforeach
             </tbody>
