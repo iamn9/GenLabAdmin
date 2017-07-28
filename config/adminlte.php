@@ -152,7 +152,7 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Carts',
+            'text'        => 'Pending Carts',
             'url'         => 'cart',
             'icon'        => 'shopping-cart',
             'label_color' => 'success',

@@ -28,7 +28,7 @@
         <tbody>
             @foreach($transactions as $transaction) 
             <tr>
-                <td>Borrower Name</td>
+                <td>{!!$transaction->borrower_id!!}</td>
                 <td>{!!$transaction->cart_id!!}</td>
                 <td>{!!$transaction->completed_at!!}</td>
                 <td>

@@ -10,7 +10,7 @@
             Showing search results for "<b>{{$searchWord}}</b>".
         @endif
         <div class="input-group" >
-            <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
+            <input type="text" name="search" class="form-control pull-right" placeholder="Search using cart ID" value='{!!$searchWord!!}'>
             <div class="input-group-btn">
                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
@@ -24,12 +24,12 @@
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>cart_id</th>
-            <th>submitted_at</th>
-            <th>prepared_at</th>
-            <th>released_at</th>
-            <th>completed_at</th>
-            <th>actions</th>
+            <th>Cart ID</th>
+            <th>Date & Time Submitted</th>
+            <th>Date & Time Prepared</th>
+            <th>Date & Time Released</th>
+            <th>Date & Time Returned</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             @foreach($transactions as $transaction) 

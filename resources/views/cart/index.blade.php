@@ -10,7 +10,7 @@
             Showing search results for "<b>{{$searchWord}}</b>".
         @endif
         <div class="input-group" >
-            <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
+            <input type="text" name="search" class="form-control pull-right" placeholder="Search cart using borrrower ID" value='{!!$searchWord!!}'>
             <div class="input-group-btn">
                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
@@ -18,15 +18,15 @@
     </form>
     <br>
     <form class = 'col s3' method = 'get' action = '{!!url("cart")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create New cart</button>
+        <button class = 'btn btn-primary' type = 'submit'>Create New Cart</button>
     </form>
 </div>
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>borrower_id</th>
-            <th>status</th>
-            <th>actions</th>
+            <th>Borrower ID</th>
+            <th>Status</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             @foreach($carts as $cart) 
@@ -49,8 +49,7 @@
                 {!!$cart->status!!}</span></td>
                 <td>
                     <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/delete' class='delete btn btn-danger btn-xs'><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
-                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
-                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+                    <a href = '/cart/{!!$cart->id!!}' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Prepare Cart</a>
                 </td>
             </tr>
             @endforeach 

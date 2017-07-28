@@ -44,28 +44,35 @@
     </table>
 </div>
 <div class="box-body">
-    <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
-        <thead>
-            <th>item_id</th>
-            <th>qty</th>
-            <th>actions</th>
-        </thead>
-        <tbody>
-            @foreach($cart_items as $cart_item) 
-            <tr>
-                <td>{!!$cart_item->item_id!!}</td>
-                <td>{!!$cart_item->qty!!}</td>
-                <td>
-                    <a href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
-                    <a href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
-                    <a href = '/item/{!!$cart_item->id!!}' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-primary btn-xs' data-link = "/item/{!!$cart_item->id!!}/showModal" ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
-
-                </td>
-            </tr>
-            @endforeach 
-        </tbody>
-    </table>
-    <div class='text-center'>{!! $cart_items->render() !!}</div>
+    <form method = 'GET' action = '/transaction/{!!$transaction->id!!}/prepare'>
+        <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+            <thead>
+                <th>item_id</th>
+                <th>qty</th>
+                <th>actions</th>
+            </thead>
+            <tbody>
+                @foreach($cart_items as $cart_item) 
+                <tr>
+                    <td>{!!$cart_item->item_id!!}</td>
+                    <td>{!!$cart_item->qty!!}</td>
+                    <td>
+                        <a href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
+                        <a href = '/cart_item/{!!$cart_item->id!!}/edit' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
+                        <a href = '/item/{!!$cart_item->id!!}' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-primary btn-xs' data-link = "/item/{!!$cart_item->id!!}/showModal" ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
+                        <select name="status_{!!$cart_item->id!!}">
+                          <option value="0">Not Available</option>
+                          <option value="1">Released</option>
+                          <option value="2">Damaged</option>
+                          <option value="3">Returned</option>
+                        </select>
+                    </td>
+                </tr>
+                @endforeach 
+            </tbody>
+        </table>
+        <button class = 'btn btn-primary' type ='submit'>Ready</button
+>    </form>
 </div>
 </div>
 </section>
