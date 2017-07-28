@@ -33,7 +33,7 @@ class CartController extends Controller
         $searchWord = \Request::get('search');
 
         if(Auth::user()->isAdmin){
-            $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+            $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->where('status', '=', 'Pending')->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
         else{
@@ -100,8 +100,9 @@ class CartController extends Controller
         if(Auth::user()->isAdmin){
             $cart = Cart::findOrfail($id);
             $searchWord = \Request::get('search');
-            $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
-            return view('cart.show',compact('searchWord','title','cart','cart_items'));
+            $cart_items = DB::table('cart_items')->where('cart_id','=', $id)->paginate(5)->appends(Input::except('page'));  
+            $transaction = DB::table('transactions')->where('cart_id', '=', $id)->first();
+            return view('cart.show',compact('searchWord','title','cart','cart_items', 'transaction'));
         }
         else
             return redirect('cart');
@@ -216,6 +217,8 @@ class CartController extends Controller
         $userid = Auth::user()->id_no;
         //get the current time and date (needs to fix timezone)
         $date = date('Y-m-d H:i:s');
+
+        //before checkout, check if user has active transaction either pending, or released, if the user has, display error message
 
         $transaction_id = DB::table('transactions')->insertGetId(
             ['cart_id' => $cart_id, 'submitted_at' => $date]

@@ -44,7 +44,8 @@
     </table>
 </div>
 <div class="box-body">
-    <form method = 'GET' action = '/transaction/{!!$transaction->id!!}/prepare'>
+    <form method = 'POST' action = '/transaction/{!!$transaction->id!!}/prepare'>
+        <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
         <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
             <thead>
                 <th>item_id</th>

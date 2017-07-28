@@ -33,7 +33,7 @@ Route::get('transaction/prepared','\App\Http\Controllers\TransactionController@i
 Route::get('transaction/released','\App\Http\Controllers\TransactionController@index_released');
 Route::get('transaction/completed','\App\Http\Controllers\TransactionController@index_completed');
 Route::get('transaction/{id}/release','\App\Http\Controllers\TransactionController@release');
-Route::get('transaction/{id}/prepare','\App\Http\Controllers\TransactionController@prepare');
+Route::post('transaction/{id}/prepare','\App\Http\Controllers\TransactionController@prepare');
 Route::get('transaction/{id}/complete','\App\Http\Controllers\TransactionController@complete');
 Route::get('transaction/{id}/undo_submission','\App\Http\Controllers\TransactionController@undo_submission');
 Route::get('transaction/{id}/undo_release','\App\Http\Controllers\TransactionController@undo_release');

@@ -273,17 +273,26 @@ class TransactionController extends Controller
     }
 
     public function prepare($id, Request $Request){ 
+        $var = $Request->all();
+        $status = array();
+        foreach ($var as $key => $value) {
+           if (strpos($key, 'status') !== false) {
+                 $status[trim($key, 'status_')] = $value;
+            }
+        }
         $date = date('Y-m-d H:i:s'); 
-        $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
+        $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id');
  
         DB::table('carts') 
             ->where('id', $cart_id) 
-            ->update(['status' => 'Prepared']); 
+            ->update(['status' => 'Prepared']);
          
         DB::table('transactions') 
             ->where('id',$id) 
             ->update(['prepared_at' => $date]); 
-       
+       foreach ($status as $key => $value) {
+           DB::table('cart_items')->where('id', '=', $key)->update(['status' => $value]);
+       }
         return redirect('transaction/pending'); 
     }
 
