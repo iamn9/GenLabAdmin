@@ -48,6 +48,7 @@
             <th>item_id</th>
             <th>name</th>
             <th>qty</th>
+            <th>status</th>
         </thead>
         <tbody>
             @foreach($cart_items as $cart_item) 
@@ -55,6 +56,7 @@
                 <td>{!!$cart_item->item_id!!}</td>
                 <td>{!!$cart_item->name!!}</td>
                 <td>{!!$cart_item->qty!!}</td>
+                <td>{!!$cart_item->status!!}</td>
             </tr>
             @endforeach 
         </tbody>

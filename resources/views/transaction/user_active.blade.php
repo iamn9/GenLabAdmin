@@ -67,9 +67,11 @@
           <table class="table table-striped">
             <thead>
             <tr>
-              <th>Qty</th>
+              <th>Quantity</th>
               <th>Item</th>
+              <th>Name</th>
               <th>Description</th>
+              <th>Status</th>
             </tr>
             </thead>
             <tbody>
@@ -79,6 +81,7 @@
               <td>{!!$cart_item->item_id!!}</td>
               <td>{!!$cart_item->name!!}</td>
               <td>{!!$cart_item->description!!}</td>
+              <td>{{!!$cart_item->status!!}}</td>
             </tr>
             @endforeach
             </tbody>

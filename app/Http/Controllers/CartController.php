@@ -39,10 +39,11 @@ class CartController extends Controller
         else{
             $userid = Auth::user()->id_no;
             $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
+            $students = DB::table('users')->where('isAdmin', '=', '0')->where('isActivated', '=', '1')->get();
             $cart_items = $cart_items = DB::table('cart_items')->join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$cart_id)->where('name','like','%'.$searchWord.'%')->where('item_id','like','%'.$searchWord.'%')->select('cart_items.*','items.name')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
-            return view('cart.user',compact('title','searchWord','cart_id','cart_items'));
+            return view('cart.user',compact('title','searchWord','cart_id','cart_items', 'students'));
         }
     }
     /**
@@ -187,6 +188,8 @@ class CartController extends Controller
     }
 
     public function addItem($itemID, Request $request){
+            $defStatus = '0';
+            $subject = '';
             //get the id_no of user logged in
             $userid = Auth::user()->id_no;
 
@@ -196,14 +199,14 @@ class CartController extends Controller
 
             if(is_null($cart_id)){
                 $cart_id = DB::table('carts')->insertGetId(
-                    ['borrower_id' => $userid, 'status' => 'Draft']
+                    ['borrower_id' => $userid, 'status' => 'Draft', 'subject' => $subject]
                 );                
             }
             $countQtyItem = DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $itemID)->count();
 
             if($countQtyItem == 0){
                     DB::table('cart_items')->insert([
-                    ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1]
+                    ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1, 'status' => $defStatus]
                     ]);
                 }
 
@@ -213,6 +216,8 @@ class CartController extends Controller
     }
 
     public function checkout($cart_id, Request $request){
+        $subject = $request->get('subject');
+        $groupmembers = $request->get('groupmembers');
         //get the id_no of user logged in
         $userid = Auth::user()->id_no;
         //get the current time and date (needs to fix timezone)
@@ -226,7 +231,18 @@ class CartController extends Controller
         DB::table('carts')
             ->where('id', $cart_id)
             ->where('borrower_id',$userid)
-            ->update(['status' => 'Pending']);
+            ->update(['status' => 'Pending', 'subject' => $subject]);
+
+        $dataSet = [];
+        foreach ($groupmembers as $member) {
+            $dataSet[] = [
+                'cart_id'    => $cart_id,
+                'user_id'       => $member,
+            ];
+            }
+
+        DB::table('group_members')->insert($dataSet);
+        
         return redirect('/home');
     }
 }

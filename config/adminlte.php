@@ -152,7 +152,7 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Pending Carts',
+            'text'        => 'Prepare Pending Carts',
             'url'         => 'cart',
             'icon'        => 'shopping-cart',
             'label_color' => 'success',
@@ -166,11 +166,6 @@ return [
                     'text'       => 'Show All',
                     'icon_color' => 'white',
                     'url'         => 'transaction/',
-                ],
-                [
-                    'text'       => 'Pending',
-                    'icon_color' => 'red',
-                    'url'         => 'transaction/pending',
                 ],
                 [
                     'text'       => 'Prepared',

@@ -206,12 +206,6 @@ class TransactionController extends Controller
 
 
     public function index_pending(){
-        /*$carts = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
-            $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->first(); 
-        $cart_items = DB::table('cart_items')->join('items', function($join){
-                $join->on('cart_items.item_id', '=', 'items.id');
-            })->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));*/
         $title = 'Pending Transactions'; 
         $searchWord = \Request::get('search'); 
         $transactions = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status', 'prepared_at')->join('transactions', function($join){
