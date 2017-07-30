@@ -30,12 +30,6 @@ class TransactionController extends Controller
         $title = 'Index - transaction';
         $searchWord = \Request::get('search');
         $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
-        foreach ($transactions as $transaction) {
-            $transaction->submitted_at=self::format_date($transaction->submitted_at);
-            $transaction->prepared_at=self::format_date($transaction->prepared_at);
-            $transaction->released_at=self::format_date($transaction->released_at);
-            $transaction->completed_at=self::format_date($transaction->completed_at);
-        }
         return view('transaction.index',compact('transactions','title','searchWord'));
     }
 
@@ -100,7 +94,7 @@ class TransactionController extends Controller
     public function show($id,Request $request)
     {
         $title = 'Show - transaction';
-
+        $date = date('Y-m-d H:i:s'); 
         if($request->ajax())
         {
             return URL::to('transaction/'.$id);
@@ -110,9 +104,14 @@ class TransactionController extends Controller
         })->where('transactions.id', '=', $id)->first(); 
         $user = DB::table('users')->where('id_no', '=', $transaction->borrower_id)->first();
         //return view('transaction.show',compact('title','transaction'));
-        $cart_items = DB::table('cart_items')->where('cart_id',$transaction->cart_id)->get(); 
-        //$user= DB::table('carts')->join('users','carts.borrower_id','=','users.id_no')->join(select('') 
-        return view('transaction.show',compact('title','transaction','cart_items', 'user'));
+        $cart_items = DB::table('cart_items')->join('items', function($join){
+                $join->on('cart_items.item_id', '=', 'items.id');
+            })->where('cart_id','=',$transaction->cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+        if(Auth::user()->isAdmin==1){
+            return view('transaction.show',compact('title','transaction','cart_items', 'user', 'date'));
+        }
+        else
+             return view('transaction.user_show',compact('title','transaction','cart_items', 'user', 'date'));
     }
 
     /**
@@ -196,11 +195,6 @@ class TransactionController extends Controller
         $transactions = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('borrower_id', '=', $userid)->where('status', '=', 'Completed')->paginate(5)->appends(Input::except('page'));
-        foreach ($transactions as $transaction) {
-            $transaction->submitted_at=self::format_date($transaction->submitted_at);
-            $transaction->released_at=self::format_date($transaction->released_at);
-            $transaction->completed_at=self::format_date($transaction->completed_at);
-        } 
         return view('transaction.user_history',compact('transactions','title')); 
     }
 
@@ -211,21 +205,15 @@ class TransactionController extends Controller
         $transactions = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status', 'prepared_at')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('status', '=', 'Pending')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
-         foreach ($transactions as $transaction) {
-            $transaction->submitted_at=self::format_date($transaction->submitted_at);
-        }
         return view('transaction.index_pending',compact('transactions','title','searchWord')); 
     } 
  
     public function index_prepared(){ 
         $title = 'Prepared Carts'; 
         $searchWord = \Request::get('search'); 
-       $transactions = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status', 'prepared_at')->join('transactions', function($join){
+        $transactions = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status', 'prepared_at')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('status', '=', 'Prepared')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
-        foreach ($transactions as $transaction) {
-            $transaction->prepared_at=self::format_date($transaction->prepared_at);
-        }
         return view('transaction.index_prepared',compact('transactions','title','searchWord')); 
     } 
 
@@ -235,9 +223,6 @@ class TransactionController extends Controller
       $transactions = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status', 'prepared_at')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('status', '=', 'Released')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
-       foreach ($transactions as $transaction){
-            $transaction->released_at=self::format_date($transaction->released_at);
-       }
         return view('transaction.index_released',compact('transactions','title','searchWord')); 
     } 
  
@@ -247,9 +232,6 @@ class TransactionController extends Controller
        $transactions = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status', 'prepared_at')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('status', '=', 'Completed')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
-        foreach ($transactions as $transaction) {
-            $transaction->completed_at=self::format_date($transaction->completed_at);
-        }
         return view('transaction.index_completed',compact('transactions','title','searchWord')); 
     }
  
@@ -287,7 +269,7 @@ class TransactionController extends Controller
        foreach ($status as $key => $value) {
            DB::table('cart_items')->where('id', '=', $key)->update(['status' => $value]);
        }
-        return redirect('transaction/pending'); 
+        return redirect('cart/'); 
     }
 
     public function undo_prepare($id, Request $Request){
@@ -369,15 +351,11 @@ class TransactionController extends Controller
         $user = DB::table('users')->where('id_no', '=', $userid)->first();
         $carts = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->first();
-
-            $carts->submitted_at=self::format_date($carts->submitted_at);
-            $carts->released_at=self::format_date($carts->released_at);
-            $carts->completed_at=self::format_date($carts->completed_at);
+        })->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
         $cart_items = DB::table('cart_items')->join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
-        return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
+        return view('transaction.user_active',compact('title','carts','cart_items', 'user', 'date')); 
     } 
     public function user_history_info($id, Request $Request){
         $date = date('Y-m-d');
@@ -391,9 +369,5 @@ class TransactionController extends Controller
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
         return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
-    }
-    public function format_date($date){
-        $date_created = date_create($date);
-        return date_format($date_created, 'F j\, Y g:ia');
     }
 }

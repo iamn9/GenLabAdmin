@@ -1,5 +1,4 @@
 @extends('adminlte::page')
-@section('title','Show')
 @section('content')
 
 <div class="box box-primary no-print">
@@ -75,8 +74,8 @@
             <tr>
               <td>{!!$cart_item->qty!!}</td>
               <td>{!!$cart_item->item_id!!}</td>
-              <td>El snort testosterone trophy driving gloves handsome</td>
-              <td>{!!\Helper::cartItemStatus($cart_item->status); !!} </td>
+              <td>{!!$cart_item->description!!}</td>
+              <td>{!!\Helper::cartItemStatus($cart_item->status); !!}</td>
             </tr>
             @endforeach
             </tbody>

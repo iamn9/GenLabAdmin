@@ -30,15 +30,27 @@
         <tbody>
             <tr>
                 <td>
-                    <b><i>borrower_id : </i></b>
+                    <b><i>borrower: </i></b>
                 </td>
-                <td>{!!$cart->borrower_id!!}</td>
+                <td>{!!$cart->borrower_id!!} : {!!\Helper::student_name($cart->borrower_id);!!}</td>
             </tr>
             <tr>
                 <td>
-                    <b><i>status : </i></b>
+                    <b><i>status: </i></b>
                 </td>
                 <td>{!!$cart->status!!}</td>
+            </tr>
+            <tr>
+                 <td><b><i>subject: </i></b>
+                 <td>{!!$cart->subject!!}</td>
+            </tr>
+            <tr>
+                <td><b><i>group members: </i></b>
+                <td>
+                @foreach($groupmembers as $member)
+                    <li>{!!$member->user_id!!} : {!!\Helper::student_name($member->user_id);!!}</li>
+                @endforeach
+                </td>
             </tr>
         </tbody>
     </table>

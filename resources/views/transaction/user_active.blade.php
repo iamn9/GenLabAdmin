@@ -1,106 +1,36 @@
 @extends('scaffold-interface.layouts.app')
-@section('title','Show')
+@section('title','Index')
 @section('content')
 
-<section class='content'>
-<div class="box box-primary no-print">
+<div class="box box-primary">
 <div class="box-header">
-    <h1><div class="center">{!!$title!!}</div></h1>
-
-    <br>
+    <h1>{!!$title!!}</h1>
+</div>
+<div class="box-body">
+    <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+        <thead>
+            <th>Cart ID</th>
+            <th>Submitted at</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            @foreach($carts as $cart) 
+            <tr>
+                
+                <td>{!!$cart->cart_id!!}</td>
+                <td>{!!\Helper::format_date($cart->submitted_at); !!}</td>
+                <td>{!!$cart->status!!}</td>
+                <td>
+                    <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$cart->trans_id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    <a href = '#' class = 'edit btn btn-primary xs' data-link = '/transaction/{!!$cart->trans_id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                    <a href = '#' class = 'viewShow btn btn-warning xs' data-link = '/transaction/{!!$cart->trans_id!!}'><i class="fa fa-info" aria-hidden="true"></i> </a>
+                </td>
+            </tr>
+            @endforeach 
+        </tbody>
+    </table>
+    <div class='text-center'>{!! $carts->render() !!}</div>
 </div>
 </div>
-<section class="invoice">
-      <!-- title row -->
-      <div class="row">
-        <div class="col-xs-12">
-          <h2 class="page-header">
-            <i class="fa fa-flask"></i> GenLab System
-            <small class="pull-right">{!!$date!!}</small>
-          </h2>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- info row -->
-      <div class="row invoice-info">
-        
-        <div class="col-sm-4 invoice-col">
-          <address>
-            <strong>Borrower Details</strong><br>
-            Name: {!!$user->name!!}<br>
-            Email: {!!$user->email!!}<br>
-            Student Number: {!!$user->id_no!!}<br>
-          </address>
-        </div>
-        <!-- /.col -->
-
-        
-        <div class="col-sm-4 invoice-col">
-        <strong>Transaction Details</strong><br>
-          <address>
-          @foreach($carts as $cart)
-            @if($cart->status == "Completed")
-                Submitted: {!!$cart->submitted_at!!} <br>
-                Prepared: {!!$cart->completed_at!!}<br>
-                Released: {!!$cart->released_at!!}<br>
-            @else
-                Submitted: {!!$cart->submitted_at!!} <br>
-                Status: <b>{!!$cart->status!!}</b>
-            @endif
-          @endforeach
-          </address>
-        </div>
-        <!-- /.col -->
-
-        <div class="col-sm-4 invoice-col">
-          <b>Transaction #:</b> {!!$cart->trans_id!!} <br>
-          <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
-          <b>Processed by:</b> Name of Admin<br>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
-      <!-- Table row -->
-      <div class="row">
-        <div class="col-xs-12 table-responsive">
-          <table class="table table-striped">
-            <thead>
-            <tr>
-              <th>Quantity</th>
-              <th>Item</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($cart_items as $cart_item)
-            <tr>
-              <td>{!!$cart_item->qty!!}</td>
-              <td>{!!$cart_item->item_id!!}</td>
-              <td>{!!$cart_item->name!!}</td>
-              <td>{!!$cart_item->description!!}</td>
-              <td>{{!!$cart_item->status!!}}</td>
-            </tr>
-            @endforeach
-            </tbody>
-          </table>
-          <hr>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
-
-      <!-- this row will not appear when printing -->
-      <div class="row">
-        <div class="col-xs-12">
-            <button onclick="javascript:window.print();" target="_blank" class="btn btn-primary pull-right no-print" style="margin-right: 5px;"><i class="fa fa-print"></i> Print</button>
-            University of The Philippines Visayas - Tacloban College<br>
-            Division of Natural Sciences and Mathematics
-        </div>
-      </div>
-    </section>
-</section>
 @endsection

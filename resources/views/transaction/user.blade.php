@@ -34,9 +34,9 @@
             @foreach($transactions as $transaction) 
             <tr>
                 <td><a href="#">{!!$transaction->cart_id!!}</a></td>
-                <td>{!!$transaction->submitted_at!!}</td>
-                <td>{!!$transaction->released_at!!}</td>
-                <td>{!!$transaction->completed_at!!}</td>
+                <td>{!!\Helper::format_date($transaction->submitted_at);!!}</td>
+                <td>{!!\Helper::format_date($transaction->released_at);!!}</td>
+                <td>{!!\Helper::format_date($transaction->completed_at);!!}</td>
                 <td>
                     <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>

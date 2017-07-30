@@ -103,7 +103,8 @@ class CartController extends Controller
             $searchWord = \Request::get('search');
             $cart_items = DB::table('cart_items')->where('cart_id','=', $id)->paginate(5)->appends(Input::except('page'));  
             $transaction = DB::table('transactions')->where('cart_id', '=', $id)->first();
-            return view('cart.show',compact('searchWord','title','cart','cart_items', 'transaction'));
+            $groupmembers = DB::table('group_members')->where('cart_id', '=', $id)->get();
+            return view('cart.show',compact('searchWord','title','cart','cart_items', 'transaction', 'groupmembers'));
         }
         else
             return redirect('cart');
