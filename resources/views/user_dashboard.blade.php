@@ -57,39 +57,16 @@ td{
 
  <body>
  	<div class="container">
-	   <div class='w3-animate-zoom'><br>
-	      <h3>Welcome to GenLab, {{Auth::user()->name}}!</h3>
-	   </div>
-	   <h2>Here are your transactions:</h2>
-  <div class="tbl-header">
-    <table cellpadding="0" cellspacing="0" border="0">
-      <thead>
-        <tr>
-          <th>Cart ID</th>
-          <th>Status</th>
-        </tr>
-        @foreach($carts as $cart)
-        <tr>
-          <td>{!!$cart->id!!}</td>
-          <td>{!!$cart->status!!}</td>
-        </tr>
-        @endforeach
-      </thead>
-    </table>
+	   <h3>Welcome to GenLab, {{Auth::user()->name}}!</h3>
+	   <h2>Here are the updates on your transactions:</h2>
+  <div class="box-body">
+    <br>
+     @foreach($carts as $cart) 
+      <li>You're cart <a href="/cart/{!!$cart->id!!}" style="text-decoration-line: underline;">#{!!$cart->id!!} </a>was {!!$cart->status!!}.</li>
+    @endforeach 
   </div>
-  <div class="tbl-content">
-    <table cellpadding="0" cellspacing="0" border="0">
-      <tbody>
-       
-      </tbody>
-    </table>
-  </div>
-	  
-	</div>
-	
-  
-
- </body>
+</div>
+</body>
 
   
   

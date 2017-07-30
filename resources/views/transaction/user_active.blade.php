@@ -11,6 +11,7 @@
         <thead>
             <th>Cart ID</th>
             <th>Submitted at</th>
+            <th>Released at</th>
             <th>Status</th>
             <th>Actions</th>
         </thead>
@@ -19,11 +20,10 @@
             <tr>
                 
                 <td>{!!$cart->cart_id!!}</td>
-                <td>{!!\Helper::format_date($cart->submitted_at); !!}</td>
+                <td>{!!\Helper::format_date($cart->submitted_at);!!}</td>
+                <td>{!!\Helper::format_date($cart->released_at);!!}</td>
                 <td>{!!$cart->status!!}</td>
                 <td>
-                    <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$cart->trans_id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                    <a href = '#' class = 'edit btn btn-primary xs' data-link = '/transaction/{!!$cart->trans_id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                     <a href = '#' class = 'viewShow btn btn-warning xs' data-link = '/transaction/{!!$cart->trans_id!!}'><i class="fa fa-info" aria-hidden="true"></i> </a>
                 </td>
             </tr>
