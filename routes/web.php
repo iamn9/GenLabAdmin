@@ -15,9 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/about', function () {
+    return view('about');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
 //Users
 Route::get('users/unactivated','\App\Http\Controllers\UserController@showUnactivated');
 Route::get('users/admins','\App\Http\Controllers\UserController@showAdmins');
