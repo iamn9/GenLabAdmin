@@ -38,8 +38,8 @@ class HomeController extends Controller
             else{
                 if(Auth::user()->isActivated){
                     $userid = Auth::user()->id_no;
-                    $cart = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->first();
-                    return view('user_dashboard', compact('user', 'cart'));
+                    $carts = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->orderBy('id')->get();
+                    return view('user_dashboard', compact('user', 'carts'));
                 }
                 else
                     return view('user_dashboard'); //replace with welcome page if code is final

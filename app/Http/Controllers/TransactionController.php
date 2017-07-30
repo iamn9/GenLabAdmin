@@ -206,7 +206,16 @@ class TransactionController extends Controller
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('status', '=', 'Pending')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
         return view('transaction.index_pending',compact('transactions','title','searchWord')); 
-    } 
+    }
+
+    public function index_rejected(){
+        $title = 'Pending Transactions'; 
+        $searchWord = \Request::get('search'); 
+        $transactions = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status', 'prepared_at')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->where('status', '=', 'Rejected')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        return view('transaction.index_rejected',compact('transactions','title','searchWord')); 
+    }
  
     public function index_prepared(){ 
         $title = 'Prepared Carts'; 

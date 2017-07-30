@@ -37,6 +37,7 @@ Route::get('transaction/pending','\App\Http\Controllers\TransactionController@in
 Route::get('transaction/prepared','\App\Http\Controllers\TransactionController@index_prepared');
 Route::get('transaction/released','\App\Http\Controllers\TransactionController@index_released');
 Route::get('transaction/completed','\App\Http\Controllers\TransactionController@index_completed');
+Route::get('transaction/rejected','\App\Http\Controllers\TransactionController@index_rejected');
 Route::get('transaction/{id}/release','\App\Http\Controllers\TransactionController@release');
 Route::post('transaction/{id}/prepare','\App\Http\Controllers\TransactionController@prepare');
 Route::get('transaction/{id}/complete','\App\Http\Controllers\TransactionController@complete');
@@ -65,6 +66,7 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('cart/add/{id}','\App\Http\Controllers\CartController@addItem');
   Route::get('cart/add/{id}/addItemMsg','\App\Http\Controllers\CartController@addItemMsg');
   Route::get('cart/{id}/checkout','\App\Http\Controllers\CartController@checkout');
+  Route::get('cart/{id}/reject', '\App\Http\Controllers\CartController@reject');
 });
 
 //cart_item Routes

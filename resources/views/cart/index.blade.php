@@ -48,7 +48,7 @@
                     @endif
                 {!!$cart->status!!}</span></td>
                 <td>
-                    <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/delete' class='delete btn btn-danger btn-xs'><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
+                    <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/reject' class='delete btn btn-danger btn-xs'><i class="fa fa-trash-o" aria-hidden="true"></i>Reject Cart</a>
                     <a href = '/cart/{!!$cart->id!!}' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Prepare Cart</a>
                 </td>
             </tr>

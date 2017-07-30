@@ -149,6 +149,14 @@ class CartController extends Controller
         return redirect('cart');
     }
 
+    public function reject($id, Request $request)
+    {
+        $cart = Cart::findOrfail($id);
+        $cart->status = 'Rejected';
+        $cart->save();
+        return redirect('cart');
+    }
+
     /**
      * Delete confirmation message by Ajaxis.
      *

@@ -31,8 +31,12 @@ class Helper
     }
 
     public static function format_date($date){
-        $date_created = date_create($date);
-        return date_format($date_created, 'F j\, Y g:ia');
+    	if(!empty($date)){
+	        $date_created = date_create($date);
+	        return date_format($date_created, 'F j\, Y g:ia');
+	    }
+	    else
+	    	return '';
     }
 
     public static function student_name($student_no){

@@ -182,6 +182,11 @@ return [
                     'icon_color' => 'green',
                     'url'         => 'transaction/completed',
                 ],
+                [
+                    'text'       => 'Rejected',
+                    'icon_color' => 'red',
+                    'url'         => 'transaction/rejected',
+                ],
             ]
         ],        
     ],

@@ -1,7 +1,12 @@
 @extends('adminlte::page')
 @section('title','Show')
 @section('content')
-
+<style>
+    .dropdown{
+        background-color: green;
+        color: white;
+    }
+</style>
 <section class='content'>
 <div class="box box-primary">
 <div class="box-header">
@@ -73,7 +78,7 @@
                         <a href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
                         <a href = '/cart_item/{!!$cart_item->id!!}/edit' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
                         <a href = '/item/{!!$cart_item->id!!}' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-primary btn-xs' data-link = "/item/{!!$cart_item->id!!}/showModal" ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
-                        <select name="status_{!!$cart_item->id!!}">
+                        <select name="status_{!!$cart_item->id!!}" class="dropdown btn btn-xs">
                           <option value="0">Not Available</option>
                           <option value="1">Released</option>
                           <option value="2">Damaged</option>

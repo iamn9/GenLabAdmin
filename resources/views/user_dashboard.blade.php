@@ -1,7 +1,5 @@
 @extends('scaffold-interface.layouts.app')
 @section('content')
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
  <style>
  	@import url('https://fonts.googleapis.com/css?family=Raleway');
  	h3 {
@@ -68,9 +66,14 @@ td{
       <thead>
         <tr>
           <th>Cart ID</th>
-          <th>Items</th>
           <th>Status</th>
         </tr>
+        @foreach($carts as $cart)
+        <tr>
+          <td>{!!$cart->id!!}</td>
+          <td>{!!$cart->status!!}</td>
+        </tr>
+        @endforeach
       </thead>
     </table>
   </div>
