@@ -28,9 +28,9 @@
         <tbody>
             @foreach($transactions as $transaction) 
             <tr>
-                <td>Borrower Name</td>
+                <td>{!!$transaction->borrower_id!!}</td>
                 <td>{!!$transaction->cart_id!!}</td>
-                <td>{!!$transaction->completed_at!!}</td>
+                <td>{!!\Helper::format_date($transaction->completed_at);!!}</td>
                 <td>
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     <a href = '#' class = 'viewShow btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>

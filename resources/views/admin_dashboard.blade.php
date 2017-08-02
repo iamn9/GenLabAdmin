@@ -44,7 +44,7 @@
         <div class="icon">
           <i class="fa fa-shopping-cart"></i>
         </div>
-        <a href="#" class="small-box-footer">
+        <a href="transaction/pending" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
         </a>
       </div>
@@ -91,7 +91,7 @@
        <tbody>
         @foreach($transactions as $transaction)
         <tr>
-         <td>{!!$transaction->submitted_at!!}</td>
+         <td>{!!\Helper::format_date($transaction->submitted_at);!!}</td>
          <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>
          <td>{!!$transaction->name!!}</td>
          <td><span class="label label-info">{!!$transaction->status!!}</span></td>

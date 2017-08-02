@@ -17,7 +17,7 @@
             @foreach($transactions as $transaction) 
             <tr>
                 <td>{!!$transaction->cart_id!!}</td>
-                <td>{!!$transaction->completed_at!!}</td>
+                <td>{!!\Helper::format_date($transaction->completed_at);!!}</td>
                 <td>
                     <form method = 'GET' action = '/transaction/{{$transaction->cart_id}}/show'>
                         <button class = 'btn btn-success'>INFO</button>

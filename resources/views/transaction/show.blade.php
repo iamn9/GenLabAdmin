@@ -1,5 +1,4 @@
 @extends('adminlte::page')
-@section('title','Show')
 @section('content')
 
 <div class="box box-primary no-print">
@@ -30,10 +29,10 @@
         
         <div class="col-sm-4 invoice-col">
           <address>
-            <strong>Name</strong><br>
-            Email<br>
-            Student Number<br>
-            Phone: (555) 539-1037<br>
+            <strong>Borrower Details</strong><br>
+            Name: {!!$user->name!!} <br>
+            Email: {!!$user->email!!}<br>
+            Student Number: {!!$user->id_no!!}<br>
           </address>
         </div>
         <!-- /.col -->
@@ -43,14 +42,14 @@
         <strong>Transaction Details</strong><br>
           <address>
             Submitted: {!!$transaction->submitted_at!!}<br>
-            released: {!!$transaction->released_at!!}<br>
+            Released: {!!$transaction->released_at!!}<br>
             Completed: {!!$transaction->completed_at!!}<br>
           </address>
         </div>
         <!-- /.col -->
 
         <div class="col-sm-4 invoice-col">
-          <b>Transaction #:</b> {!!$transaction->id!!}<br>
+          <b>Transaction #:</b> {!!$transaction->trans_id!!}<br>
           <b>Cart ID:</b> {!!$transaction->cart_id!!}<br>
           <b>Processed by:</b> Name of Admin<br>
         </div>
@@ -67,6 +66,7 @@
               <th>Qty</th>
               <th>Item</th>
               <th>Description</th>
+              <th>Status</th>
             </tr>
             </thead>
             <tbody>
@@ -74,7 +74,8 @@
             <tr>
               <td>{!!$cart_item->qty!!}</td>
               <td>{!!$cart_item->item_id!!}</td>
-              <td>El snort testosterone trophy driving gloves handsome</td>
+              <td>{!!$cart_item->description!!}</td>
+              <td>{!!\Helper::cartItemStatus($cart_item->status); !!}</td>
             </tr>
             @endforeach
             </tbody>
