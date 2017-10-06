@@ -16,16 +16,16 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">{{ trans('adminlte::adminlte.login_message') }}</p>
-            <form action="{{ url(config('adminlte.login_url', 'login')) }}" method="post">
+            <form action="{{url('/login')}}" method="post">
                 {!! csrf_field() !!}
 
-                <div class="form-group has-feedback {{ $errors->has('id_no') ? 'has-error' : '' }}">
-                    <input type="text" name="id_no" class="form-control" value="{{ old('id_no') }}"
-                           placeholder="ID Number">
+                <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
+                    <input type="text" name="email" class="form-control" value="{{ old('email') }}"
+                           placeholder="Email Address">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                    @if ($errors->has('id_no'))
+                    @if ($errors->has('email'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('id_no') }}</strong>
+                            <strong>{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
                 </div>
