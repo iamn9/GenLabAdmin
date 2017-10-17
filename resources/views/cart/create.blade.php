@@ -6,7 +6,7 @@
 <div class="box-header">
     <h1>Create cart</h1>
     <form method = 'get' action = '{!!url("cart")!!}'>
-        <button class = 'btn btn-danger'>Cart Index</button>
+        <button class = 'btn btn-danger'>cart Index</button>
     </form>
 </div>
 <div class="box-body">
@@ -15,7 +15,7 @@
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
         <div class="form-group">
             <label for="borrower_id">borrower_id</label>
-            <input id="borrower_id" name = "borrower_id" type="text" class = "form-control" required>
+            <input id="borrower_id" name = "borrower_id" type="text" class="form-control">
         </div>
         <div class="form-group">
             <label for="status">status</label>
@@ -28,9 +28,6 @@
             </select>
         </div>
         <button class = 'btn btn-primary' type ='submit'>Create</button>
-    </form>
-    <form method="get" action="/cart">
-        <button class = 'btn btn-danger'>Cancel</button>
     </form>
 </div>
 </div>

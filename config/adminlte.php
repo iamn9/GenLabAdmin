@@ -152,7 +152,7 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Prepare Pending Carts',
+            'text'        => 'Carts',
             'url'         => 'cart',
             'icon'        => 'shopping-cart',
             'label_color' => 'success',
@@ -168,6 +168,11 @@ return [
                     'url'         => 'transaction/',
                 ],
                 [
+                    'text'       => 'Pending',
+                    'icon_color' => 'red',
+                    'url'         => 'transaction/pending',
+                ],
+                [
                     'text'       => 'Prepared',
                     'icon_color' => 'orange',
                     'url'         => 'transaction/prepared',
@@ -181,11 +186,6 @@ return [
                     'text'       => 'Completed',
                     'icon_color' => 'green',
                     'url'         => 'transaction/completed',
-                ],
-                [
-                    'text'       => 'Rejected',
-                    'icon_color' => 'red',
-                    'url'         => 'transaction/rejected',
                 ],
             ]
         ],        

@@ -8,15 +8,15 @@
     @include('search')
     <br>
     <form class = 'col s3' method = 'get' action = '{!!url("cart")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create New Cart</button>
+        <button class = 'btn btn-primary' type = 'submit'>Create New cart</button>
     </form>
 </div>
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>Borrower ID</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th>borrower_id</th>
+            <th>status</th>
+            <th>actions</th>
         </thead>
         <tbody>
             @foreach($carts as $cart) 
@@ -38,8 +38,9 @@
                     @endif
                 {!!$cart->status!!}</span></td>
                 <td>
-                    <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/reject' class='delete btn btn-danger btn-xs'><i class="fa fa-trash-o" aria-hidden="true"></i>Reject Cart</a>
-                    <a href = '/cart/{!!$cart->id!!}' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Prepare Cart</a>
+                    <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/delete' class='delete btn btn-danger btn-xs'><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
+                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
+                    <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>
             </tr>
             @endforeach 

@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Hash;
 
 
@@ -49,26 +48,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-            $this->validate($request, [
-            'email' => 'required|unique:users|email',
-            // 'id_no' => 'required|unique:users|id_no',
-        ]); 
-            $user = new \App\User();
-            $user->email = $request->email;
-            $user->name = $request->name;
-            $user->id_no = $request->id_no;
-            $user->password = Hash::make($request->password);
-            if($request->isAdmin == 'on')
-                $user->isAdmin = 1;
-            else
-                $user->isAdmin = 0;
-            if ($request->isActivated == 'on')
-                $user->isActivated = 1;
-            else
-                $user->isActivated = 0;
-            $user->save();
-            return redirect('users');
-        
+        $user = new \App\User();
+
+        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->id_no = $request->id_no;
+        $user->password = Hash::make($request->password);
+        if($request->isAdmin == 'on')
+            $user->isAdmin = 1;
+        else
+            $user->isAdmin = 0;
+        if ($request->isActivated == 'on')
+            $user->isActivated = 1;
+        else
+            $user->isActivated = 0;
+        $user->save();
+
+        return redirect('users');
     }
 
     /**
@@ -98,8 +94,8 @@ class UserController extends Controller
 
         $user->email = $request->email;
         $user->name = $request->name;
-        // $user->id_no = $request->id_no;
-        // $user->password = Hash::make($request->password);
+        $user->id_no = $request->id_no;
+        $user->password = Hash::make($request->password);
         if($request->isAdmin == 'on')
             $user->isAdmin = 1;
         else

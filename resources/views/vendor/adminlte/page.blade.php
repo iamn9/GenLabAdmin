@@ -139,7 +139,7 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                     <!-- search form -->
-                   <!--  <form action="#" method="get" class="sidebar-form">
+                    <form action="#" method="get" class="sidebar-form">
                         <div class="input-group">
                             <input type="text" name="q" class="form-control" placeholder="Search...">
                             <span class="input-group-btn">
@@ -147,7 +147,7 @@
                                 </button>
                             </span>
                         </div>
-                    </form> -->
+                    </form>
                     <!-- /.search form -->    
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">

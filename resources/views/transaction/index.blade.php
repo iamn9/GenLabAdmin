@@ -14,21 +14,21 @@
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>Cart ID</th>
-            <th>Date & Time Submitted</th>
-            <th>Date & Time Prepared</th>
-            <th>Date & Time Released</th>
-            <th>Date & Time Returned</th>
-            <th>Actions</th>
+            <th>cart_id</th>
+            <th>submitted_at</th>
+            <th>prepared_at</th>
+            <th>released_at</th>
+            <th>completed_at</th>
+            <th>actions</th>
         </thead>
         <tbody>
             @foreach($transactions as $transaction) 
             <tr>
                 <td>{!!$transaction->cart_id!!}</td>
-                <td>{!!\Helper::format_date($transaction->submitted_at);!!}</td>
-                <td>{!!\Helper::format_date($transaction->prepared_at);!!}</td>
-                <td>{!!\Helper::format_date($transaction->released_at);!!}</td>
-                <td>{!!\Helper::format_date($transaction->completed_at);!!}</td>
+                <td>{!!$transaction->submitted_at!!}</td>
+                <td>{!!$transaction->prepared_at!!}</td>
+                <td>{!!$transaction->released_at!!}</td>
+                <td>{!!$transaction->completed_at!!}</td>
                 <td>
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     <a href = '#' class = 'edit btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>

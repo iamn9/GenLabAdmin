@@ -15,9 +15,9 @@
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
+            <th>name</th>
+            <th>description</th>
+            <th>actions</th>
         </thead>
         <tbody>
             @foreach($items as $item) 
