@@ -31,18 +31,23 @@ class CartController extends Controller
     {
         $title = 'Index - cart';
         $searchWord = \Request::get('search');
-
         if(Auth::user()->isAdmin){
-            $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->where('status', '=', 'Pending')->paginate(5)->appends(Input::except('page'));
+            if ($searchWord == "")
+                $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->where('status', '=', 'Pending')->paginate(5)->appends(Input::except('page'));
+            else{
+                $searchWord = (int) $searchWord;
+                $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->where('status', '=', 'Pending')->paginate(5)->appends(Input::except('page'));
+            }
             return view('cart.index',compact('carts','title','searchWord'));
         }
         else{
+            $searchInt = (int) $searchWord;
             $userid = Auth::user()->id_no;
             $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
             $students = DB::table('users')->where('isAdmin', '=', '0')->where('isActivated', '=', '1')->get();
             $cart_items = $cart_items = DB::table('cart_items')->join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
-            })->where('cart_id','=',$cart_id)->where('name','like','%'.$searchWord.'%')->where('item_id','like','%'.$searchWord.'%')->select('cart_items.*','items.name')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+            })->where('cart_id','=',$cart_id)->where('name','like','%'.$searchWord.'%')->orWhere('item_id','=',$searchInt)->select('cart_items.*','items.name')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
             return view('cart.user',compact('title','searchWord','cart_id','cart_items', 'students'));
         }
     }

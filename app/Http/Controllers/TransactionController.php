@@ -12,12 +12,6 @@ use App\Transaction;
 use Amranidev\Ajaxis\Ajaxis;
 use URL;
 
-/**
- * Class TransactionController.
- *
- * @author  The scaffold-interface created at 2016-12-19 04:15:40am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class TransactionController extends Controller
 {
     /**
@@ -29,7 +23,12 @@ class TransactionController extends Controller
     {
         $title = 'Index - transaction';
         $searchWord = \Request::get('search');
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        if($searchWord == "")            
+            $transactions = Transaction::orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        else{
+            $searchWord = (int) $searchWord;
+            $transactions = Transaction::where('cart_id','=',$searchWord)->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        }
         return view('transaction.index',compact('transactions','title','searchWord'));
     }
 
