@@ -28,7 +28,7 @@
           <p>User Registrations</p>
         </div>
         <div class="icon">
-          <i class="ion ion-person-add"></i>
+          <i class="fa fa-user-plus"></i>
         </div>
         <a href="users/unactivated" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
@@ -56,7 +56,7 @@
           <p>Completed Transactions</p>
         </div>
         <div class="icon">
-          <i class="ion ion-stats-bars"></i>
+          <i class="fa fa-bars"></i>
         </div>
         <a href="#" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
