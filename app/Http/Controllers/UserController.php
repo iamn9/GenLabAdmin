@@ -22,7 +22,7 @@ class UserController extends Controller
         $title = "Users Index";
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
-            $users = \App\User::where('Name','like','%'.$searchWord.'%')->orWhere('Email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('Name')->paginate(5)->appends(Input::except('page'));
+            $users = \App\User::where('name','like','%'.$searchWord.'%')->orWhere('email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('name')->paginate(5)->appends(Input::except('page'));
             return view('users.index', compact('title','users','searchWord'));
         }
         else{
@@ -134,7 +134,13 @@ class UserController extends Controller
 
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
-            $users = \App\User::where('isActivated',0)->paginate(5);
+            $users = \App\User::where(function($query){
+                $query->where('isActivated',0);
+            })->where(function($query) use ($searchWord){
+                $query->where('name','like','%'.$searchWord.'%')
+                ->orWhere('email','like','%'.$searchWord.'%')
+                ->orWhere('id_no','like','%'.$searchWord.'%');
+            })->paginate(5);
 
             return view('users.index', compact('title','users','searchWord'));
         }
@@ -147,7 +153,13 @@ class UserController extends Controller
         $title = 'Admin Accounts';
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
-            $users = \App\User::where('isAdmin',1)->paginate(5);
+            $users = \App\User::where(function($query){
+                $query->where('isAdmin',1);
+            })->where(function($query) use ($searchWord){
+                $query->where('name','like','%'.$searchWord.'%')
+                ->orWhere('email','like','%'.$searchWord.'%')
+                ->orWhere('id_no','like','%'.$searchWord.'%');
+            })->paginate(5);
             return view('users.index', compact('title', 'users','searchWord'));
         }
         else{
@@ -159,7 +171,13 @@ class UserController extends Controller
         $title = 'User Accounts';
         if(Auth::user()->isAdmin){
             $searchWord = \Request::get('search');
-            $users = \App\User::where('isAdmin',0)->paginate(5);
+            $users = \App\User::where(function($query){
+                $query->where('isAdmin',0);
+            })->where(function($query) use ($searchWord){
+                $query->where('name','like','%'.$searchWord.'%')
+                ->orWhere('email','like','%'.$searchWord.'%')
+                ->orWhere('id_no','like','%'.$searchWord.'%');
+            })->paginate(5);
             return view('users.index', compact('title', 'users','searchWord'));
         }
         else{
