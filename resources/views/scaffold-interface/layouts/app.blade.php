@@ -7,16 +7,16 @@
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.7 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
 	<!-- Theme style -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
 		<!-- AdminLTE Skins. Choose a skin from the css/skins
 		folder instead of downloading all of them to reduce the load. -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="{{ asset('css/_all-skins.min.css') }}">
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -99,14 +99,14 @@
 		</div>
 	</div>
 	<!-- Compiled and minified JavaScript -->
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/js/app.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/js/demo.js"></script>
+	<script src="{{ asset('js/jquery-2.1.1.min.js') }}"></script>
+	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('js/app.min.js') }}"></script>
+	<script src="{{ asset('js/demo.js') }}"></script>
 	<script> var baseURL = "{{ URL::to('/') }}"</script>
 	<script src = "{{URL::asset('js/AjaxisBootstrap.js') }}"></script>
 	<script src = "{{URL::asset('js/scaffold-interface-js/customA.js') }}"></script>
-	<script src="https://js.pusher.com/3.2/pusher.min.js"></script>
+	<script src="{{ asset('js/pusher.min.js') }}"></script>
 	<script>
 		// pusher log to console.
 		Pusher.logToConsole = true;
