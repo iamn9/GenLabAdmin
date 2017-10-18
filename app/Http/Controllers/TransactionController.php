@@ -92,18 +92,25 @@ class TransactionController extends Controller
      */
     public function show($id,Request $request)
     {
+        $date = date('Y-m-d');
         $title = 'Show - transaction';
-
         if($request->ajax())
         {
             return URL::to('transaction/'.$id);
         }
 
         $transaction = Transaction::findOrfail($id);
-        //return view('transaction.show',compact('title','transaction'));
-        $cart_items = DB::table('cart_items')->where('cart_id',$transaction->cart_id)->get(); 
-        //$user= DB::table('carts')->join('users','carts.borrower_id','=','users.id_no')->join(select('') 
-        return view('transaction.show',compact('title','transaction','cart_items'));
+        $userid = DB::table('carts')->where('id', '=', $transaction->cart_id)->value('borrower_id');
+        $user = DB::table('users')->where('id_no', '=', $userid)->first();
+        $carts = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->where('borrower_id','=', $userid)->paginate(5)->appends(Input::except('page')); 
+        $cart_items = DB::table('cart_items')->join('items', function($join){
+                $join->on('cart_items.item_id', '=', 'items.id');
+            })->where('cart_id','=',$transaction->cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+
+        $nameAdmin = Auth::user()->name;
+        return view('transaction.show',compact('title','carts','cart_items', 'user', 'date','nameAdmin')); 
     }
 
     /**
@@ -194,28 +201,33 @@ class TransactionController extends Controller
     public function index_pending(){ 
         $title = 'Pending Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        if($searchWord == "")           
+            $transactions = Transaction::whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        else{ 
+            $searchWord = (int) $searchWord;
+            $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+        }
         return view('transaction.index_pending',compact('transactions','title','searchWord')); 
     } 
  
     public function index_prepared(){ 
         $title = 'Prepared Carts'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('prepared_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('prepared_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_prepared',compact('transactions','title','searchWord')); 
     } 
 
     public function index_released(){ 
         $title = 'Released Carts'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('released_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('released_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_released',compact('transactions','title','searchWord')); 
     } 
  
     public function index_completed(){ 
         $title = 'Completed Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('completed_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('completed_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_completed',compact('transactions','title','searchWord')); 
     } 
  
@@ -323,6 +335,8 @@ class TransactionController extends Controller
         $title = 'Active Transaction'; 
         $userid = Auth::user()->id_no; 
         $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->value('id');
+        if (!$cart_id)
+        return redirect('/cart');
         $user = DB::table('users')->where('id_no', '=', $userid)->first();
         $carts = DB::table('carts')->select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');

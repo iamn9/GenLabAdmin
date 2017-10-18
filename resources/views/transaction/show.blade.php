@@ -1,26 +1,21 @@
 @extends('adminlte::page')
 @section('title','Show')
 @section('content')
-
+<section class='content'>
 <div class="box box-primary no-print">
 <div class="box-header">
-    <h1>{!!$title!!}</h1>
-    <form method = 'get' action = '{!!url("transaction")!!}'>
-        <button class = 'btn btn-primary' onclick="javascript:history.back()"> Back</button>
-    </form>
+    <h1><div class="center">{!!$title!!}</div></h1>
+
     <br>
 </div>
 </div>
-
-
-
 <section class="invoice">
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
             <i class="fa fa-flask"></i> GenLab System
-            <small class="pull-right">Date: 2/10/2014</small>
+            <small class="pull-right">{!!$date!!}</small>
           </h2>
         </div>
         <!-- /.col -->
@@ -30,10 +25,10 @@
         
         <div class="col-sm-4 invoice-col">
           <address>
-            <strong>Name</strong><br>
-            Email<br>
-            Student Number<br>
-            Phone: (555) 539-1037<br>
+            <strong>Borrower Details</strong><br>
+            Name:   <b>{!!$user->name!!}</b><br>
+            Email:   <b>{!!$user->email!!}</b><br>
+            Student Number:   <b>{!!$user->id_no!!}</b><br>
           </address>
         </div>
         <!-- /.col -->
@@ -42,17 +37,24 @@
         <div class="col-sm-4 invoice-col">
         <strong>Transaction Details</strong><br>
           <address>
-            Submitted: {!!$transaction->submitted_at!!}<br>
-            released: {!!$transaction->released_at!!}<br>
-            Completed: {!!$transaction->completed_at!!}<br>
+          @foreach($carts as $cart)
+            @if($cart->status == "Completed")
+                Submitted: {!!$cart->submitted_at!!} <br>
+                Prepared: {!!$cart->completed_at!!}<br>
+                Released: {!!$cart->released_at!!}<br>
+            @else
+                Submitted: {!!$cart->submitted_at!!} <br>
+                Status: <b>{!!$cart->status!!}</b>
+            @endif
+          @endforeach
           </address>
         </div>
         <!-- /.col -->
 
         <div class="col-sm-4 invoice-col">
-          <b>Transaction #:</b> {!!$transaction->id!!}<br>
-          <b>Cart ID:</b> {!!$transaction->cart_id!!}<br>
-          <b>Processed by:</b> Name of Admin<br>
+          <b>Transaction #:</b> {!!$cart->trans_id!!} <br>
+          <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
+          <b>Processed by:</b> {!!$nameAdmin!!}<br>
         </div>
         <!-- /.col -->
       </div>
@@ -66,6 +68,7 @@
             <tr>
               <th>Qty</th>
               <th>Item</th>
+              <th>Name</th>
               <th>Description</th>
             </tr>
             </thead>
@@ -74,7 +77,8 @@
             <tr>
               <td>{!!$cart_item->qty!!}</td>
               <td>{!!$cart_item->item_id!!}</td>
-              <td>El snort testosterone trophy driving gloves handsome</td>
+              <td>{!!$cart_item->name!!}</td>
+              <td>{!!$cart_item->description!!}</td>
             </tr>
             @endforeach
             </tbody>
@@ -95,5 +99,5 @@
         </div>
       </div>
     </section>
-
+</section>
 @endsection
