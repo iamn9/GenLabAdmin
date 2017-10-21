@@ -125,7 +125,7 @@ return [
                 [
                     'text'       => 'Show All',
                     'icon_color' => 'white',
-                    'url'         => 'users/',
+                    'url'         => 'users/all',
                 ],
                 [
                     'text'       => 'Unactivated',
