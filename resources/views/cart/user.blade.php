@@ -10,10 +10,10 @@
     <div class="box-body">
         <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
             <thead>
-                <th>item_id</th>
+                <th style="width: 60px">item_id</th>
                 <th>name</th>
-                <th>qty</th>
-                <th>actions</th>
+                <th style="width: 80px">qty</th>
+                <th style="width: 200px">actions</th>
             </thead>
             <tbody>
                 @foreach($cart_items as $cart_item) 
