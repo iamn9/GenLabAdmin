@@ -26,8 +26,14 @@ class CartController extends Controller
         $title = 'Index - cart';
         $searchWord = \Request::get('search');
         if(Auth::user()->isAdmin){
-            if ($searchWord == "")
-                $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->where('status', '=', 'Pending')->paginate(5)->appends(Input::except('page'));
+            if ($searchWord == ""){
+                $carts = DB::table('users')->join('carts', function($join){
+                    $join->on('carts.borrower_id', '=', 'users.id_no');
+                })
+                ->where('borrower_id','like','%'.$searchWord.'%')
+                ->where('status', '=', 'Pending')
+                ->paginate(5)->appends(Input::except('page'));
+            }
             else{
                 $searchWord = (int) $searchWord;
                 $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->where('status', '=', 'Pending')->paginate(5)->appends(Input::except('page'));
