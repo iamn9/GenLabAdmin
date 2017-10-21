@@ -151,7 +151,13 @@
                     <!-- /.search form -->    
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
-                    @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
+					<li class="header">MAIN NAVIGATION</li>
+					<li class="treeview"><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> <span>Home</span></i></a></li>
+					<li class="treeview"><a href="{{url('/item')}}"><i class="fa fa-flask"></i> <span>Items</span></a></li>
+					<li class="header">TRANSACTIONS</li>
+					<li class="treeview"><a href="{{url('/transaction/user/active')}}"><i class="fa fa-shopping-cart"></i> <span>Active Transaction</span></a></li>
+					<li class="treeview"><a href="{{url('/cart')}}"><i class="fa fa-shopping-cart"></i> <span>Cart</span></a></li>
+					<li class="treeview"><a href="{{url('/transaction/user/history')}}"><i class="fa fa-history"></i> <span>History</span></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -186,10 +192,11 @@
 
     </div>
     <!-- ./wrapper -->
+        
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class = 'AjaxisModal'>
 		</div>
-	</div>     
+	</div>
         <!-- Compiled and minified JavaScript -->
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->

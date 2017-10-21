@@ -22,6 +22,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 //Users
+Route::get('users/all','\App\Http\Controllers\UserController@index');
 Route::get('users/unactivated','\App\Http\Controllers\UserController@showUnactivated');
 Route::get('users/admins','\App\Http\Controllers\UserController@showAdmins');
 Route::get('users/regular','\App\Http\Controllers\UserController@showUsers');
@@ -31,6 +32,7 @@ Route::post('users/update/','\App\Http\Controllers\UserController@update');
 Route::get('users/edit/{id}','\App\Http\Controllers\UserController@edit');
 Route::get('users/delete/{id}','\App\Http\Controllers\UserController@destroy');
 
+Route::get('transaction/all','\App\Http\Controllers\TransactionController@index');
 Route::get('transaction/pending','\App\Http\Controllers\TransactionController@index_pending');
 Route::get('transaction/prepared','\App\Http\Controllers\TransactionController@index_prepared');
 Route::get('transaction/released','\App\Http\Controllers\TransactionController@index_released');

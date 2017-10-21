@@ -15,13 +15,15 @@
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>name</th>
+            <th style="width: 60px">id</th>
+            <th style="width: 210px">name</th>
             <th>description</th>
-            <th>actions</th>
+            <th style="width: 180px">actions</th>
         </thead>
         <tbody>
             @foreach($items as $item) 
             <tr>
+                <td>{!!$item->id!!}</td>
                 <td>{!!$item->name!!}</td>
                 <td>{!!$item->description!!}</td>
                 <td>
