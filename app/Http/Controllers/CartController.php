@@ -14,12 +14,6 @@ use App\Cart;
 use App\Cart_item;
 use App\Transaction;
 
-/**
- * Class CartController.
- *
- * @author  The scaffold-interface created at 2016-12-13 01:15:11am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class CartController extends Controller
 {
     /**
@@ -151,13 +145,6 @@ class CartController extends Controller
         return redirect('cart');
     }
 
-    /**
-     * Delete confirmation message by Ajaxis.
-     *
-     * @link      https://github.com/amranidev/ajaxis
-     * @param    \Illuminate\Http\Request  $request
-     * @return  String
-     */
     public function DeleteMsg($id,Request $request)
     {
         $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/cart/'. $id . '/delete');

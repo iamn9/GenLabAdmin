@@ -11,12 +11,6 @@ use App\Item;
 use Amranidev\Ajaxis\Ajaxis;
 use URL;
 
-/**
- * Class ItemController.
- *
- * @author  The scaffold-interface created at 2016-11-30 06:49:55am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class ItemController extends Controller
 {
     /**
@@ -152,13 +146,6 @@ class ItemController extends Controller
         return redirect('item');
     }
 
-    /**
-     * Delete confirmation message by Ajaxis.
-     *
-     * @link      https://github.com/amranidev/ajaxis
-     * @param    \Illuminate\Http\Request  $request
-     * @return  String
-     */
     public function DeleteMsg($id,Request $request)
     {
         $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/item/'. $id . '/delete');
