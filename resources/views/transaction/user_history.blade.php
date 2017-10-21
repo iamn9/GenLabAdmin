@@ -1,4 +1,4 @@
-@extends('scaffold-interface.layouts.app')
+@extends('adminlte::page_user')
 @section('title','Transaction History')
 @section('content')
 

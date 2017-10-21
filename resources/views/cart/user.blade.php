@@ -1,8 +1,7 @@
-@extends('scaffold-interface.layouts.app')
+@extends('adminlte::page_user')
 @section('title','Show')
 @section('content')
 
-<section class='content'>
 <div class="box box-primary">
     <div class="box-header">
         <h1>USER CART</h1>
@@ -42,5 +41,4 @@
         </div>
     </div>
 </div>
-</section>
 @endsection
