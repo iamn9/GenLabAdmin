@@ -13,10 +13,10 @@
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>item id</th>
-            <th>name</th>
+            <th style="width: 60px">id</th>
+            <th style="width: 210px">name</th>
             <th>description</th>
-            <th>actions</th>
+            <th style="width: 160px">actions</th>
         </thead>
         <tbody>
             @foreach($items as $item) 
