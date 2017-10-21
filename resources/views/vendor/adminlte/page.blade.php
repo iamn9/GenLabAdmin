@@ -186,7 +186,10 @@
 
     </div>
     <!-- ./wrapper -->
-        
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class = 'AjaxisModal'>
+		</div>
+	</div>     
         <!-- Compiled and minified JavaScript -->
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->
