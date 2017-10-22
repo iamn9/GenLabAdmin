@@ -23,27 +23,129 @@ class CartController extends Controller
      */
     public function index()
     {
-        $title = 'Index - cart';
+        $title = 'Cart Index';
         $searchWord = \Request::get('search');
         if(Auth::user()->isAdmin){
-            if ($searchWord == "")
-                $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->where('status', '=', 'Pending')->paginate(5)->appends(Input::except('page'));
-            else{
-                $searchWord = (int) $searchWord;
-                $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->where('status', '=', 'Pending')->paginate(5)->appends(Input::except('page'));
-            }
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })->where('carts.borrower_id','like','%'.$searchWord.'%')
+            ->orWhere('users.name', 'ilike','%'.$searchWord.'%')
+            ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
         else{
             $searchInt = (int) $searchWord;
             $userid = Auth::user()->id_no;
-            $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
-            $cart_items = $cart_items = DB::table('cart_items')->join('items', function($join){
+            $cart_id = Cart::where('borrower_id','=', $userid)->where('status','Draft')->value('id');
+            $cart_items = Cart_item::join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
-            })->where('cart_id','=',$cart_id)->where('name','like','%'.$searchWord.'%')->orWhere('item_id','=',$searchInt)->select('cart_items.*','items.name')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+            })
+            ->where('cart_id','=',$cart_id)
+            ->when($searchWord, function ($query) {
+                return $query->where('name','ilike','%'.$searchWord.'%')->orWhere('item_id','=',$searchInt);
+            })
+            ->select('cart_items.*','items.name')
+            ->paginate(5)->appends(Input::except('page'));
             return view('cart.user',compact('title','searchWord','cart_id','cart_items', 'students'));
         }
     }
+
+    public function index_draft(){
+        $title = 'Carts on Draft';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Draft')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+    public function index_pending(){
+        $title = 'Pending Carts';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Pending')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+    public function index_prepared(){
+        $title = 'Prepared Carts';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Prepared')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+    public function index_released(){
+        $title = 'Released Carts';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Released')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+    public function index_completed(){
+        $title = 'Completed Carts';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Completed')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
