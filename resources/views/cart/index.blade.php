@@ -14,14 +14,16 @@
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>borrower_id</th>
-            <th>status</th>
-            <th>actions</th>
+            <th style="width:200px">borrower_id</th>
+            <th>Borrower Name</th>
+            <th style="width: 200px">status</th>
+            <th style="width: 200px">actions</th>
         </thead>
         <tbody>
             @foreach($carts as $cart) 
             <tr>
                 <td>{!!$cart->borrower_id!!}</td>
+                <td>{!!$cart->name!!}</td>
                 <td>
                     @if($cart->status == "Draft")
                         <span class="label label-info">
