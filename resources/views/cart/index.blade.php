@@ -4,7 +4,7 @@
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Cart Index</h1>
+    <h1>{{$title}}</h1>
     @include('search')
     <br>
     <form class = 'col s3' method = 'get' action = '{!!url("cart")!!}/create'>
@@ -23,7 +23,7 @@
             @foreach($carts as $cart) 
             <tr>
                 <td>{!!$cart->borrower_id!!}</td>
-                <td>{!!$cart->name!!}</td>
+                <td>{!!$cart->getOwner()!!}</td>
                 <td>
                     @if($cart->status == "Draft")
                         <span class="label label-info">
@@ -40,8 +40,10 @@
                     @endif
                 {!!$cart->status!!}</span></td>
                 <td>
-                    <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/delete' class='delete btn btn-danger btn-xs'><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
-                    <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
+                    @if($cart->status != "Completed" && $cart->status != "Released")
+                        <a href = '/cart' data-link = '/cart/{!!$cart->id!!}/delete' class='delete btn btn-danger btn-xs'><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
+                        <a href = '#' class = 'viewEdit btn btn-primary btn-xs' data-link = '/cart/{!!$cart->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
+                    @endif
                     <a href = '#' class = 'viewShow btn btn-info btn-xs' data-link = '/cart/{!!$cart->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>
             </tr>
