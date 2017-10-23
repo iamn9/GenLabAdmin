@@ -28,8 +28,11 @@ class CartController extends Controller
         if(Auth::user()->isAdmin){
             $carts = Cart::join('users', function($join){
                 $join->on('carts.borrower_id', '=', 'users.id_no');
-            })->where('carts.borrower_id','like','%'.$searchWord.'%')
-            ->orWhere('users.name', 'ilike','%'.$searchWord.'%')
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
