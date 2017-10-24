@@ -28,8 +28,12 @@ class CartController extends Controller
         if(Auth::user()->isAdmin){
             $carts = Cart::join('users', function($join){
                 $join->on('carts.borrower_id', '=', 'users.id_no');
-            })->where('carts.borrower_id','like','%'.$searchWord.'%')
-            ->orWhere('users.name', 'ilike','%'.$searchWord.'%')
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->select('carts.id','carts.borrower_id','carts.status','users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -62,6 +66,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Draft')
+            ->select('carts.id','carts.borrower_id','carts.status','users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -81,6 +86,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Pending')
+            ->select('carts.id','carts.borrower_id','carts.status','users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -100,6 +106,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Prepared')
+            ->select('carts.id','carts.borrower_id','carts.status','users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -119,6 +126,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Released')
+            ->select('carts.id','carts.borrower_id','carts.status','users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -138,6 +146,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Completed')
+            ->select('carts.id','carts.borrower_id','carts.status','users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -198,19 +207,20 @@ class CartController extends Controller
         {
             return URL::to('cart/'.$id);
         }
-        if(Auth::user()->isAdmin){
+     
+        if(Auth::user()->isAdmin)
             $cart = Cart::findOrfail($id);
-            $searchWord = \Request::get('search');
-            if ($searchWord == "")
-                $cart_items = DB::table('cart_items')->paginate(5)->appends(Input::except('page'));
-            else{
-                $searchWord = (int) $searchWord;
-                $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
-            }
-            return view('cart.show',compact('searchWord','title','cart','cart_items'));
-        }
         else
-            return redirect('cart');
+            $cart = Cart::where('borrower_id','=',Auth::user()->id_no)->findOrfail($id);
+
+        $searchWord = \Request::get('search');
+        if ($searchWord == "")
+            $cart_items = DB::table('cart_items')->paginate(5)->appends(Input::except('page'));
+        else{
+            $searchWord = (int) $searchWord;
+            $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+        }
+        return view('cart.show',compact('searchWord','title','cart','cart_items'));
     }
 
     /**

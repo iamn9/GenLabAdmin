@@ -17,8 +17,7 @@ class Cart extends Model
 
     public function getOwner(){
         return DB::table('users')
-        ->join('carts', function($join){
-            $join->on('carts.borrower_id', '=', 'users.id_no');
-        })->value('name');
+        ->where('users.id_no',$this->borrower_id)
+        ->value('name');
     }
 }
