@@ -266,7 +266,7 @@ class TransactionController extends Controller
     }
 
     public function release($id, Request $Request){ 
-        $date = date('Y-m-d'); 
+        $date = date('Y-m-d H:i:s'); 
         $cart_id = DB::table('transactions')->where('id',$id)->value('cart_id'); 
  
         DB::table('carts') 
