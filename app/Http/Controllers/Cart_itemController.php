@@ -10,12 +10,6 @@ use App\Cart_item;
 use Amranidev\Ajaxis\Ajaxis;
 use URL;
 
-/**
- * Class Cart_itemController.
- *
- * @author  The scaffold-interface created at 2016-12-13 02:19:43am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class Cart_itemController extends Controller
 {
     /**
@@ -142,20 +136,11 @@ class Cart_itemController extends Controller
         return redirect('cart_item');
     }
 
-    /**
-     * Delete confirmation message by Ajaxis.
-     *
-     * @link      https://github.com/amranidev/ajaxis
-     * @param    \Illuminate\Http\Request  $request
-     * @return  String
-     */
     public function DeleteMsg($id,Request $request)
     {
-
         $msg = Ajaxis::BtDeleting('Remove Item','Would you like to remove this item from the cart?','/cart_item/'. $id . '/delete');
 
-        if($request->ajax())
-        {
+        if($request->ajax()){
             return $msg;
         }
     }

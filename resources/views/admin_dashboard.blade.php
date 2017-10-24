@@ -28,7 +28,7 @@
           <p>User Registrations</p>
         </div>
         <div class="icon">
-          <i class="ion ion-person-add"></i>
+          <i class="fa fa-user-plus"></i>
         </div>
         <a href="users/unactivated" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
@@ -44,7 +44,7 @@
         <div class="icon">
           <i class="fa fa-shopping-cart"></i>
         </div>
-        <a href="transaction/pending" class="small-box-footer">
+        <a href="#" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
         </a>
       </div>
@@ -56,7 +56,7 @@
           <p>Completed Transactions</p>
         </div>
         <div class="icon">
-          <i class="ion ion-stats-bars"></i>
+          <i class="fa fa-bars"></i>
         </div>
         <a href="#" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
@@ -91,7 +91,7 @@
        <tbody>
         @foreach($transactions as $transaction)
         <tr>
-         <td>{!!\Helper::format_date($transaction->submitted_at);!!}</td>
+         <td>{!!$transaction->submitted_at!!}</td>
          <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>
          <td>{!!$transaction->name!!}</td>
          <td><span class="label label-info">{!!$transaction->status!!}</span></td>

@@ -14,12 +14,6 @@ use App\Cart;
 use App\Cart_item;
 use App\Transaction;
 
-/**
- * Class CartController.
- *
- * @author  The scaffold-interface created at 2016-12-13 01:15:11am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class CartController extends Controller
 {
     /**
@@ -29,23 +23,129 @@ class CartController extends Controller
      */
     public function index()
     {
-        $title = 'Index - cart';
+        $title = 'Cart Index';
         $searchWord = \Request::get('search');
-
         if(Auth::user()->isAdmin){
-            $carts = DB::table('carts')->where('borrower_id','like','%'.$searchWord.'%')->where('status', '=', 'Pending')->paginate(5)->appends(Input::except('page'));
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })->where('carts.borrower_id','like','%'.$searchWord.'%')
+            ->orWhere('users.name', 'ilike','%'.$searchWord.'%')
+            ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
         else{
+            $searchInt = (int) $searchWord;
             $userid = Auth::user()->id_no;
-            $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
-            $students = DB::table('users')->where('isAdmin', '=', '0')->where('isActivated', '=', '1')->get();
-            $cart_items = $cart_items = DB::table('cart_items')->join('items', function($join){
+            $cart_id = Cart::where('borrower_id','=', $userid)->where('status','Draft')->value('id');
+            $cart_items = Cart_item::join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
-            })->where('cart_id','=',$cart_id)->where('name','like','%'.$searchWord.'%')->where('item_id','like','%'.$searchWord.'%')->select('cart_items.*','items.name')->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+            })
+            ->where('cart_id','=',$cart_id)
+            ->when($searchWord, function ($query) {
+                return $query->where('name','ilike','%'.$searchWord.'%')->orWhere('item_id','=',$searchInt);
+            })
+            ->select('cart_items.*','items.name')
+            ->paginate(5)->appends(Input::except('page'));
             return view('cart.user',compact('title','searchWord','cart_id','cart_items', 'students'));
         }
     }
+
+    public function index_draft(){
+        $title = 'Carts on Draft';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Draft')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+    public function index_pending(){
+        $title = 'Pending Carts';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Pending')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+    public function index_prepared(){
+        $title = 'Prepared Carts';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Prepared')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+    public function index_released(){
+        $title = 'Released Carts';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Released')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+    public function index_completed(){
+        $title = 'Completed Carts';
+        $searchWord = \Request::get('search');
+        if(Auth::user()->isAdmin){
+            $carts = Cart::join('users', function($join){
+                $join->on('carts.borrower_id', '=', 'users.id_no');
+            })
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
+                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
+            })
+            ->where('status','=','Completed')
+            ->paginate(5)->appends(Input::except('page'));
+            return view('cart.index',compact('carts','title','searchWord'));
+        }
+        else
+            return redirect('home');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -101,19 +201,16 @@ class CartController extends Controller
         if(Auth::user()->isAdmin){
             $cart = Cart::findOrfail($id);
             $searchWord = \Request::get('search');
-            $cart_items = DB::table('cart_items')->where('cart_id','=', $id)->paginate(5)->appends(Input::except('page'));  
-            $transaction = DB::table('transactions')->where('cart_id', '=', $id)->first();
-            $groupmembers = DB::table('group_members')->where('cart_id', '=', $id)->get();
-            return view('cart.show',compact('searchWord','title','cart','cart_items', 'transaction', 'groupmembers'));
+            if ($searchWord == "")
+                $cart_items = DB::table('cart_items')->paginate(5)->appends(Input::except('page'));
+            else{
+                $searchWord = (int) $searchWord;
+                $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+            }
+            return view('cart.show',compact('searchWord','title','cart','cart_items'));
         }
-        else{
-            $cart = Cart::findOrfail($id);
-            $searchWord = \Request::get('search');
-            $cart_items = DB::table('cart_items')->where('cart_id','=', $id)->paginate(5)->appends(Input::except('page'));  
-            $transaction = DB::table('transactions')->where('cart_id', '=', $id)->first();
-            $groupmembers = DB::table('group_members')->where('cart_id', '=', $id)->get();
-            return view('cart.user_show',compact('searchWord','title','cart','cart_items', 'transaction', 'groupmembers'));
-        }
+        else
+            return redirect('cart');
     }
 
     /**
@@ -155,21 +252,6 @@ class CartController extends Controller
         return redirect('cart');
     }
 
-    public function reject($id, Request $request)
-    {
-        $cart = Cart::findOrfail($id);
-        $cart->status = 'Rejected';
-        $cart->save();
-        return redirect('cart');
-    }
-
-    /**
-     * Delete confirmation message by Ajaxis.
-     *
-     * @link      https://github.com/amranidev/ajaxis
-     * @param    \Illuminate\Http\Request  $request
-     * @return  String
-     */
     public function DeleteMsg($id,Request $request)
     {
         $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/cart/'. $id . '/delete');
@@ -203,8 +285,6 @@ class CartController extends Controller
     }
 
     public function addItem($itemID, Request $request){
-            $defStatus = '0';
-            $subject = '';
             //get the id_no of user logged in
             $userid = Auth::user()->id_no;
 
@@ -214,14 +294,14 @@ class CartController extends Controller
 
             if(is_null($cart_id)){
                 $cart_id = DB::table('carts')->insertGetId(
-                    ['borrower_id' => $userid, 'status' => 'Draft', 'subject' => $subject]
+                    ['borrower_id' => $userid, 'status' => 'Draft']
                 );                
             }
             $countQtyItem = DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $itemID)->count();
 
             if($countQtyItem == 0){
                     DB::table('cart_items')->insert([
-                    ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1, 'status' => $defStatus]
+                    ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1]
                     ]);
                 }
 
@@ -231,14 +311,10 @@ class CartController extends Controller
     }
 
     public function checkout($cart_id, Request $request){
-        $subject = $request->get('subject');
-        $groupmembers = $request->get('groupmembers');
         //get the id_no of user logged in
         $userid = Auth::user()->id_no;
         //get the current time and date (needs to fix timezone)
         $date = date('Y-m-d H:i:s');
-
-        //before checkout, check if user has active transaction either pending, or released, if the user has, display error message
 
         $transaction_id = DB::table('transactions')->insertGetId(
             ['cart_id' => $cart_id, 'submitted_at' => $date]
@@ -246,18 +322,7 @@ class CartController extends Controller
         DB::table('carts')
             ->where('id', $cart_id)
             ->where('borrower_id',$userid)
-            ->update(['status' => 'Pending', 'subject' => $subject]);
-
-        $dataSet = [];
-        foreach ($groupmembers as $member) {
-            $dataSet[] = [
-                'cart_id'    => $cart_id,
-                'user_id'       => $member,
-            ];
-            }
-
-        DB::table('group_members')->insert($dataSet);
-        
+            ->update(['status' => 'Pending']);
         return redirect('/home');
     }
 }

@@ -3,12 +3,6 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-/**
- * Class Carts.
- *
- * @author  The scaffold-interface created at 2016-12-13 01:15:11am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class Carts extends Migration
 {
     /**
@@ -30,7 +24,7 @@ class Carts extends Migration
          * Foreignkeys section
          */
         
-        $table->foreign('borrower_id')->references('id_no')->on('users');
+        $table->foreign('borrower_id')->references('id_no')->on('users')->onDelete('cascade');
         
         // type your addition here
 

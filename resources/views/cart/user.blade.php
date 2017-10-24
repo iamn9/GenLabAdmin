@@ -1,31 +1,19 @@
-@extends('scaffold-interface.layouts.app')
+@extends('adminlte::page_user')
 @section('title','Show')
 @section('content')
-
-<section class='content'>
 
 <div class="box box-primary">
     <div class="box-header">
         <h1>USER CART</h1>
-        <form method = 'GET'>
-             @if($searchWord != "")
-                Showing search results for "<b>{{$searchWord}}</b>".
-            @endif
-            <div class="input-group" >
-                <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
-                <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
+        @include('search')
     </div>
     <div class="box-body">
         <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
             <thead>
-                <th>item_id</th>
+                <th style="width: 60px">item_id</th>
                 <th>name</th>
-                <th>qty</th>
-                <th>actions</th>
+                <th style="width: 80px">qty</th>
+                <th style="width: 200px">actions</th>
             </thead>
             <tbody>
                 @foreach($cart_items as $cart_item) 
@@ -46,41 +34,11 @@
             <br>
         @if(!is_null($cart_id))
         <div class="input-group">    
-            <button id = "myBtn" class = 'btn btn-success'>CHECKOUT</button>
+        <form method = 'GET' action = '/cart/{{$cart_id}}/checkout'>
+            <button class = 'btn btn-success'>CHECKOUT</button>
+        </form>
         @endif
         </div>
     </div>
 </div>
-
-    @include('cart.checkout_modal')
-
-    <script>
-    // Get the modal
-    var modal = document.getElementById('myModal');
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-    </script>
-    
-</section>
 @endsection

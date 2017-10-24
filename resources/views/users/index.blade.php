@@ -4,17 +4,7 @@
 <div class="box box-primary">
 <div class="box-header">
 	<h1>{{$title}}</h1>
-	<form method = 'GET'>
-	    @if($searchWord != "")
-            Showing search results for "<b>{{$searchWord}}</b>".
-        @endif
-		<div class="input-group" >
-	        <input type="text" name="search" class="form-control pull-right" placeholder="Search" value='{!!$searchWord!!}'>
-	        <div class="input-group-btn">
-	            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-	        </div>
-	    </div>
-    </form>
+	@include('search')
 </div>
 	<div class="box-body">
 		<a href="{{url('users/create')}}" class = "btn btn-success"><i class="fa fa-plus fa-md" aria-hidden="true"></i> New User</a>

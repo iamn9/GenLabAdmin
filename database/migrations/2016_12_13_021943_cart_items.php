@@ -3,12 +3,6 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-/**
- * Class Cart_items.
- *
- * @author  The scaffold-interface created at 2016-12-13 02:19:43am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class CartItems extends Migration
 {
     /**
@@ -23,7 +17,7 @@ class CartItems extends Migration
             $table->unsignedInteger('cart_id');
             $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->unsignedInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->integer('qty')->default(1);
         });
     }

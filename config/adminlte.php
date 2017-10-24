@@ -125,7 +125,7 @@ return [
                 [
                     'text'       => 'Show All',
                     'icon_color' => 'white',
-                    'url'         => 'users/',
+                    'url'         => 'users/all',
                 ],
                 [
                     'text'       => 'Unactivated',
@@ -152,10 +152,42 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Prepare Pending Carts',
+            'text'        => 'Carts',
             'url'         => 'cart',
             'icon'        => 'shopping-cart',
             'label_color' => 'success',
+            'submenu'   =>[
+                [
+                    'text'       => 'Show All',
+                    'icon_color' => 'white',
+                    'url'         => 'cart/all',
+                ],
+                [
+                    'text'       => 'Draft',
+                    'icon_color' => 'aqua',
+                    'url'         => 'cart/draft',
+                ],
+                [
+                    'text'       => 'Pending',
+                    'icon_color' => 'red',
+                    'url'         => 'cart/pending',
+                ],
+                [
+                    'text'       => 'Prepared',
+                    'icon_color' => 'orange',
+                    'url'         => 'cart/prepared',
+                ],
+                [
+                    'text'       => 'Released',
+                    'icon_color' => 'blue',
+                    'url'         => 'cart/released',
+                ],
+                [
+                    'text'       => 'Completed',
+                    'icon_color' => 'green',
+                    'url'         => 'cart/completed',
+                ],
+            ]
         ],
         'TRANSACTIONS',
         [
@@ -165,7 +197,12 @@ return [
                 [
                     'text'       => 'Show All',
                     'icon_color' => 'white',
-                    'url'         => 'transaction/',
+                    'url'         => 'transaction/all',
+                ],
+                [
+                    'text'       => 'Pending',
+                    'icon_color' => 'red',
+                    'url'         => 'transaction/pending',
                 ],
                 [
                     'text'       => 'Prepared',
@@ -174,18 +211,13 @@ return [
                 ],
                 [
                     'text'       => 'Released',
-                    'icon_color' => 'aqua',
+                    'icon_color' => 'blue',
                     'url'         => 'transaction/released',
                 ],
                 [
                     'text'       => 'Completed',
                     'icon_color' => 'green',
                     'url'         => 'transaction/completed',
-                ],
-                [
-                    'text'       => 'Rejected',
-                    'icon_color' => 'red',
-                    'url'         => 'transaction/rejected',
                 ],
             ]
         ],        

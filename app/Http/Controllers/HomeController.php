@@ -36,13 +36,7 @@ class HomeController extends Controller
                 return view('admin_dashboard',compact('transactions','count_unactivatedUsers','count_newOrders','count_completed'));
             }
             else{
-                if(Auth::user()->isActivated){
-                    $userid = Auth::user()->id_no;
-                    $carts = DB::table('carts')->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->orderBy('id')->get();
-                    return view('user_dashboard', compact('user', 'carts'));
-                }
-                else
-                    return view('user_dashboard'); //replace with welcome page if code is final
+                return view('user_dashboard');
             }
     }
 }

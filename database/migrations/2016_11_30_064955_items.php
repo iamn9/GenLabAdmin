@@ -3,12 +3,6 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-/**
- * Class Items.
- *
- * @author  The scaffold-interface created at 2016-11-30 06:49:55am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class Items extends Migration
 {
     /**

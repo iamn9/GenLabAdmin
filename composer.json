@@ -8,7 +8,8 @@
         "php": ">=5.6.4",
         "laravel/framework": "5.3.*",
         "jeroennoten/laravel-adminlte": "^1.17",
-        "Amranidev/scaffold-interface": "v1.6.*"
+        "Amranidev/ajaxis": "v3.*",
+        "vinkla/pusher": "3.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -4,22 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
-/**
- * Class Cart.
- *
- * @author  The scaffold-interface created at 2016-12-13 01:15:11am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class Cart extends Model
 {
-	
-	
-    public $timestamps = false;
-    
+    public $timestamps = false;  
     protected $table = 'carts';
 
 	public function getID(){
         return $this->id;
+    }
+
+    public function getOwner(){
+        return DB::table('users')
+        ->join('carts', function($join){
+            $join->on('carts.borrower_id', '=', 'users.id_no');
+        })->value('name');
     }
 }

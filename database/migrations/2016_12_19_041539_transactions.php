@@ -3,12 +3,6 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-/**
- * Class Transactions.
- *
- * @author  The scaffold-interface created at 2016-12-19 04:15:40am
- * @link  https://github.com/amranidev/scaffold-interface
- */
 class Transactions extends Migration
 {
     /**
