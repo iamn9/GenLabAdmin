@@ -23,11 +23,11 @@
         <!-- Bootstrap 3.3.7 -->
         <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
         <!-- Ionicons -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
         <!-- Theme style -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/AdminLTE.min.css') }}">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
         folder instead of downloading all of them to reduce the load. -->
         <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.5/css/skins/_all-skins.min.css">
@@ -191,8 +191,8 @@
 		</div>
 	</div>     
         <!-- Compiled and minified JavaScript -->
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->
+        <script src="{{ asset('vendor/adminlte/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+        <script src="{{ asset('vendor/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
         <script> var baseURL = "{{ URL::to('/') }}"</script>
         <script src = "{{URL::asset('js/AjaxisBootstrap.js') }}"></script>
         <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
@@ -215,7 +215,7 @@
             </li>'
             );
         });
-        </script-->
+        </script>
 @stop
 
 @section('adminlte_js')
