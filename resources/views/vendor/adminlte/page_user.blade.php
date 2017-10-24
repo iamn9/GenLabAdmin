@@ -202,8 +202,7 @@
         <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->
         <script> var baseURL = "{{ URL::to('/') }}"</script>
         <script src = "{{URL::asset('js/AjaxisBootstrap.js') }}"></script>
-        <script src = "{{URL::asset('js/scaffold-interface-js/customA.js') }}"></script>
-        <!--script src="https://js.pusher.com/3.2/pusher.min.js"></script>
+        <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
         <script>
         // pusher log to console.
         Pusher.logToConsole = true;
