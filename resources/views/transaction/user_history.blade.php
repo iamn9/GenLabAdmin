@@ -17,7 +17,8 @@
             @foreach($transactions as $transaction) 
             <tr>
                 <td>{!!$transaction->cart_id!!}</td>
-                <td>{!!$transaction->completed_at!!}</td>
+                <td>{!!date('F d, Y', strtotime($transaction->completed_at))!!} {!!Carbon\Carbon::parse($transaction->completed_at)->format('g:i A')!!}
+                </td>
                 <td>
                     <form method = 'GET' action = '/transaction/{{$transaction->cart_id}}/show'>
                         <button class = 'btn btn-success'>INFO</button>

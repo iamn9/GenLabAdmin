@@ -20,7 +20,8 @@
             <tr>
                 <td>Borrower Name</td>
                 <td>{!!$transaction->cart_id!!}</td>
-                <td>{!!$transaction->prepared_at!!}</td>
+                <td> {!!date('F d, Y', strtotime($transaction->prepared_at))!!} {!!Carbon\Carbon::parse($transaction->prepared_at)->format('g:i A')!!}
+                </td>
                 <td>
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     <a href = '#' class = 'viewShow btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>

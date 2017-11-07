@@ -25,10 +25,14 @@
             @foreach($transactions as $transaction) 
             <tr>
                 <td>{!!$transaction->cart_id!!}</td>
-                <td>{!!$transaction->submitted_at!!}</td>
-                <td>{!!$transaction->prepared_at!!}</td>
-                <td>{!!$transaction->released_at!!}</td>
-                <td>{!!$transaction->completed_at!!}</td>
+                <td> {!!date('F d, Y', strtotime($transaction->submitted_at))!!} {!!Carbon\Carbon::parse($transaction->submitted_at)->format('g:i A')!!}
+                </td>
+                <td> {!!date('F d, Y', strtotime($transaction->prepared_at))!!} {!!Carbon\Carbon::parse($transaction->prepared_at)->format('g:i A')!!}
+                </td>
+                <td> {!!date('F d, Y', strtotime($transaction->released_at))!!} {!!Carbon\Carbon::parse($transaction->released_at)->format('g:i A')!!}
+                </td>
+                <td> {!!date('F d, Y', strtotime($transaction->completed_at))!!} {!!Carbon\Carbon::parse($transaction->completed_at)->format('g:i A')!!}
+                </td>
                 <td>
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                     <a href = '#' class = 'edit btn btn-primary xs' data-link = '/transaction/{!!$transaction->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>

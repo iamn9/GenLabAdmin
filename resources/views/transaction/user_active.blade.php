@@ -15,7 +15,8 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <i class="fa fa-flask"></i> GenLab System
-            <small class="pull-right">{!!$date!!}</small>
+            <small class="pull-right">{!!date('F d, Y', strtotime($date))!!}
+            </small>
           </h2>
         </div>
         <!-- /.col -->
@@ -39,11 +40,15 @@
           <address>
           @foreach($carts as $cart)
             @if($cart->status == "Completed")
-                Submitted: {!!$cart->submitted_at!!} <br>
-                Prepared: {!!$cart->completed_at!!}<br>
-                Released: {!!$cart->released_at!!}<br>
+                Submitted: {!!date('F d, Y', strtotime($cart->submitted_at))!!} {!!Carbon\Carbon::parse($cart->submitted_at)->format('g:i A')!!}
+                 <br>
+                Prepared: {!!date('F d, Y', strtotime($cart->completed_at))!!} {!!Carbon\Carbon::parse($cart->completed_at)->format('g:i A')!!}
+                <br>
+                Released: {!!date('F d, Y', strtotime($cart->released_at))!!} {!!Carbon\Carbon::parse($cart->released_at)->format('g:i A')!!}
+                <br>
             @else
-                Submitted: {!!$cart->submitted_at!!} <br>
+                Submitted: {!!date('F d, Y', strtotime($cart->submitted_at))!!} {!!Carbon\Carbon::parse($cart->submitted_at)->format('g:i A')!!}
+                 <br>
                 Status: <b>{!!$cart->status!!}</b>
             @endif
           @endforeach
