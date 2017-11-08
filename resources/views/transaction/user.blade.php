@@ -24,12 +24,9 @@
             @foreach($transactions as $transaction) 
             <tr>
                 <td><a href="#">{!!$transaction->cart_id!!}</a></td>
-                <td> {!!date('F d, Y', strtotime($transaction->submitted_at))!!} {!!Carbon\Carbon::parse($transaction->submitted_at)->format('g:i A')!!}
-                </td>
-                <td> {!!date('F d, Y', strtotime($transaction->released_at))!!} {!!Carbon\Carbon::parse($transaction->released_at)->format('g:i A')!!}
-                </td>
-                <td><!--{!!$transaction->completed_at!!} -->{!!date('F d, Y', strtotime($transaction->completed_at))!!} {!!Carbon\Carbon::parse($transaction->completed_at)->format('g:i A')!!}
-                </td>
+                <td>{!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}</td>
+                <td>{!!date('F j, Y g:i A', strtotime($transaction->released_at))!!}</td>
+                <td>{!!date('F j, Y g:i A', strtotime($transaction->completed_at))!!}</td>
                 <td>
                     <a href = '#' class = 'viewShow btn btn-warning btn-xs' data-link = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>

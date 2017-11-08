@@ -13,7 +13,6 @@ use App\Cart;
 use App\Cart_item;
 use App\User;
 use URL;
-use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -83,7 +82,7 @@ class TransactionController extends Controller
      */
     public function show($id,Request $request)
     {
-        $date = date('Y-m-d');
+        $date = date('F j, Y g:i A');
         $title = 'Show - transaction';
         if($request->ajax())
         {
@@ -221,7 +220,7 @@ class TransactionController extends Controller
     }
 
     public function prepare($id, Request $Request){ 
-        $date = date('Y-m-d H:i:s'); 
+        $date = date('F j, Y g:i A'); 
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
  
         Cart::where('id', $cart_id)->update(['status' => 'Prepared']); 
@@ -240,7 +239,7 @@ class TransactionController extends Controller
     }
 
     public function release($id, Request $Request){ 
-        $date = date('Y-m-d'); 
+        $date = date('F j, Y g:i A'); 
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
  
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
@@ -259,7 +258,7 @@ class TransactionController extends Controller
     }
  
     public function complete($id, Request $Request){ 
-        $date = date('Y-m-d H:i:s'); 
+        $date = date('F j, Y g:i A'); 
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
  
         Cart::where('id', $cart_id)->update(['status' => 'Completed']); 
@@ -278,7 +277,7 @@ class TransactionController extends Controller
     }
 
     public function user_active(){ 
-        $date = date('Y-m-d');
+        $date = date('F j, Y');
         $title = 'Active Transaction'; 
         $userid = Auth::user()->id_no; 
         $cart_id = Cart::where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->value('id');
@@ -294,7 +293,7 @@ class TransactionController extends Controller
         return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
     } 
     public function user_history_info($id, Request $Request){
-        $date = date('Y-m-d');
+        $date = date('F j, Y');
         $title = 'Transaction History'; 
         $userid = Auth::user()->id_no;
         $user = User::where('id_no', '=', $userid)->first();

@@ -9,9 +9,7 @@
         "laravel/framework": "5.3.*",
         "jeroennoten/laravel-adminlte": "^1.17",
         "Amranidev/ajaxis": "v3.*",
-        "pusher/pusher-http-laravel": "2.4.0",
-        "nesbot/carbon": "^1.22"
-
+        "pusher/pusher-http-laravel": "2.4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -41,14 +41,11 @@
           <address>
           @foreach($carts as $cart)
             @if($cart->status == "Completed")
-                Submitted: {!!date('F d, Y', strtotime($cart->submitted_at))!!} {!!Carbon\Carbon::parse($cart->submitted_at)->format('g:i A')!!} <br>
-
-                Prepared: {!!date('F d, Y', strtotime($cart->completed_at))!!} {!!Carbon\Carbon::parse($cart->completed_at)->format('g:i A')!!} <br>
-
-                Released: {!!date('F d, Y', strtotime($cart->released_at))!!} {!!Carbon\Carbon::parse($cart->released_at)->format('g:i A')!!}<br>
+                Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
+                Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}<br>
+                Released: {!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
             @else
-                <!-- {!!Carbon\Carbon::parse($cart->submitted_at)->  diffForHumans()!!} on -->
-                Submitted: {!!date('F d, Y', strtotime($cart->submitted_at))!!} {!!Carbon\Carbon::parse($cart->submitted_at)->format('g:i A')!!} <br>
+                Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
                 Status: <b>{!!$cart->status!!}</b>
             @endif
           @endforeach
