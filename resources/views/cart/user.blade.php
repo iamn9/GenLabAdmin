@@ -30,15 +30,14 @@
                 @endforeach 
             </tbody>
         </table>
-        <div class='text-center'>{!! $cart_items->render() !!}</div>
-            <br>
-        @if(!is_null($cart_id))
-        <div class="input-group">    
-        <form method = 'GET' action = '/cart/{{$cart_id}}/checkout'>
-            <button class = 'btn btn-success'>CHECKOUT</button>
-        </form>
+        <div class='text-center'>{!! $cart_items->render() !!}</div><br>
+        @if(count($cart_items))
+            <div class="input-group">    
+            <form method = 'GET' action = '/cart/{{$cart_id}}/checkout'>
+                <button class = 'btn btn-success'>CHECKOUT</button>
+            </form>
+            </div>
         @endif
-        </div>
     </div>
 </div>
 @endsection
