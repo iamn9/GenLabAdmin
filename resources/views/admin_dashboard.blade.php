@@ -91,7 +91,7 @@
        <tbody>
         @foreach($transactions as $transaction)
         <tr>
-         <td>{!!$transaction->submitted_at!!}</td>
+         <td> {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}</td>
          <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>
          <td>{!!$transaction->name!!}</td>
          <td><span class="label label-info">{!!$transaction->status!!}</span></td>

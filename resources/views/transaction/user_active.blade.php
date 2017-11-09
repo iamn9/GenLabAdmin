@@ -15,7 +15,8 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <i class="fa fa-flask"></i> GenLab System
-            <small class="pull-right">{!!$date!!}</small>
+            <small class="pull-right">{!!date('F d, Y', strtotime($date))!!}
+            </small>
           </h2>
         </div>
         <!-- /.col -->
@@ -39,11 +40,11 @@
           <address>
           @foreach($carts as $cart)
             @if($cart->status == "Completed")
-                Submitted: {!!$cart->submitted_at!!} <br>
-                Prepared: {!!$cart->completed_at!!}<br>
-                Released: {!!$cart->released_at!!}<br>
+                Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
+                Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}<br>
+                Released: {!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
             @else
-                Submitted: {!!$cart->submitted_at!!} <br>
+                Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
                 Status: <b>{!!$cart->status!!}</b>
             @endif
           @endforeach

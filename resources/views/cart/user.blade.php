@@ -13,7 +13,7 @@
                 <th style="width: 60px">item_id</th>
                 <th>name</th>
                 <th style="width: 80px">qty</th>
-                <th style="width: 200px">actions</th>
+                <th style="width: 220px">actions</th>
             </thead>
             <tbody>
                 @foreach($cart_items as $cart_item) 

@@ -99,7 +99,7 @@ class ItemController extends Controller
     public function showModal($id, Request $request){
         $item = Item::findOrfail($id);
         $msg = Ajaxis::btShow('Item Name: '.$item->name, $item->description);
-
+        
         if($request->ajax())
         {
             return $msg;
@@ -120,7 +120,6 @@ class ItemController extends Controller
             return URL::to('item/'. $id . '/edit');
         }
 
-        
         $item = Item::findOrfail($id);
         return view('item.edit',compact('title','item'  ));
     }

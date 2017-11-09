@@ -6,11 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>GenLab System</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
         <!-- Styles -->
         <style>
+            @font-face {
+            font-family: 'Raleway';
+            font-style: thin;
+            src: url("/fonts/raleway/Raleway-Thin.woff2") format('woff2');
+            }
+        
             html, body {
                 background-color: #fff;
                 background-image: url("/img/bghome.jpg");
@@ -41,35 +44,24 @@
                 top: 18px;
             }
 
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
             .links > a {
-                color: #636b6f;
+                color: #000000;
                 padding: 0 25px;
+                font-family: 'Raleway', sans-serif;
+                font-weight: bold;
                 font-size: 12px;
-                font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
             }
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            <div class="content">
+            <div style="text-align: center;">
             <img src="/img/upicon.png" style="width:128px;height:128px;">
             <img src="/img/intersoc.png" style="width:109px;height:128px">
-                <div class="title m-b-md">
+                <div style="margin-bottom: 30px; font-size: 84px;">
                     GenLab System
                 </div>
 
