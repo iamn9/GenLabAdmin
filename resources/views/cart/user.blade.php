@@ -24,21 +24,20 @@
                     <td>
                         <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart_item/{!!$cart_item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Remove</a>
                         <a href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
-                        <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-primary btn-xs' data-link = "/item/{!!$cart_item->item_id!!}/showModal" ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
+                        <a href = '#' data-toggle="modal" data-target="#myModal" class = 'display btn btn-primary btn-xs' data-link = "/item/{!!$cart_item->item_id!!}/showModal" ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
                     </td>
                 </tr>
                 @endforeach 
             </tbody>
         </table>
-        <div class='text-center'>{!! $cart_items->render() !!}</div>
-            <br>
-        @if(!is_null($cart_id))
-        <div class="input-group">    
-        <form method = 'GET' action = '/cart/{{$cart_id}}/checkout'>
-            <button class = 'btn btn-success'>CHECKOUT</button>
-        </form>
+        <div class='text-center'>{!! $cart_items->render() !!}</div><br>
+        @if(count($cart_items))
+            <div class="input-group">    
+            <form method = 'GET' action = '/cart/{{$cart_id}}/checkout'>
+                <button class = 'btn btn-success'>CHECKOUT</button>
+            </form>
+            </div>
         @endif
-        </div>
     </div>
 </div>
 @endsection

@@ -98,8 +98,12 @@ class ItemController extends Controller
 
     public function showModal($id, Request $request){
         $item = Item::findOrfail($id);
-        $msg = Ajaxis::btShow('Item Name: '.$item->name, $item->description);
-        
+        $msg = Ajaxis::BtDisplay("Item Info",
+        [
+            ['key' => 'ID', 'value' => $item->id],
+            ['key' => 'Name', 'value' => $item->name],
+            ['key' => 'Description', 'value' => $item->description],
+        ]);
         if($request->ajax())
         {
             return $msg;
