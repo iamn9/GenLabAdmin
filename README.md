@@ -90,13 +90,15 @@ php artisan db:seed -- class=ItemsTableSeeder
 If you discover any security related issues, please email nagarcia2@up.edu.ph or send a report using the issue tracker. Thanks!
 
 
-## Credits
+## Contributors
 **Version 1**
 - [Noel Garcia](https://gitlab.com/nagarcia2)
 - [Ferlie Mae Penido](#)
 - [Kristine Joyce Sabar](#)
+- [John Ultra](https://gitlab.com/jdultra)
 
 **Version 2**
+- [John Ultra](https://gitlab.com/jdultra)
 - [Noel Garcia](https://gitlab.com/nagarcia2)
 - [April Joy Padrigano](#)
 - [Jude Clarence Baguinang](#)
