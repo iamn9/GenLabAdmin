@@ -37,7 +37,7 @@
 <script src="{{ asset('vendor/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->
-    <script src="{{ asset('css/jquery.dataTables.min.css') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
 @endif
 
 @yield('adminlte_js')
