@@ -246,7 +246,8 @@ class CartController extends Controller
         $cart->borrower_id = $request->borrower_id;
         
         $cart->status = $request->status;
-        
+
+        \Session::flash('flash_message','Sucessfully Updated.'); //<--FLASH MESSAGE
         
         $cart->save();
 
@@ -285,6 +286,8 @@ class CartController extends Controller
         {
             return $msg;
         }
+
+        \Session::flash('flash_message','Sucessfully Deleted.'); //<--FLASH MESSAGE
     }
 
     /**
@@ -373,6 +376,9 @@ class CartController extends Controller
             ->where('id', $cart_id)
             ->where('borrower_id',$userid)
             ->update(['status' => 'Pending']);
+
+        \Session::flash('flash_message','Sucessfully Sent.'); //<--FLASH MESSAGE
+
         return redirect('/home');
     }
 }
