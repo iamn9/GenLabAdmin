@@ -51,26 +51,9 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $item = new Item();
-
-        
         $item->name = $request->name;
-
-        
         $item->description = $request->description;
-
-        
-        
         $item->save();
-
-        $pusher = App::make('pusher');
-
-        //default pusher notification.
-        //by default channel=test-channel,event=test-event
-        //Here is a pusher notification example when you create a new resource in storage.
-        //you can modify anything you want or use it wherever.
-        $pusher->trigger('test-channel',
-                         'test-event',
-                        ['message' => 'A new item has been created !!']);
 
         return redirect('item');
     }

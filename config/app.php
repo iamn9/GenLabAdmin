@@ -168,7 +168,6 @@ return [
          */
 
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
-        Vinkla\Pusher\PusherServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -212,7 +211,6 @@ return [
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
         'Notification' => Illuminate\Support\Facades\Notification::class,
-        'Pusher' => Vinkla\Pusher\Facades\Pusher::class,
         'Password' => Illuminate\Support\Facades\Password::class,
         'Queue' => Illuminate\Support\Facades\Queue::class,
         'Redirect' => Illuminate\Support\Facades\Redirect::class,

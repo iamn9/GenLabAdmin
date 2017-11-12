@@ -46,29 +46,10 @@ class Cart_itemController extends Controller
     public function store(Request $request)
     {
         $cart_item = new Cart_item();
-
-        
         $cart_item->cart_id = $request->cart_id;
-
-        
         $cart_item->item_id = $request->item_id;
-
-        
         $cart_item->qty = $request->qty;
-
-        
-        
         $cart_item->save();
-
-        $pusher = App::make('pusher');
-
-        //default pusher notification.
-        //by default channel=test-channel,event=test-event
-        //Here is a pusher notification example when you create a new resource in storage.
-        //you can modify anything you want or use it wherever.
-        $pusher->trigger('test-channel',
-                         'test-event',
-                        ['message' => 'A new cart_item has been created !!']);
 
         return redirect('cart_item');
     }
