@@ -196,6 +196,7 @@
         <script src="{{ asset('vendor/adminlte/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
         <script src="{{ asset('vendor/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
         <script> var baseURL = "{{ URL::to('/') }}"</script>
+        <script src = "{{URL::asset('js/bootbox.min.js') }}"></script>
 @stop
 
 @section('adminlte_js')

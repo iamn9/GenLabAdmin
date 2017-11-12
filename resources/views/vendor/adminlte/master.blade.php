@@ -35,6 +35,8 @@
 
 <script src="{{ asset('vendor/adminlte/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src = "{{URL::asset('js/bootbox.min.js') }}"></script> 
+<script src = "{{URL::asset('js/ModalAJAX.js') }}"></script>
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->
     <script src="{{ asset('css/jquery.dataTables.min.css') }}"></script>
