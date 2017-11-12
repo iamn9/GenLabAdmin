@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Item;
-use Amranidev\Ajaxis\Ajaxis;
 use URL;
 
 class ItemController extends Controller
@@ -98,12 +97,12 @@ class ItemController extends Controller
 
     public function showModal($id, Request $request){
         $item = Item::findOrfail($id);
-        $msg = Ajaxis::BtDisplay("Item Info",
-        [
-            ['key' => 'ID', 'value' => $item->id],
-            ['key' => 'Name', 'value' => $item->name],
-            ['key' => 'Description', 'value' => $item->description],
-        ]);
+        // $msg = Ajaxis::BtDisplay("Item Info",
+        // [
+        //     ['key' => 'ID', 'value' => $item->id],
+        //     ['key' => 'Name', 'value' => $item->name],
+        //     ['key' => 'Description', 'value' => $item->description],
+        // ]);
         if($request->ajax())
         {
             return $msg;
@@ -151,7 +150,7 @@ class ItemController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/item/'. $id . '/delete');
+        //$msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/item/'. $id . '/delete');
 
         if($request->ajax())
         {

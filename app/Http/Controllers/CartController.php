@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Amranidev\Ajaxis\Ajaxis;
 use URL;
 use App\Cart;
 use App\Cart_item;
@@ -264,7 +263,7 @@ class CartController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/cart/'. $id . '/delete');
+        //$msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/cart/'. $id . '/delete');
 
         if($request->ajax())
         {
@@ -286,8 +285,22 @@ class CartController extends Controller
 
     public function addItemMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Add Item','Would you like to add this item to your cart?','/cart/add/'. $id);
-
+        //$msg = Ajaxis::BtDeleting('Add Item','Would you like to add this item to your cart?','/cart/add/'. $id);
+        $msg = '<script>bootbox.confirm({ 
+            size: "small",
+            title: "Your Title",
+            message: "Your message here…", 
+            callback: function(result){
+                if (result){
+                    Toastr::info("hello");
+                    $.ajax({
+                        type: "GET",
+                        url: "/cart/add/'.$id.'"
+                    });          
+                }
+            }
+          })</script>';
+          
         if($request->ajax())
         {
             return $msg;
@@ -318,6 +331,8 @@ class CartController extends Controller
             else{
                 DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $itemID)->increment('qty');
             }
+
+            \Session::flash('flash_message','Sucessfully Added.'); //<--FLASH MESSAGE 
     }
 
     public function checkout($cart_id, Request $request){

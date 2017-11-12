@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
-use Amranidev\Ajaxis\Ajaxis;
 use App\Http\Controllers\Controller;
 use App\Transaction;
 use App\Cart;
@@ -145,7 +144,7 @@ class TransactionController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/transaction/'. $id . '/delete');
+        //$msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/transaction/'. $id . '/delete');
 
         if($request->ajax())
         {

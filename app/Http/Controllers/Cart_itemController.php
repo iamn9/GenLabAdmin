@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Cart_item;
-use Amranidev\Ajaxis\Ajaxis;
 use URL;
 
 class Cart_itemController extends Controller
@@ -138,7 +137,7 @@ class Cart_itemController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Remove Item','Would you like to remove this item from the cart?','/cart_item/'. $id . '/delete');
+        //$msg = Ajaxis::BtDeleting('Remove Item','Would you like to remove this item from the cart?','/cart_item/'. $id . '/delete');
 
         if($request->ajax()){
             return $msg;

@@ -186,15 +186,11 @@
 
     </div>
     <!-- ./wrapper -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class = 'AjaxisModal'>
-		</div>
-	</div>     
+ 
         <!-- Compiled and minified JavaScript -->
         <script src="{{ asset('vendor/adminlte/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
         <script src="{{ asset('vendor/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
         <script> var baseURL = "{{ URL::to('/') }}"</script>
-        <script src = "{{URL::asset('js/AjaxisBootstrap.js') }}"></script>
         <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
         <script>
         // pusher log to console.

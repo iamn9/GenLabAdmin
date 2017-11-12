@@ -167,10 +167,7 @@ return [
          * Package Service Providers...
          */
 
-        //AdminLTE
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
-        //ajaxis modals by amranidev
-        Amranidev\Ajaxis\AjaxisServiceProvider::class,
         Vinkla\Pusher\PusherServiceProvider::class,
         /*
          * Application Service Providers...
