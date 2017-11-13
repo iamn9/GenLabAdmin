@@ -40,6 +40,15 @@
 <script src = "{{URL::asset('js/bootbox.min.js') }}"></script> 
 <script src = "{{URL::asset('js/ModalAJAX.js') }}"></script>
 <script src = "{{URL::asset('js/toastr.min.js') }}"></script>
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "newestOnTop": true,
+        "progressBar": true
+    }
+</script>
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->
     <script src="{{ asset('css/jquery.dataTables.min.css') }}"></script>

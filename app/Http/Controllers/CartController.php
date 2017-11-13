@@ -12,6 +12,7 @@ use URL;
 use App\Cart;
 use App\Cart_item;
 use App\Transaction;
+use App\Item;
 
 class CartController extends Controller
 {
@@ -254,8 +255,32 @@ class CartController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        //$msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/cart/'. $id . '/delete');
-
+        $notif = 'toastr["info"]("Cart # '.$id.' was successfully deleted from the system")';
+        $msg = '<script>
+        bootbox.confirm({
+            title: "Delete Cart #'.$id.' from the system",
+            message: "Warning! Are you sure you want to remove this Cart?",
+            buttons: {
+                confirm: {
+                    label: "Delete",
+                    className: "btn-danger"
+                },
+                cancel: {
+                    label: "Cancel",
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $("#" + '.$id.').remove();
+                    '.$notif.'
+                    $.ajax({
+                        type: "GET",
+                        url: "/cart/'.$id.'/delete"
+                    });          
+                }
+            }
+        });
+        </script>';
         if($request->ajax())
         {
             return $msg;
@@ -276,24 +301,33 @@ class CartController extends Controller
 
     public function addItemMsg($id,Request $request)
     {
-        //$msg = Ajaxis::BtDeleting('Add Item','Would you like to add this item to your cart?','/cart/add/'. $id);
-        $msg = '<script>bootbox.confirm({ 
-            size: "small",
-            title: "Your Title",
-            message: "Your message here…", 
+        $item = Item::findOrFail($id);
+        $notif = 'toastr["success"]("'.$item->name.' successfully added to cart.","Success")';
+        $msg = '<script>bootbox.prompt({ 
+            title: "Add <b>qty of '.$item->name.'</b> to cart",
+            inputType: "number",
+            value: "1",
+            buttons: {
+                confirm: {
+                    label: "Add to Cart",
+                    className: "btn-success"
+                },
+                cancel: {
+                    label: "Cancel"
+                }
+            },
             callback: function(result){
-                if (result){
-                    Toastr::info("hello");
+                if (result>=1){
+                    '.$notif.'
                     $.ajax({
                         type: "GET",
-                        url: "/cart/add/'.$id.'"
+                        url: "/cart/add/'.$id.'?qty="+result
                     });          
                 }
             }
           })</script>';
           
-        if($request->ajax())
-        {
+        if($request->ajax()){
             return $msg;
         }
     }
@@ -315,12 +349,12 @@ class CartController extends Controller
 
             if($countQtyItem == 0){
                     DB::table('cart_items')->insert([
-                    ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => 1]
+                    ['cart_id' => $cart_id, 'item_id' => $itemID, 'qty' => $request->qty]
                     ]);
                 }
 
             else{
-                DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $itemID)->increment('qty');
+                DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $itemID)->increment('qty',$request->qty);
             }
 
             \Session::flash('flash_message','Sucessfully Added.'); //<--FLASH MESSAGE 

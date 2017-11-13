@@ -133,7 +133,32 @@ class TransactionController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        //$msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/transaction/'. $id . '/delete');
+        $notif = 'toastr["info"]("Transaction #'.$id.' was successfully deleted from the system")';
+        $msg = '<script>
+        bootbox.confirm({
+            title: "Delete Transaction #'.$id.' from the System",
+            message: "Warning! Are you sure you want to remove this Transaction?",
+            buttons: {
+                confirm: {
+                    label: "Delete",
+                    className: "btn-danger"
+                },
+                cancel: {
+                    label: "Cancel",
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $("#" + '.$id.').remove();
+                    '.$notif.'
+                    $.ajax({
+                        type: "GET",
+                        url: "/transaction/'.$id.'/delete"
+                    });          
+                }
+            }
+        });
+        </script>';
 
         if($request->ajax())
         {

@@ -133,8 +133,33 @@ class ItemController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        //$msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/item/'. $id . '/delete');
-
+        $item = Item::findOrFail($id);
+        $notif = 'toastr["info"]("'.$item->name.' was successfully deleted from the system")';
+        $msg = '<script>
+        bootbox.confirm({
+            title: "<b>Delete '.$item->name.'</b> from the system",
+            message: "Warning! Are you sure you want to delete this Item?",
+            buttons: {
+                confirm: {
+                    label: "Delete",
+                    className: "btn-danger"
+                },
+                cancel: {
+                    label: "Cancel",
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $("#" + '.$id.').remove();
+                    '.$notif.'
+                    $.ajax({
+                        type: "GET",
+                        url: "/item/'.$id.'/delete"
+                    });      
+                }
+            }
+        });
+        </script>';
         if($request->ajax())
         {
             return $msg;

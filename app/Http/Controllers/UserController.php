@@ -109,6 +109,41 @@ class UserController extends Controller
         return redirect('users');
     }
 
+    public function DeleteMsg($id,Request $request)
+    {
+        $user = \App\User::findOrfail($id);
+        $notif = 'toastr["info"]("User <b>'.$user->name.'</b> was successfully deleted from the system")';
+        $msg = '<script>
+        bootbox.confirm({
+            title: "Delete User <b>'.$user->name.'</b> from the system",
+            message: "Warning! Are you sure you want to remove this User?",
+            buttons: {
+                confirm: {
+                    label: "Delete",
+                    className: "btn-danger"
+                },
+                cancel: {
+                    label: "Cancel",
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $("#" + '.$id.').remove();
+                    '.$notif.'
+                    $.ajax({
+                        type: "GET",
+                        url: "/users/delete/'.$id.'"
+                    });          
+                }
+            }
+        });
+        </script>';
+        if($request->ajax())
+        {
+            return $msg;
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

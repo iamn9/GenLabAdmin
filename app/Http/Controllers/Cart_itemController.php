@@ -118,8 +118,32 @@ class Cart_itemController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        //$msg = Ajaxis::BtDeleting('Remove Item','Would you like to remove this item from the cart?','/cart_item/'. $id . '/delete');
-
+        $cart_item = Cart_item::findOrFail($id);
+        $item = \App\Item::findOrFail($cart_item->item_id);
+        $notif = 'toastr["info"]("'.$item->name.' was successfully removed from cart #"'.$cart_item->cart_id.')';
+        $msg = '<script>bootbox.confirm({
+            title: "<b>Remove Item from cart</b>",
+            message: "Warning! Are you sure you want to remove all of the <b>'.$item->name.'</b> from the cart?",
+            buttons: {
+                confirm: {
+                    label: "Remove",
+                    className: "btn-danger"
+                },
+                cancel: {
+                    label: "No",
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $("#" + '.$id.').remove();
+                    '.$notif.'
+                    $.ajax({
+                        type: "GET",
+                        url: "/cart_item/'. $id . '/delete"
+                    });
+                }
+            }
+        })</script>';
         if($request->ajax()){
             return $msg;
         }
