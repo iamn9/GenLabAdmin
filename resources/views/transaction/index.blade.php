@@ -23,7 +23,7 @@
         </thead>
         <tbody>
             @foreach($transactions as $transaction) 
-            <tr>
+            <tr id='{!!$transaction->id!!}'>
                 <td>{!!$transaction->cart_id!!}</td>
                 <td>
                     @if($transaction->submitted_at != NULL)

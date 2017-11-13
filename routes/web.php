@@ -50,6 +50,7 @@ Route::group(['middleware'=> 'web'],function(){
   Route::post('users/update/','\App\Http\Controllers\UserController@update');
   Route::get('users/edit/{id}','\App\Http\Controllers\UserController@edit');
   Route::get('users/delete/{id}','\App\Http\Controllers\UserController@destroy');
+  Route::get('users/{id}/deleteMsg','\App\Http\Controllers\UserController@DeleteMsg');
 });
 
 //item Routes

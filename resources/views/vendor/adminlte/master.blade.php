@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/AdminLTE.min.css') }}">
+    <!-- Toastr style -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     
     @if(config('adminlte.plugins.datatables'))
         <!-- DataTables -->
@@ -35,6 +37,18 @@
 
 <script src="{{ asset('vendor/adminlte/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src = "{{URL::asset('js/bootbox.min.js') }}"></script> 
+<script src = "{{URL::asset('js/ModalAJAX.js') }}"></script>
+<script src = "{{URL::asset('js/toastr.min.js') }}"></script>
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "newestOnTop": true,
+        "progressBar": true
+    }
+</script>
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">

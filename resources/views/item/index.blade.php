@@ -22,7 +22,7 @@
         </thead>
         <tbody>
             @foreach($items as $item) 
-            <tr>
+            <tr id='{!!$item->id!!}'>
                 <td>{!!$item->id!!}</td>
                 <td>{!!$item->name!!}</td>
                 <td>{!!$item->description!!}</td>

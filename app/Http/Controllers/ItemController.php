@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Item;
-use Amranidev\Ajaxis\Ajaxis;
 use URL;
 
 class ItemController extends Controller
@@ -52,26 +51,9 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $item = new Item();
-
-        
         $item->name = $request->name;
-
-        
         $item->description = $request->description;
-
-        
-        
         $item->save();
-
-        $pusher = App::make('pusher');
-
-        //default pusher notification.
-        //by default channel=test-channel,event=test-event
-        //Here is a pusher notification example when you create a new resource in storage.
-        //you can modify anything you want or use it wherever.
-        $pusher->trigger('test-channel',
-                         'test-event',
-                        ['message' => 'A new item has been created !!']);
 
         return redirect('item');
     }
@@ -98,12 +80,12 @@ class ItemController extends Controller
 
     public function showModal($id, Request $request){
         $item = Item::findOrfail($id);
-        $msg = Ajaxis::BtDisplay("Item Info",
-        [
-            ['key' => 'ID', 'value' => $item->id],
-            ['key' => 'Name', 'value' => $item->name],
-            ['key' => 'Description', 'value' => $item->description],
-        ]);
+        // $msg = Ajaxis::BtDisplay("Item Info",
+        // [
+        //     ['key' => 'ID', 'value' => $item->id],
+        //     ['key' => 'Name', 'value' => $item->name],
+        //     ['key' => 'Description', 'value' => $item->description],
+        // ]);
         if($request->ajax())
         {
             return $msg;
@@ -151,8 +133,33 @@ class ItemController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/item/'. $id . '/delete');
-
+        $item = Item::findOrFail($id);
+        $notif = 'toastr["info"]("'.$item->name.' was successfully deleted from the system")';
+        $msg = '<script>
+        bootbox.confirm({
+            title: "<b>Delete '.$item->name.'</b> from the system",
+            message: "Warning! Are you sure you want to delete this Item?",
+            buttons: {
+                confirm: {
+                    label: "Delete",
+                    className: "btn-danger"
+                },
+                cancel: {
+                    label: "Cancel",
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $("#" + '.$id.').remove();
+                    '.$notif.'
+                    $.ajax({
+                        type: "GET",
+                        url: "/item/'.$id.'/delete"
+                    });      
+                }
+            }
+        });
+        </script>';
         if($request->ajax())
         {
             return $msg;

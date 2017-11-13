@@ -17,7 +17,7 @@
         </thead>
         <tbody>
             @foreach($transactions as $transaction) 
-            <tr>
+            <tr id='{!!$transaction->id!!}'>
                 <td>Borrower Name</td>
                 <td>{!!$transaction->cart_id!!}</td>
                 <td>{!!date('F j, Y g:i A', strtotime($transaction->completed_at))!!}</td>

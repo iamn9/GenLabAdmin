@@ -22,7 +22,7 @@
         </thead>
         <tbody>
             @foreach($transactions as $transaction) 
-            <tr>
+            <tr id='{!!$transaction->id!!}'>
                 <td><a href="#">{!!$transaction->cart_id!!}</a></td>
                 <td>{!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}</td>
                 <td>{!!date('F j, Y g:i A', strtotime($transaction->released_at))!!}</td>

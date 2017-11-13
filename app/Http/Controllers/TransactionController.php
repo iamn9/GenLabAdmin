@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
-use Amranidev\Ajaxis\Ajaxis;
 use App\Http\Controllers\Controller;
 use App\Transaction;
 use App\Cart;
@@ -59,17 +58,6 @@ class TransactionController extends Controller
         $transaction->released_at = $request->released_at;
         $transaction->completed_at = $request->completed_at;
         $transaction->save();
-
-        $pusher = App::make('pusher');
-
-        //default pusher notification.
-        //by default channel=test-channel,event=test-event
-        //Here is a pusher notification example when you create a new resource in storage.
-        //you can modify anything you want or use it wherever.
-        $pusher->trigger('test-channel',
-                         'test-event',
-                        ['message' => 'A new transaction has been created !!']);
-
         return redirect('transaction');
     }
 
@@ -145,7 +133,32 @@ class TransactionController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Warning!!','Would you like to remove This?','/transaction/'. $id . '/delete');
+        $notif = 'toastr["info"]("Transaction #'.$id.' was successfully deleted from the system")';
+        $msg = '<script>
+        bootbox.confirm({
+            title: "Delete Transaction #'.$id.' from the System",
+            message: "Warning! Are you sure you want to remove this Transaction?",
+            buttons: {
+                confirm: {
+                    label: "Delete",
+                    className: "btn-danger"
+                },
+                cancel: {
+                    label: "Cancel",
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $("#" + '.$id.').remove();
+                    '.$notif.'
+                    $.ajax({
+                        type: "GET",
+                        url: "/transaction/'.$id.'/delete"
+                    });          
+                }
+            }
+        });
+        </script>';
 
         if($request->ajax())
         {

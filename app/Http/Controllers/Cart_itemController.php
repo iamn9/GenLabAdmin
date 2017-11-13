@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Cart_item;
-use Amranidev\Ajaxis\Ajaxis;
 use URL;
 
 class Cart_itemController extends Controller
@@ -47,29 +46,10 @@ class Cart_itemController extends Controller
     public function store(Request $request)
     {
         $cart_item = new Cart_item();
-
-        
         $cart_item->cart_id = $request->cart_id;
-
-        
         $cart_item->item_id = $request->item_id;
-
-        
         $cart_item->qty = $request->qty;
-
-        
-        
         $cart_item->save();
-
-        $pusher = App::make('pusher');
-
-        //default pusher notification.
-        //by default channel=test-channel,event=test-event
-        //Here is a pusher notification example when you create a new resource in storage.
-        //you can modify anything you want or use it wherever.
-        $pusher->trigger('test-channel',
-                         'test-event',
-                        ['message' => 'A new cart_item has been created !!']);
 
         return redirect('cart_item');
     }
@@ -138,8 +118,32 @@ class Cart_itemController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        $msg = Ajaxis::BtDeleting('Remove Item','Would you like to remove this item from the cart?','/cart_item/'. $id . '/delete');
-
+        $cart_item = Cart_item::findOrFail($id);
+        $item = \App\Item::findOrFail($cart_item->item_id);
+        $notif = 'toastr["info"]("'.$item->name.' was successfully removed from cart #"'.$cart_item->cart_id.')';
+        $msg = '<script>bootbox.confirm({
+            title: "<b>Remove Item from cart</b>",
+            message: "Warning! Are you sure you want to remove all of the <b>'.$item->name.'</b> from the cart?",
+            buttons: {
+                confirm: {
+                    label: "Remove",
+                    className: "btn-danger"
+                },
+                cancel: {
+                    label: "No",
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $("#" + '.$id.').remove();
+                    '.$notif.'
+                    $.ajax({
+                        type: "GET",
+                        url: "/cart_item/'. $id . '/delete"
+                    });
+                }
+            }
+        })</script>';
         if($request->ajax()){
             return $msg;
         }
