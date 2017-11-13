@@ -22,7 +22,7 @@
         </thead>
         <tbody>
             @foreach($cart_items as $cart_item) 
-            <tr>
+            <tr id='{!!$cart_item->id!!}'>
                 <td>{!!$cart_item->cart_id!!}</td>
                 <td>{!!$cart_item->item_id!!}</td>
                 <td>{!!$cart_item->qty!!}</td>

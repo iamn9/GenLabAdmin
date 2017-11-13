@@ -18,7 +18,7 @@
 		</thead>
 		<tbody>
 			@foreach($users as $user)
-			<tr>
+			<tr id='{{$user->id}}'>
 				<td>{{$user->id_no}}</td>
 				<td>{{$user->name}}</td>
 				<td>{{$user->email}}</td>
@@ -36,7 +36,7 @@
 				</td>
 				<td>
 					<a href="{{url('users/edit')}}/{{$user->id}}" class = 'btn btn-primary btn-sm'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-					<a href="{{url('users/delete')}}/{{$user->id}}" class = "btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+					<a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-sm' data-link = "/users/{{$user->id}}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 				</td>
 			</tr>
 			@endforeach
