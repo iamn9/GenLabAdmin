@@ -21,7 +21,7 @@ class Cart_itemController extends Controller
     {
         $title = 'Index - cart_item';
         $searchWord = \Request::get('search');
-        $cart_items = Cart_item::where('id','like','%'.$searchWord.'%')->orWhere('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+        $cart_items = Cart_item::where('id','ilike','%'.$searchWord.'%')->orWhere('item_id','ilike','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
 
         return view('cart_item.index',compact('cart_items','title','searchWord'));
     }
