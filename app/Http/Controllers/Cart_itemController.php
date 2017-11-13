@@ -120,7 +120,7 @@ class Cart_itemController extends Controller
     {
         $cart_item = Cart_item::findOrFail($id);
         $item = \App\Item::findOrFail($cart_item->item_id);
-        $notif = 'toastr["info"]("'.$item->name.' was successfully removed from cart #"'.$cart_item->cart_id.')';
+        $notif = 'toastr["info"]("'.$item->name.' was successfully removed from cart")';
         $msg = '<script>bootbox.confirm({
             title: "<b>Remove Item from cart</b>",
             message: "Warning! Are you sure you want to remove all of the <b>'.$item->name.'</b> from the cart?",
