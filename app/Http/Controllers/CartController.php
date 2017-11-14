@@ -30,7 +30,7 @@ class CartController extends Controller
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
             ->when($searchWord, function ($query) use ($searchWord) {
-                return $query->where('carts.borrower_id','ilike','%'.$searchWord.'%')
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->select('carts.id','carts.borrower_id','carts.status','users.name')
@@ -62,7 +62,7 @@ class CartController extends Controller
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
             ->when($searchWord, function ($query) use ($searchWord) {
-                return $query->where('carts.borrower_id','ilike','%'.$searchWord.'%')
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Draft')
@@ -82,7 +82,7 @@ class CartController extends Controller
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
             ->when($searchWord, function ($query) use ($searchWord) {
-                return $query->where('carts.borrower_id','ilike','%'.$searchWord.'%')
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Pending')
@@ -102,7 +102,7 @@ class CartController extends Controller
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
             ->when($searchWord, function ($query) use ($searchWord) {
-                return $query->where('carts.borrower_id','ilike','%'.$searchWord.'%')
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Prepared')
@@ -122,7 +122,7 @@ class CartController extends Controller
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
             ->when($searchWord, function ($query) use ($searchWord) {
-                return $query->where('carts.borrower_id','ilike','%'.$searchWord.'%')
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Released')
@@ -142,7 +142,7 @@ class CartController extends Controller
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
             ->when($searchWord, function ($query) use ($searchWord) {
-                return $query->where('carts.borrower_id','ilike','%'.$searchWord.'%')
+                return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Completed')
@@ -209,7 +209,7 @@ class CartController extends Controller
             $cart_items = DB::table('cart_items')->paginate(5)->appends(Input::except('page'));
         else{
             $searchWord = (int) $searchWord;
-            $cart_items = DB::table('cart_items')->where('item_id','ilike','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+            $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
         }
         return view('cart.show',compact('searchWord','title','cart','cart_items'));
     }
