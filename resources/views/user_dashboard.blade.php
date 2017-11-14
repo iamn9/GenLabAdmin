@@ -37,5 +37,41 @@
       </table>
     </div>
   </div>
+  
+ <!-- /.table-responsive -->
+</div>
+  <div class="box box-info">
+  <div class="box-header with-border">
+    <h3 class="box-title">My Latest Transactions</h3>
+
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <div class="table-responsive">
+      <table class="table no-margin">
+        <thead>
+          <tr>
+           <th>Timestamp</th>
+           <th>Order ID</th>
+           <th>Status</th>
+         </tr>
+       </thead>
+       <tbody>
+        @foreach($transactions as $transaction)
+        <tr>
+         <td> {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}</td>
+         <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>
+         <td><span class="label label-info">{!!$transaction->status!!}</span></td>
+       </tr>
+       @endforeach
+     </tbody>
+   </table>
+ </div>
+<div class="box-footer clearfix">
 </div>
 @stop 
