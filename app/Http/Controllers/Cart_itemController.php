@@ -112,7 +112,9 @@ class Cart_itemController extends Controller
         
         $cart_item->save();
 
-        \Session::flash('flash_message','Successfully Updated.'); //<--FLASH MESSAGE
+        $item = \App\Item::findOrFail($cart_item->item_id);
+
+        \Session::flash('info','<b>Info: </b>Qty of '.$item->name.' successfully Updated.'); //<--FLASH MESSAGE
 
         return redirect('cart');
     }
