@@ -66,7 +66,20 @@
         <tr>
          <td> {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}</td>
          <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>
-         <td><span class="label label-info">{!!$transaction->status!!}</span></td>
+         <td>
+            @if($transaction->status == "Draft")
+                <span class="label label-info">
+            @elseif($transaction->status == "Pending")
+                <span class="label label-danger">
+            @elseif($transaction->status == "Prepared")
+                <span class="label label-warning">
+            @elseif($transaction->status == "Released")
+                <span class="label label-primary">
+            @elseif($transaction->status == "Completed")
+                <span class="label label-success">
+            @else
+                <span class="label label-info">
+            @endif{!!$transaction->status!!}</span></td>
        </tr>
        @endforeach
      </tbody>
