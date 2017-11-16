@@ -220,7 +220,14 @@ return [
                     'url'         => 'transaction/completed',
                 ],
             ]
-        ],        
+        ],
+        "NEWS",
+        [
+            'text'        => 'Updates',
+            'url'         => 'news',
+            'icon'        => 'info',
+            'label_color' => 'success',
+        ]        
     ],
 
     /*

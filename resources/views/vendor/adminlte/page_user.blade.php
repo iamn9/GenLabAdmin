@@ -158,6 +158,8 @@
 					<li class="treeview"><a href="{{url('/transaction/user/active')}}"><i class="fa fa-shopping-cart"></i> <span>Active Transaction</span></a></li>
 					<li class="treeview"><a href="{{url('/cart')}}"><i class="fa fa-shopping-cart"></i> <span>Cart</span></a></li>
 					<li class="treeview"><a href="{{url('/transaction/user/history')}}"><i class="fa fa-history"></i> <span>History</span></a></li>
+                    <li class="header">NEWS</li>
+                    <li class="treeview"><a href="{{url('/news')}}"><i class="fa fa-info"></i> <span>News</span></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

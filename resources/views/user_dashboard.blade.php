@@ -6,10 +6,9 @@
 
 @section('content')
 
-<!--Updates-->
 <div class="box box-info">
   <div class="box-header with-border">
-    <h3 class="box-title">Updates</h3>
+    <h3 class="box-title">Fresh Announcements</h3>
     <div class="box-tools pull-right">
       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
       </button>
@@ -17,11 +16,26 @@
     </div>
   </div>
   <div class="box-body">
-    Nothing to see.
+    <div class="table-responsive">
+      <table class="table no-margin">
+        <thead>
+            <tr>
+              <th style="width: 170px">Author</th>
+              <th style="width: 230px">Date Posted</th>
+              <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+           @foreach($news as $entry) 
+            <tr>
+                <td>{!!$entry->name!!}</td>
+                <td>{!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</td>
+                <td>{!!$entry->content!!}</td>
+            </tr>
+            @endforeach 
+        </tbody>
+      </table>
+    </div>
   </div>
-<div class="box-footer clearfix">
-  <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Button</a>
 </div>
-</div>
-<!--End of Order Summary-->
 @stop 
