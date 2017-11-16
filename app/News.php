@@ -14,6 +14,9 @@ class News extends Model
 	public function getID(){
         return $this->id;
     }
+    public function getreporter_id(){
+        return $this->reporter_id;
+    }
 
    
 }

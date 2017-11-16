@@ -32,7 +32,7 @@ class HomeController extends Controller
         $news = News::join('users', function ($join) {
             $join->on('news.reporter_id', '=', 'users.id_no');})
             ->select('news.news', 'users.name','news.date_posted')
-            ->orderBy('news.date_posted','asc')->limit(5)->get();
+            ->orderBy('news.date_posted','desc')->limit(5)->get();
         if (Auth::user()->isAdmin){
             $count_unactivatedUsers = DB::table('users')->where('isActivated','0')->count();
             $count_newOrders = DB::table('carts')->where('status','Pending')->count();

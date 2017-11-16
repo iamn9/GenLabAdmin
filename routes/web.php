@@ -62,6 +62,15 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('item/{id}/showModal','\App\Http\Controllers\ItemController@showModal');
 });
 
+//news Routes
+Route::group(['middleware'=> 'web'],function(){
+  Route::resource('news','\App\Http\Controllers\NewsController');
+  Route::post('news/{id}/update','\App\Http\Controllers\NewsController@update');
+  Route::get('news/{id}/delete','\App\Http\Controllers\NewsController@destroy');
+  Route::get('news/{id}/deleteMsg','\App\Http\Controllers\NewsController@DeleteMsg');
+  Route::get('news/{id}/showModal','\App\Http\Controllers\NewsController@showModal');
+});
+
 //cart Routes
 Route::group(['middleware'=> 'web'],function(){
   Route::resource('cart','\App\Http\Controllers\CartController');
