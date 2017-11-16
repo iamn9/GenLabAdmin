@@ -20,7 +20,7 @@
             <tr id='{!!$entry->id!!}'>
                 <td>{!!$entry->name!!}</td>
                 <td>{!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</td>
-                <td>{!!$entry->news!!}</td>
+                <td>{!!$entry->content!!}</td>
             </tr>
             @endforeach 
         </tbody>

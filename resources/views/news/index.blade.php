@@ -24,7 +24,7 @@
             <tr id='{!!$entry->id!!}'>
                 <td>{!!$entry->name!!}</td>
                 <td>{!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</td>
-                <td>{!!$entry->news!!}</td>
+                <td>{!!$entry->content!!}</td>
                 <td>
                     <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/news/{!!$entry->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
                     <a class = 'viewEdit btn btn-warning btn-xs' href = '/news/{!!$entry->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>

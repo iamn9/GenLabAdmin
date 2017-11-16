@@ -26,9 +26,9 @@ class NewsController extends Controller
             ->when($searchWord, function ($query) use ($searchWord) {
                 return $query
                 ->where('users.name', 'ilike','%'.$searchWord.'%')
-                ->orWhere('news.news', 'ilike','%'.$searchWord.'%');
+                ->orWhere('news.content', 'ilike','%'.$searchWord.'%');
             })
-            ->select('news.id','news.date_posted','news.news','users.name')
+            ->select('news.id','news.date_posted','news.content','users.name')
             ->orderBy('news.date_posted','desc')
             ->paginate(5)->appends(Input::except('page'));
 
@@ -57,7 +57,7 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $news = new News();
-        $news->news = $request->news;
+        $news->content = $request->content;
         $news->reporter_id = Auth::user()->id_no;
         $news->date_posted =  date('Y-m-d H:i:s');
         $news->save();
@@ -76,7 +76,7 @@ class NewsController extends Controller
     {
         $news = News::join('users', function($join){
             $join->on('news.reporter_id', '=', 'users.id_no');
-        })->select('news.id','news.date_posted','news.news','users.name')->findOrfail($id);
+        })->select('news.id','news.date_posted','news.content','users.name')->findOrfail($id);
 
         return view('news.show',compact('title','news'));
     }
@@ -109,8 +109,8 @@ class NewsController extends Controller
     public function update($id,Request $request)
     {
         $create = News::findOrfail($id);
-    	$create->news = $request->news;
-        $create->reporter_id = $request->reporter_id;
+    	$create->content = $request->content;
+        // $create->reporter_id = $request->reporter_id;
         $create->save();
 
         return redirect('news');

@@ -30,7 +30,7 @@
                         <td>
                             <b><i>Content: </i></b>
                         </td>
-                        <td>{!!$news->news!!}</td>
+                        <td>{!!$news->content!!}</td>
                     </tr>
                 </tbody>
             </table>
