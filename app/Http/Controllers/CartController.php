@@ -247,7 +247,6 @@ class CartController extends Controller
         
         $cart->status = $request->status;
         
-        
         $cart->save();
 
         return redirect('cart');
@@ -356,8 +355,6 @@ class CartController extends Controller
             else{
                 DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $itemID)->increment('qty',$request->qty);
             }
-
-            \Session::flash('flash_message','Sucessfully Added.'); //<--FLASH MESSAGE 
     }
 
     public function checkout($cart_id, Request $request){
@@ -373,6 +370,9 @@ class CartController extends Controller
             ->where('id', $cart_id)
             ->where('borrower_id',$userid)
             ->update(['status' => 'Pending']);
+
+        \Session::flash('success','<b>Success</b></br>Your items have been reserved!'); //<--FLASH MESSAGE
+
         return redirect('/home');
     }
 }

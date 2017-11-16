@@ -49,6 +49,30 @@
         "progressBar": true
     }
 </script>
+@if(Session::has('success')) 
+    <script>
+        toastr['success']("{!!session('success')!!}");
+    </script>
+@endif
+
+@if(Session::has('info')) 
+<script>
+    toastr['info']("{!!session('info')!!}");
+</script>
+@endif
+
+@if(Session::has('warning')) 
+<script>
+    toastr['warning']("{!!session('warning')!!}");
+</script>
+@endif
+
+@if(Session::has('error')) 
+<script>
+    toastr['error']("{!!session('error')!!}");
+</script>
+@endif
+
 @if(config('adminlte.plugins.datatables'))
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">

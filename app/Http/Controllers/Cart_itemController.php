@@ -90,7 +90,7 @@ class Cart_itemController extends Controller
 
         
         $cart_item = Cart_item::findOrfail($id);
-        return view('cart_item.edit',compact('title','cart_item'  ));
+        return view('cart_item.edit',compact('title','cart_item'));
     }
 
     /**
@@ -104,16 +104,19 @@ class Cart_itemController extends Controller
     {
         $cart_item = Cart_item::findOrfail($id);
     	
-        $cart_item->cart_id = $request->cart_id;
+        //$cart_item->cart_id = $request->cart_id;
         
-        $cart_item->item_id = $request->item_id;
+        //$cart_item->item_id = $request->item_id;
         
         $cart_item->qty = $request->qty;
         
-        
         $cart_item->save();
 
-        return redirect('cart_item');
+        $item = \App\Item::findOrFail($cart_item->item_id);
+
+        \Session::flash('info','<b>Info: </b>Qty of '.$item->name.' successfully Updated.'); //<--FLASH MESSAGE
+
+        return redirect('cart');
     }
 
     public function DeleteMsg($id,Request $request)
