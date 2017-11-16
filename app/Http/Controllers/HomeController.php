@@ -38,11 +38,13 @@ class HomeController extends Controller
             $count_newOrders = DB::table('carts')->where('status','Pending')->count();
             $count_completed = DB::table('carts')->where('status','Completed')->count();
             $transactions = DB::table('transactions')->join('carts','transactions.cart_id' ,'=', 'carts.id')->join('users','carts.borrower_id','=','users.id_no')->limit(5)->get();
-
             return view('admin_dashboard',compact('transactions','count_unactivatedUsers','count_newOrders','count_completed','news'));
         }
-        else{
-            return view('user_dashboard',compact('news'));
-        }
+            else  
+            {
+                $cur_user = (Auth::user()->id_no);
+                $transactions = DB::table('transactions')->join('carts','transactions.cart_id' ,'=', 'carts.id')->join('users','carts.borrower_id','=','users.id_no')->where('users.id_no','=', $cur_user)->limit(5)->get();
+                return view('user_dashboard', compact('transactions','news'));
+            }
     }
 }
