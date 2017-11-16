@@ -19,37 +19,18 @@ class NewsController extends Controller
      */
     public function index()
     {
-
          $searchWord = \Request::get('search');
-         /*
-         $news = News::where('news','like','%'.$searchWord.'%')->orWhere('reporter_id','like','%'.$searchWord.'%')->orderBy('date_posted')->paginate(5)->appends(Input::except('page'));*/
          $news = News::join('users', function($join){
                 $join->on('news.reporter_id', '=', 'users.id_no');
             })
             ->when($searchWord, function ($query) use ($searchWord) {
-                return $query->where('news.id','ilike','%'.$searchWord.'%')
-                ->orWhere('users.name', 'ilike','%'.$searchWord.'%')
+                return $query
+                ->where('users.name', 'ilike','%'.$searchWord.'%')
                 ->orWhere('news.news', 'ilike','%'.$searchWord.'%');
             })
             ->select('news.id','news.date_posted','news.news','users.name')
             ->orderBy('news.date_posted','desc')
             ->paginate(5)->appends(Input::except('page'));
-
-       /* $news = News::join('users', function ($join) {
-            $join->on('news.reporter_id', '=', 'users.id_no');})
-            ->select('news.news', 'users.name','news.date_posted')
-            ->orderBy('news.date_posted','asc')->paginate(5)->appends(Input::except('page'));
-        */
-       /* $news = News::join('users', function($join){
-                $join->on('news.reporter_id', '=', 'users.id_no');
-            })
-            ->when($searchWord, function ($query) use ($searchWord) {
-                return $query->where('news.reporter_id','ilike','%'.$searchWord.'%')
-                ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
-            })
-            ->select('news.id','news.reporter_id','news.news','users.name', 'news.date_posted')
-            ->paginate(5)->appends(Input::except('page'));
-        */
 
         if(Auth::check() && Auth::user()->isAdmin)
             return view('news.index',compact('news','searchWord')); 
@@ -64,8 +45,6 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $title = 'Create - news';
-        
         return view('news.create');
     }
 
@@ -77,10 +56,9 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //may pa bug
         $news = new News();
         $news->news = $request->news;
-        $news->reporter_id = $request->reporter_id;
+        $news->reporter_id = Auth::user()->id_no;
         $news->date_posted =  date('Y-m-d H:i:s');
         $news->save();
 
@@ -96,28 +74,11 @@ class NewsController extends Controller
      */
     public function show($id,Request $request)
     {
-        $title = 'Show - news';
+        $news = News::join('users', function($join){
+            $join->on('news.reporter_id', '=', 'users.id_no');
+        })->select('news.id','news.date_posted','news.news','users.name')->findOrfail($id);
 
-        if($request->ajax()){
-            return URL::to('news/'.$id);
-        }
-
-        $news = News::findOrfail($id);
         return view('news.show',compact('title','news'));
-    }
-
-    public function showModal($id, Request $request){
-        $news = News::findOrfail($id);
-        // $msg = Ajaxis::BtDisplay("Item Info",
-        // [
-        //     ['key' => 'ID', 'value' => $item->id],
-        //     ['key' => 'Name', 'value' => $item->name],
-        //     ['key' => 'Description', 'value' => $item->description],
-        // ]);
-        if($request->ajax())
-        {
-            return $msg;
-        }
     }
 
     /**
@@ -158,11 +119,11 @@ class NewsController extends Controller
     public function DeleteMsg($id,Request $request)
     {
         $news = News::findOrFail($id);
-        $notif = 'toastr["info"](" News no. '.$news->id.' was successfully deleted from the system")';
+        $notif = 'toastr["info"](" News #'.$news->id.' was successfully deleted from the system")';
         $msg = '<script>
         bootbox.confirm({
-            title: "<b>Delete '.$news->id.'</b> from the system",
-            message: "Warning! Are you sure you want to delete this Item?",
+            title: "<b>Delete News #'.$news->id.'</b> from system",
+            message: "Warning! Are you sure you want to delete this news?",
             buttons: {
                 confirm: {
                     label: "Delete",
@@ -178,7 +139,7 @@ class NewsController extends Controller
                     '.$notif.'
                     $.ajax({
                         type: "GET",
-                        url: "/item/'.$id.'/delete"
+                        url: "/news/'.$id.'/delete"
                     });      
                 }
             }

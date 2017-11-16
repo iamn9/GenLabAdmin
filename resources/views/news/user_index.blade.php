@@ -11,18 +11,16 @@
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width: 210px">Reporter</th>
-            <th>News Content</th>
-            <th style="width: 180px">Date Posted</th>
+        <th style="width: 170px">Author</th>
+        <th style="width: 230px">Date Posted</th>
+        <th>News Content</th>
         </thead>
         <tbody>
             @foreach($news as $entry) 
             <tr id='{!!$entry->id!!}'>
                 <td>{!!$entry->name!!}</td>
-                 <td>{!!$entry->news!!}</td>
-                <td>
-                    {!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}
-                </td>
+                <td>{!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</td>
+                <td>{!!$entry->news!!}</td>
             </tr>
             @endforeach 
         </tbody>

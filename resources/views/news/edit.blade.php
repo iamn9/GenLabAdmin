@@ -19,11 +19,11 @@
        
          <div class="form-group">
             <label for="news">News Content</label>
-            <input id="news" name = "news" type="text" class="form-control">
+            <input id="news" name = "news" type="text" class="form-control" value="{{$news->news}}">
         </div>
         <div class="form-group">
             <label for="reporter_id">Reporter's ID</label>
-            <input id="reporter_id" name = "reporter_id" type="text" class="form-control">
+            <input id="reporter_id" name = "reporter_id" type="text" class="form-control" value="{{$news->reporter_id}}">
         </div>
        
         <button class = 'btn btn-primary' type ='submit'>Update</button>
