@@ -238,7 +238,8 @@ class TransactionController extends Controller
  
         Cart::where('id', $cart_id)->update(['status' => 'Prepared']); 
         Transaction::where('id',$id)->update(['prepared_at' => $date]); 
-       
+        \Session::flash('success','Cart prepared');
+
         return redirect('transaction/pending'); 
     }
 
@@ -247,7 +248,7 @@ class TransactionController extends Controller
 
         Cart::where('id', $cart_id)->update(['status' => 'Pending']); 
         Transaction::where('id',$id)->update(['prepared_at' => null]);
-
+        \Session::flash('info','Cart undone.');
         return redirect('transaction/pending'); 
     }
 
@@ -257,7 +258,7 @@ class TransactionController extends Controller
  
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
         Transaction::where('id',$id)->update(['released_at' => $date]); 
-       
+        \Session::flash('success','Cart released to User.');      
         return redirect('transaction/prepared'); 
     } 
 
@@ -266,7 +267,7 @@ class TransactionController extends Controller
 
         Transaction::where('id',$id)->update(['released_at' => null]); 
         Cart::where('id', $cart_id)->update(['status' => 'Prepared']); 
-
+        \Session::flash('info','Cart undone.');
         return redirect('transaction/prepared');
     }
  
@@ -276,7 +277,7 @@ class TransactionController extends Controller
  
         Cart::where('id', $cart_id)->update(['status' => 'Completed']); 
         Transaction::where('id',$id)->update(['completed_at' => $date]); 
- 
+        \Session::flash('success','Cart has been returned.');
         return redirect('transaction/released'); 
     } 
 
@@ -285,7 +286,7 @@ class TransactionController extends Controller
 
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
         Transaction::where('id',$id)->update(['completed_at' => null]); 
-
+        \Session::flash('info','Cart undone.');
         return redirect('transaction/released'); 
     }
 
