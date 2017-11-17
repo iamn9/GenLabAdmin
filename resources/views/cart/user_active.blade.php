@@ -37,12 +37,15 @@
         </table>
         <div class='text-center'>{!! $cart_items->render() !!}</div><br>
         @if(count($cart_items))
-            <div class="input-group">    
-            <form method = 'GET' action = '/cart/{{$cart_id}}/checkout'>
-                <button class = 'btn btn-success'>CHECKOUT</button>
+            <form method = 'POST' action = '/cart/{{$cart_id}}/checkout'>
+                <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
+                <h4>Remarks: <small>(Type message before checkout)</small></h4>
+                <textarea id="remarks" name="remarks" class="textarea" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$remarks}}</textarea>
+                <button class = 'btn btn-success btn-lg' style="float:right;"type="submit">CHECKOUT</button>
             </form>
             </div>
         @endif
     </div>
 </div>
+
 @endsection

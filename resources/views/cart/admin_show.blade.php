@@ -30,6 +30,12 @@
                 </td>
                 <td>{!!$cart->status!!}</td>
             </tr>
+            <tr>
+                <td>
+                    <b><i>remarks : </i></b>
+                </td>
+                <td>{!!$cart->remarks!!}</td>
+            </tr>
         </tbody>
     </table>
 </div>

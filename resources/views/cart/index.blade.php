@@ -14,16 +14,15 @@
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width:200px">borrower_id</th>
-            <th>Borrower Name</th>
-            <th style="width: 200px">status</th>
+            <th style="width: 120px">status</th>
+            <th style="width:160px">borrower_id</th>
+            <th style="width:170px">Borrower Name</th>
+            <th>Remarks</th>
             <th style="width: 200px">actions</th>
         </thead>
         <tbody>
             @foreach($carts as $cart) 
             <tr id='{!!$cart->id!!}'>
-                <td>{!!$cart->borrower_id!!}</td>
-                <td>{!!$cart->getOwner()!!}</td>
                 <td>
                     @if($cart->status == "Draft")
                         <span class="label label-info">
@@ -39,6 +38,9 @@
                         <span class="label label-info">
                     @endif
                 {!!$cart->status!!}</span></td>
+                <td>{!!$cart->borrower_id!!}</td>
+                <td>{!!$cart->getOwner()!!}</td>
+                <td>{!!$cart->remarks!!}</td>
                 <td>
                     @if($cart->status != "Completed" && $cart->status != "Released")
                         <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart/{!!$cart->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
