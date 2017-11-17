@@ -33,7 +33,7 @@ class CartController extends Controller
                 return $query->where('carts.borrower_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
-            ->select('carts.id','carts.borrower_id','carts.status','users.name')
+            ->select('carts.id','carts.borrower_id','carts.status', 'carts.remarks', 'users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -49,8 +49,10 @@ class CartController extends Controller
                 return $query->where('name','ilike','%'.$searchWord.'%')->orWhere('item_id','=',$searchInt);
             })
             ->select('cart_items.*','items.name')
-            ->paginate(5)->appends(Input::except('page'));
-            return view('cart.user',compact('title','searchWord','cart_id','cart_items', 'students'));
+            ->orderBy('items.name')
+            ->paginate(10)->appends(Input::except('page'));
+            $remarks = Cart::where('id',$cart_id)->value('remarks');
+            return view('cart.user_active',compact('title','searchWord','cart_id','cart_items', 'students','remarks'));
         }
     }
 
@@ -66,7 +68,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Draft')
-            ->select('carts.id','carts.borrower_id','carts.status','users.name')
+            ->select('carts.id','carts.borrower_id','carts.status', 'carts.remarks','users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -86,7 +88,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Pending')
-            ->select('carts.id','carts.borrower_id','carts.status','users.name')
+            ->select('carts.id','carts.borrower_id','carts.status', 'carts.remarks', 'users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -106,7 +108,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Prepared')
-            ->select('carts.id','carts.borrower_id','carts.status','users.name')
+            ->select('carts.id','carts.borrower_id','carts.status', 'carts.remarks', 'users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -126,7 +128,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Released')
-            ->select('carts.id','carts.borrower_id','carts.status','users.name')
+            ->select('carts.id','carts.borrower_id','carts.status', 'carts.remarks', 'users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -146,7 +148,7 @@ class CartController extends Controller
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
             ->where('status','=','Completed')
-            ->select('carts.id','carts.borrower_id','carts.status','users.name')
+            ->select('carts.id','carts.borrower_id','carts.status', 'carts.remarks', 'users.name')
             ->paginate(5)->appends(Input::except('page'));
             return view('cart.index',compact('carts','title','searchWord'));
         }
@@ -178,6 +180,7 @@ class CartController extends Controller
         $cart = new Cart();
         $cart->borrower_id = $request->borrower_id;
         $cart->status = $request->status;
+        $cart->remarks = $request->remarks;
         $cart->save();
         
         return redirect('cart');
@@ -198,11 +201,6 @@ class CartController extends Controller
         {
             return URL::to('cart/'.$id);
         }
-     
-        if(Auth::user()->isAdmin)
-            $cart = Cart::findOrfail($id);
-        else
-            $cart = Cart::where('borrower_id','=',Auth::user()->id_no)->findOrfail($id);
 
         $searchWord = \Request::get('search');
         if ($searchWord == "")
@@ -211,7 +209,14 @@ class CartController extends Controller
             $searchWord = (int) $searchWord;
             $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
         }
-        return view('cart.show',compact('searchWord','title','cart','cart_items'));
+
+        if(Auth::user()->isAdmin){
+            $cart = Cart::findOrfail($id);
+            return view('cart.admin_show',compact('searchWord','title','cart','cart_items'));
+        }else{
+            $cart = Cart::where('borrower_id','=',Auth::user()->id_no)->findOrfail($id);
+            return view('cart.user_show',compact('searchWord','title','cart','cart_items'));
+        }
     }
 
     /**
@@ -229,7 +234,7 @@ class CartController extends Controller
         }
 
         $cart = Cart::findOrfail($id);
-        return view('cart.edit',compact('title','cart'  ));
+        return view('cart.edit',compact('title','cart'));
     }
 
     /**
@@ -242,11 +247,9 @@ class CartController extends Controller
     public function update($id,Request $request)
     {
         $cart = Cart::findOrfail($id);
-    	
         $cart->borrower_id = $request->borrower_id;
-        
         $cart->status = $request->status;
-        
+        $cart->remarks = $request->remarks;
         $cart->save();
 
         return redirect('cart');
@@ -369,10 +372,7 @@ class CartController extends Controller
         DB::table('carts')
             ->where('id', $cart_id)
             ->where('borrower_id',$userid)
-            ->update(['status' => 'Pending']);
-
-        \Session::flash('success','<b>Success</b></br>Your items have been reserved!'); //<--FLASH MESSAGE
-
+            ->update(['status' => 'Pending', 'remarks'=> $request->remarks]);
         return redirect('/home');
     }
 }

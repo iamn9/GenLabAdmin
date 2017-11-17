@@ -29,6 +29,12 @@
                 </td>
                 <td>{!!$cart->status!!}</td>
             </tr>
+            <tr>
+                <td>
+                    <b><i>remarks : </i></b>
+                </td>
+                <td>{!!$cart->remarks!!}</td>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -36,15 +42,21 @@
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>item_id</th>
-            <th>name</th>
             <th>qty</th>
+            <th>actions</th>
         </thead>
         <tbody>
             @foreach($cart_items as $cart_item) 
-            <tr id='{!!$cart_item->id!!}'>
+            <tr>
                 <td>{!!$cart_item->item_id!!}</td>
-                <td>{!!$cart_item->name!!}</td>
                 <td>{!!$cart_item->qty!!}</td>
+                <td>
+                    @if($cart->status =="Draft")
+                        <a href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
+                        <a href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
+                    @endif
+                    <a href = '/item/{!!$cart_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
+                </td>
             </tr>
             @endforeach 
         </tbody>

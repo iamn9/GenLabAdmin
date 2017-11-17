@@ -79,7 +79,7 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('cart/{id}/deleteMsg','\App\Http\Controllers\CartController@DeleteMsg');
   Route::get('cart/add/{id}','\App\Http\Controllers\CartController@addItem');
   Route::get('cart/add/{id}/addItemMsg','\App\Http\Controllers\CartController@addItemMsg');
-  Route::get('cart/{id}/checkout','\App\Http\Controllers\CartController@checkout');
+  Route::post('cart/{id}/checkout','\App\Http\Controllers\CartController@checkout');
 });
 
 //cart_item Routes
