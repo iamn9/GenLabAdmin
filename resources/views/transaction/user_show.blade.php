@@ -86,6 +86,9 @@
             </tbody>
           </table>
           <hr>
+          @if ($cart->remarks != "") 
+          <b>Remarks: </b> {!!$cart->remarks!!}<br><br> 
+          @endif
         </div>
         <!-- /.col -->
       </div>
