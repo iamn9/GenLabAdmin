@@ -29,6 +29,12 @@ Route::get('cart/pending','\App\Http\Controllers\CartController@index_pending');
 Route::get('cart/prepared','\App\Http\Controllers\CartController@index_prepared');
 Route::get('cart/released','\App\Http\Controllers\CartController@index_released');
 Route::get('cart/completed','\App\Http\Controllers\CartController@index_completed');
+Route::get('listing/all','\App\Http\Controllers\ListingController@index');
+Route::get('listing/draft','\App\Http\Controllers\ListingController@index_draft');
+Route::get('listing/pending','\App\Http\Controllers\ListingController@index_pending');
+Route::get('listing/prepared','\App\Http\Controllers\ListingController@index_prepared');
+Route::get('listing/released','\App\Http\Controllers\ListingController@index_released');
+Route::get('listing/completed','\App\Http\Controllers\ListingController@index_completed');
 Route::get('transaction/all','\App\Http\Controllers\TransactionController@index');
 Route::get('transaction/pending','\App\Http\Controllers\TransactionController@index_pending');
 Route::get('transaction/prepared','\App\Http\Controllers\TransactionController@index_prepared');
@@ -80,6 +86,17 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('cart/add/{id}','\App\Http\Controllers\CartController@addItem');
   Route::get('cart/add/{id}/addItemMsg','\App\Http\Controllers\CartController@addItemMsg');
   Route::post('cart/{id}/checkout','\App\Http\Controllers\CartController@checkout');
+});
+
+//listing Routes
+Route::group(['middleware'=> 'web'],function(){
+  Route::resource('listing','\App\Http\Controllers\ListingController');
+  Route::post('listing/{id}/update','\App\Http\Controllers\ListingController@update');
+  Route::get('listing/{id}/delete','\App\Http\Controllers\ListingController@destroy');
+  Route::get('listing/{id}/deleteMsg','\App\Http\Controllers\ListingController@DeleteMsg');
+  Route::get('listing/add/{id}','\App\Http\Controllers\ListingController@addItem');
+  Route::get('listing/add/{id}/addItemMsg','\App\Http\Controllers\ListingController@addItemMsg');
+  Route::get('listing/{id}/checkout','\App\Http\Controllers\ListingController@checkout');
 });
 
 //cart_item Routes
