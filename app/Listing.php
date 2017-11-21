@@ -17,7 +17,7 @@ class Listing extends Model
 
     public function getOwner(){
         return DB::table('users')
-        ->where('users.id_no',$this->borrower_id)
+        ->where('users.id_no',$this->owner_id)
         ->value('name');
     }
 }

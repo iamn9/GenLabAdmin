@@ -1,15 +1,14 @@
-@extends('adminlte::page')
+@extends('adminlte::page_user')
 @section('title','Show')
 @section('content')
 
-<section class='content'>
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Show cart</h1>
+    <h1>Show listing</h1>
     @include('search')
     <br>
-    <form method = 'get' action = '{!!url("cart")!!}'>
-        <button class = 'btn btn-primary'>cart Index</button>
+    <form method = 'get' action = '{!!url("listing")!!}'>
+        <button class = 'btn btn-primary'>listing Index</button>
     </form>
     <br>
     <table class = 'table table-bordered'>
@@ -20,15 +19,15 @@
         <tbody>
             <tr>
                 <td>
-                    <b><i>borrower_id : </i></b>
+                    <b><i>Owner ID : </i></b>
                 </td>
-                <td>{!!$cart->borrower_id!!}</td>
+                <td>{!!$listing->owner_id!!}</td>
             </tr>
             <tr>
                 <td>
-                    <b><i>status : </i></b>
+                    <b><i>Owner Name : </i></b>
                 </td>
-                <td>{!!$cart->status!!}</td>
+                <td>{!!$listing->getOwner()!!}</td>
             </tr>
         </tbody>
     </table>
@@ -41,23 +40,22 @@
             <th>actions</th>
         </thead>
         <tbody>
-            @foreach($cart_items as $cart_item) 
+            @foreach($listing_items as $listing_item) 
             <tr>
-                <td>{!!$cart_item->item_id!!}</td>
-                <td>{!!$cart_item->qty!!}</td>
+                <td>{!!$listing_item->item_id!!}</td>
+                <td>{!!$listing_item->qty!!}</td>
                 <td>
-                    @if($cart->status != "Completed" && $cart->status != "Released")
-                        <a href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
-                        <a href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
+                    @if($listing->status != "Completed" && $listing->status != "Released")
+                        <a href = '{!!url("listing")."/".$listing_item->listing_id!!}' data-link='/listing_item/{!!$listing_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
+                        <a href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/listing_item/{!!$listing_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
                     @endif
-                    <a href = '/item/{!!$cart_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
+                    <a href = '/item/{!!$listing_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
                 </td>
             </tr>
             @endforeach 
         </tbody>
     </table>
-    <div class='text-center'>{!! $cart_items->render() !!}</div>
+    <div class='text-center'>{!! $listing_items->render() !!}</div>
 </div>
 </div>
-</section>
 @endsection

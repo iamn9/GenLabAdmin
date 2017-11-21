@@ -194,38 +194,6 @@ return [
             'url'         => 'listing',
             'icon'        => 'book',
             'label_color' => 'success',
-            'submenu'   =>[
-                [
-                    'text'       => 'Show All',
-                    'icon_color' => 'white',
-                    'url'         => 'listing/all',
-                ],
-                [
-                    'text'       => 'Draft',
-                    'icon_color' => 'aqua',
-                    'url'         => 'listing/draft',
-                ],
-                [
-                    'text'       => 'Pending',
-                    'icon_color' => 'red',
-                    'url'         => 'listing/pending',
-                ],
-                [
-                    'text'       => 'Prepared',
-                    'icon_color' => 'orange',
-                    'url'         => 'listing/prepared',
-                ],
-                [
-                    'text'       => 'Released',
-                    'icon_color' => 'blue',
-                    'url'         => 'listing/released',
-                ],
-                [
-                    'text'       => 'Completed',
-                    'icon_color' => 'green',
-                    'url'         => 'listing/completed',
-                ],
-            ]
         ],
         'TRANSACTIONS',
         [
