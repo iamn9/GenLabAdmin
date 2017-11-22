@@ -94,9 +94,8 @@ Route::group(['middleware'=> 'web'],function(){
   Route::post('listing/{id}/update','\App\Http\Controllers\ListingController@update');
   Route::get('listing/{id}/delete','\App\Http\Controllers\ListingController@destroy');
   Route::get('listing/{id}/deleteMsg','\App\Http\Controllers\ListingController@DeleteMsg');
-  Route::get('listing/add/{id}','\App\Http\Controllers\ListingController@addItem');
+  Route::get('listing/addItem/process','\App\Http\Controllers\ListingController@addItem');
   Route::get('listing/add/{id}/addItemMsg','\App\Http\Controllers\ListingController@addItemMsg');
-  Route::get('listing/{id}/checkout','\App\Http\Controllers\ListingController@checkout');
 });
 
 //cart_item Routes

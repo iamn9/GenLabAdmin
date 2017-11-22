@@ -196,47 +196,57 @@ class ListingController extends Controller
     {
         $item = Item::findOrFail($id);
         $notif = 'toastr["success"]("'.$item->name.' successfully added to listing.","Success")';
-        $msg = '<script>bootbox.prompt({ 
-            title: "Add <b>qty of '.$item->name.'</b> to listing",
-            inputType: "number",
-            value: "1",
+
+        $form = "<form id='addToListing'><input type='hidden' name='item_id' value='".$id."'>Listing:<input class='bootbox-input bootbox-input-number form-control' name='listing_id' id='listing_id' type='text'/><br/>QTY:<input class='bootbox-input bootbox-input-number form-control' type='number' name='qty' value='1' min='1'/></form>";
+
+        $msg = '<script>bootbox.confirm({
+            message: "'.$form.'",
+            title: "Add Item to Listing",
             buttons: {
-                confirm: {
-                    label: "Add to listing",
-                    className: "btn-success"
-                },
                 cancel: {
-                    label: "Cancel"
+                    label: "Cancel",
+                },
+                confirm: {
+                    label: "Add to Listing",
+                    className: "btn-success"
                 }
             },
-            callback: function(result){
-                if (result>=1){
+            callback: function (result) {
+                if(result)
                     '.$notif.'
                     $.ajax({
                         type: "GET",
-                        url: "/listing/add/'.$id.'?qty="+result
-                    });          
-                }
+                        url: "/listing/addItem/process",
+                        data: $("#addToListing").serialize()
+                    });    
             }
-          })</script>';
+            })</script>';
           
         if($request->ajax()){
             return $msg;
         }
     }
 
-    public function addItem($itemID, Request $request){
+    public function addItem(Request $request){
         //get the id_no of user logged in
         $userid = Auth::user()->id_no;
-
-        //get the cart of user where status is draft
-        $listing_id = DB::table('listing')->where('owner_id','=', $userid);
-
-
+        $itemID = Input::get('item_id');
+        $listing_id = Input::get('listing_id');
         if(is_null($listing_id)){
             $listing_id = DB::table('listing')->insertGetId(
                 ['owner_id' => $userid] 
             );                
+        }
+
+        $countQtyItem = DB::table('listing_items')->where('listing_id',$listing_id)->where('item_id', $itemID)->count();
+        
+        if($countQtyItem == 0){
+                DB::table('listing_items')->insert([
+                ['listing_id' => $listing_id, 'item_id' => $itemID, 'qty' => $request->qty]
+                ]);
+            }
+        else{
+            DB::table('listing_items')->where('listing_id',$listing_id)->where('item_id', $itemID)->increment('qty',$request->qty);
         }
     }
 
