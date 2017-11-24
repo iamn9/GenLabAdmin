@@ -97,11 +97,6 @@ class ListingController extends Controller
             return URL::to('listing/'.$id);
         }
      
-        if(Auth::user()->isAdmin)
-            $listing = listing::findOrfail($id);
-        else
-            $listing = listing::where('owner_id','=',Auth::user()->id_no)->findOrfail($id);
-
         $searchWord = \Request::get('search');
         if ($searchWord == "")
             $listing_items = DB::table('listing_items')->paginate(5)->appends(Input::except('page'));
@@ -109,7 +104,16 @@ class ListingController extends Controller
             $searchWord = (int) $searchWord;
             $listing_items = DB::table('listing_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
         }
-        return view('listing.show',compact('searchWord','title','listing','listing_items'));
+
+        if(Auth::user()->isAdmin){
+            $listing = listing::findOrfail($id);
+            return view('listing.show',compact('searchWord','title','listing','listing_items'));
+        }else{
+            $listing = listing::where('owner_id','=',Auth::user()->id_no)->findOrfail($id);
+            return view('listing.user_show',compact('searchWord','title','listing','listing_items'));
+        }
+
+        
     }
 
     /**

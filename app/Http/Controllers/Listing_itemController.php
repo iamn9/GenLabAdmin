@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Cart_item;
+use App\listing_item;
 use URL;
 
 class Listing_itemController extends Controller
@@ -20,7 +20,7 @@ class Listing_itemController extends Controller
     {
         $title = 'Index - listing_item';
         $searchWord = \Request::get('search');
-        $listing_items = Listing_item::where('id','like','%'.$searchWord.'%')->orWhere('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+        $listing_items = Listing_item::where('id','like','%'.$searchWord.'%')->orWhere('owner_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
 
         return view('listing_item.index',compact('listing_items','title','searchWord'));
     }
@@ -32,9 +32,9 @@ class Listing_itemController extends Controller
      */
     public function create()
     {
-        $title = 'Create - cart_item';
+        $title = 'Create - listing_item';
         
-        return view('cart_item.create');
+        return view('listing_item.create');
     }
 
     /**
@@ -45,13 +45,13 @@ class Listing_itemController extends Controller
      */
     public function store(Request $request)
     {
-        $cart_item = new Cart_item();
-        $cart_item->cart_id = $request->cart_id;
-        $cart_item->item_id = $request->item_id;
-        $cart_item->qty = $request->qty;
-        $cart_item->save();
+        $listing_item = new listing_item();
+        $listing_item->listing_id = $request->listing_id;
+        $listing_item->item_id = $request->item_id;
+        $listing_item->qty = $request->qty;
+        $listing_item->save();
 
-        return redirect('cart_item');
+        return redirect('listing_item');
     }
 
     /**
@@ -63,15 +63,15 @@ class Listing_itemController extends Controller
      */
     public function show($id,Request $request)
     {
-        $title = 'Show - cart_item';
+        $title = 'Show - listing_item';
 
         if($request->ajax())
         {
-            return URL::to('cart_item/'.$id);
+            return URL::to('listing_item/'.$id);
         }
 
-        $cart_item = Cart_item::findOrfail($id);
-        return view('cart_item.show',compact('title','cart_item'));
+        $listing_item = listing_item::findOrfail($id);
+        return view('listing_item.show',compact('title','listing_item'));
     }
 
     /**
@@ -82,15 +82,15 @@ class Listing_itemController extends Controller
      */
     public function edit($id,Request $request)
     {
-        $title = 'Edit - cart_item';
+        $title = 'Edit - listing_item';
         if($request->ajax())
         {
-            return URL::to('cart_item/'. $id . '/edit');
+            return URL::to('listing_item/'. $id . '/edit');
         }
 
         
-        $cart_item = Cart_item::findOrfail($id);
-        return view('cart_item.edit',compact('title','cart_item'));
+        $listing_item = listing_item::findOrfail($id);
+        return view('listing_item.edit',compact('title','listing_item'));
     }
 
     /**
@@ -102,31 +102,31 @@ class Listing_itemController extends Controller
      */
     public function update($id,Request $request)
     {
-        $cart_item = Cart_item::findOrfail($id);
+        $listing_item = listing_item::findOrfail($id);
     	
-        //$cart_item->cart_id = $request->cart_id;
+        //$listing_item->listing_id = $request->listing_id;
         
-        //$cart_item->item_id = $request->item_id;
+        //$listing_item->item_id = $request->item_id;
         
-        $cart_item->qty = $request->qty;
+        $listing_item->qty = $request->qty;
         
-        $cart_item->save();
+        $listing_item->save();
 
-        $item = \App\Item::findOrFail($cart_item->item_id);
+        $item = \App\Item::findOrFail($listing_item->item_id);
 
         \Session::flash('info','<b>Info: </b>Qty of '.$item->name.' successfully Updated.'); //<--FLASH MESSAGE
 
-        return redirect('cart');
+        return redirect('listing');
     }
 
     public function DeleteMsg($id,Request $request)
     {
-        $cart_item = Cart_item::findOrFail($id);
-        $item = \App\Item::findOrFail($cart_item->item_id);
-        $notif = 'toastr["info"]("'.$item->name.' was successfully removed from cart")';
+        $listing_item = listing_item::findOrFail($id);
+        $item = \App\Item::findOrFail($listing_item->item_id);
+        $notif = 'toastr["info"]("'.$item->name.' was successfully removed from listing")';
         $msg = '<script>bootbox.confirm({
-            title: "<b>Remove Item from cart</b>",
-            message: "Warning! Are you sure you want to remove all of the <b>'.$item->name.'</b> from the cart?",
+            title: "<b>Remove Item from listing</b>",
+            message: "Warning! Are you sure you want to remove all of the <b>'.$item->name.'</b> from the listing?",
             buttons: {
                 confirm: {
                     label: "Remove",
@@ -142,7 +142,7 @@ class Listing_itemController extends Controller
                     '.$notif.'
                     $.ajax({
                         type: "GET",
-                        url: "/cart_item/'. $id . '/delete"
+                        url: "/listing_item/'. $id . '/delete"
                     });
                 }
             }
@@ -160,8 +160,8 @@ class Listing_itemController extends Controller
      */
     public function destroy($id)
     {
-     	$cart_item = Cart_item::findOrfail($id);
-        $cart = $cart_item->cart_id;
-     	$cart_item->delete();
+     	$listing_item = listing_item::findOrfail($id);
+        $listing = $listing_item->listing_id;
+     	$listing_item->delete();
     }
 }

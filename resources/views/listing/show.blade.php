@@ -1,4 +1,4 @@
-@extends('adminlte::page_user')
+@extends('adminlte::page')
 @section('title','Show')
 @section('content')
 
@@ -41,14 +41,11 @@
         </thead>
         <tbody>
             @foreach($listing_items as $listing_item) 
-            <tr>
+            <tr id={!!$listing_item->id!!}>
                 <td>{!!$listing_item->item_id!!}</td>
                 <td>{!!$listing_item->qty!!}</td>
                 <td>
-                    @if($listing->status != "Completed" && $listing->status != "Released")
-                        <a href = '{!!url("listing")."/".$listing_item->listing_id!!}' data-link='/listing_item/{!!$listing_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
-                        <a href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/listing_item/{!!$listing_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
-                    @endif
+                    <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing_item/{!!$listing_item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
                     <a href = '/item/{!!$listing_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
                 </td>
             </tr>

@@ -4,11 +4,11 @@
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Show cart</h1>
+    <h1>Show listing</h1>
     @include('search')
     <br>
-    <form method = 'get' action = '{!!url("cart")!!}'>
-        <button class = 'btn btn-primary'>cart Index</button>
+    <form method = 'get' action = '{!!url("listing")!!}'>
+        <button class = 'btn btn-primary'>listing Index</button>
     </form>
     <br>
     <table class = 'table table-bordered'>
@@ -19,15 +19,15 @@
         <tbody>
             <tr>
                 <td>
-                    <b><i>borrower_id : </i></b>
+                    <b><i>Owner ID : </i></b>
                 </td>
-                <td>{!!$cart->borrower_id!!}</td>
+                <td>{!!$listing->owner_id!!}</td>
             </tr>
             <tr>
                 <td>
-                    <b><i>status : </i></b>
+                    <b><i>Owner Name : </i></b>
                 </td>
-                <td>{!!$cart->status!!}</td>
+                <td>{!!$listing->getOwner()!!}</td>
             </tr>
         </tbody>
     </table>
@@ -36,20 +36,23 @@
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>item_id</th>
-            <th>name</th>
             <th>qty</th>
+            <th>actions</th>
         </thead>
         <tbody>
-            @foreach($cart_items as $cart_item) 
-            <tr id='{!!$cart_item->id!!}'>
-                <td>{!!$cart_item->item_id!!}</td>
-                <td>{!!$cart_item->name!!}</td>
-                <td>{!!$cart_item->qty!!}</td>
+            @foreach($listing_items as $listing_item) 
+            <tr id={!!$listing_item->id!!}>
+                <td>{!!$listing_item->item_id!!}</td>
+                <td>{!!$listing_item->qty!!}</td>
+                <td>
+                <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing_item/{!!$listing_item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
+                    <a href = '/item/{!!$listing_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
+                </td>
             </tr>
             @endforeach 
         </tbody>
     </table>
-    <div class='text-center'>{!! $cart_items->render() !!}</div>
+    <div class='text-center'>{!! $listing_items->render() !!}</div>
 </div>
 </div>
 @endsection

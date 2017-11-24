@@ -98,6 +98,15 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('listing/add/{id}/addItemMsg','\App\Http\Controllers\ListingController@addItemMsg');
 });
 
+//listing_item Routes
+Route::group(['middleware'=> 'web'],function(){
+  Route::resource('listing_item','\App\Http\Controllers\listing_itemController');
+  Route::post('listing_item/{id}/update','\App\Http\Controllers\listing_itemController@update');
+  Route::get('listing_item/{id}/delete','\App\Http\Controllers\listing_itemController@destroy');
+  Route::get('listing_item/{id}/deleteMsg','\App\Http\Controllers\listing_itemController@DeleteMsg');
+  Route::get('listing_item/{id}/edit','\App\Http\Controllers\listing_itemController@edit');
+});
+
 //cart_item Routes
 Route::group(['middleware'=> 'web'],function(){
   Route::resource('cart_item','\App\Http\Controllers\Cart_itemController');
