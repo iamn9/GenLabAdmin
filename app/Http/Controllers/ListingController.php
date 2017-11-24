@@ -33,7 +33,7 @@ class ListingController extends Controller
                 return $query->where('listing.owner_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
-            ->select('listing.id','listing.owner_id','users.name')
+            ->select('listing.id','listing.owner_id', 'listing.name', 'listing.description', 'users.name as owner_name')
             ->paginate(5)->appends(Input::except('page'));
             return view('listing.index',compact('listings','title','searchWord'));
         }
@@ -47,7 +47,7 @@ class ListingController extends Controller
                 return $query->where('listing.owner_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
-            ->select('listing.id','listing.owner_id','users.name')
+            ->select('listing.id','listing.owner_id', 'listing.name', 'listing.description', 'users.name as owner_name')
             ->where('listing.owner_id',$userid)
             ->paginate(5)->appends(Input::except('page'));
             return view('listing.index',compact('listings','title','searchWord'));
@@ -75,7 +75,12 @@ class ListingController extends Controller
     public function store(Request $request)
     {
         $listing = new Listing();
-        $listing->owner_id = $request->owner_id;
+        if (Auth::user()->isAdmin)
+            $listing->owner_id = $request->owner_id;
+        else
+            $listing->owner_id = Auth::user()->id_no;
+        $listing->name = $request->name;
+        $listing->description = $request->description;
         $listing->save();
         
         return redirect('listing');
@@ -97,19 +102,23 @@ class ListingController extends Controller
             return URL::to('listing/'.$id);
         }
      
+        if(Auth::user()->isAdmin){
+            $listing = listing::findOrfail($id);
+        }else{
+            $listing = listing::where('owner_id','=',Auth::user()->id_no)->findOrfail($id);
+        }
+
         $searchWord = \Request::get('search');
         if ($searchWord == "")
-            $listing_items = DB::table('listing_items')->paginate(5)->appends(Input::except('page'));
+            $listing_items = DB::table('listing_items')->where('listing_id', $listing->id)->paginate(5)->appends(Input::except('page'));
         else{
             $searchWord = (int) $searchWord;
-            $listing_items = DB::table('listing_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
+            $listing_items = DB::table('listing_items')->where('listing_id', $listing->id)->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
         }
 
         if(Auth::user()->isAdmin){
-            $listing = listing::findOrfail($id);
             return view('listing.show',compact('searchWord','title','listing','listing_items'));
         }else{
-            $listing = listing::where('owner_id','=',Auth::user()->id_no)->findOrfail($id);
             return view('listing.user_show',compact('searchWord','title','listing','listing_items'));
         }
 
@@ -144,7 +153,12 @@ class ListingController extends Controller
     public function update($id,Request $request)
     {
         $listing = listing::findOrfail($id);
-        $listing->owner_id = $request->owner_id;
+        if (Auth::user()->isAdmin)
+            $listing->owner_id = $request->owner_id;
+        else
+            $listing->owner_id = Auth::user()->id_no;
+        $listing->name = $request->name;
+        $listing->description = $request->description;
         $listing->save();
 
         return redirect('listing');
@@ -152,10 +166,11 @@ class ListingController extends Controller
 
     public function DeleteMsg($id,Request $request)
     {
-        $notif = 'toastr["info"]("listing # '.$id.' was successfully deleted from the system")';
+        $listing = listing::findOrfail($id);
+        $notif = 'toastr["info"]("Listing <b>'.$listing->name.'</b> was successfully deleted from the system")';
         $msg = '<script>
         bootbox.confirm({
-            title: "Delete listing #'.$id.' from the system",
+            title: "Delete listing <b>'.$listing->name.'</b> from the system",
             message: "Warning! Are you sure you want to remove this listing?",
             buttons: {
                 confirm: {
@@ -199,20 +214,20 @@ class ListingController extends Controller
     public function addItemMsg($id,Request $request)
     {
         $item = Item::findOrFail($id);
-        $notif = 'toastr["success"]("'.$item->name.' successfully added to listing.","Success")';
-        $listings = \App\Listing::all();
+        $listings = \App\Listing::where('owner_id', '=', Auth::user()->id_no)->get();
         $formp1 = "<form id='addToListing'><input type='hidden' name='item_id' value='".$id."'>"
         ."Listing: "
         ."<select id='listing_id' name='listing_id' class='bootbox-input bootbox-input-number form-control'>";
         $formp2 = "";
         foreach ($listings as $listing){
-            $formp2 = $formp2."<option value='".$listing->id."'>".$listing->id."</option>";
+            $formp2 = $formp2."<option value='".$listing->id."'>".$listing->name."</option>";
         }
-        $formp3 = "</select><br/>"
+        $formp3 = "<option value='-1'>Create New List</option></select><br/>"
         ."QTY:"
         ."<input class='bootbox-input bootbox-input-number form-control' type='number' name='qty' value='1' min='1'/>"
         ."</form>";
 
+        $notif = 'toastr["success"]("'.$item->name.' successfully added to listing.","Success")';
         $msg = '<script>bootbox.confirm({
             message: "'.$formp1.$formp2.$formp3.'",
             title: "Add <b>'.$item->name.'</b> to Listing",
@@ -246,9 +261,9 @@ class ListingController extends Controller
         $userid = Auth::user()->id_no;
         $itemID = Input::get('item_id');
         $listing_id = Input::get('listing_id');
-        if(is_null($listing_id)){
+        if($listing_id == -1){
             $listing_id = DB::table('listing')->insertGetId(
-                ['owner_id' => $userid] 
+                ['owner_id' => $userid, 'name' => 'My list']
             );                
         }
 

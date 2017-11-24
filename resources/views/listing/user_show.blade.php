@@ -29,6 +29,18 @@
                 </td>
                 <td>{!!$listing->getOwner()!!}</td>
             </tr>
+            <tr>
+                <td>
+                    <b><i>Name : </i></b>
+                </td>
+                <td>{!!$listing->name!!}</td>
+            </tr>
+            <tr>
+                <td>
+                    <b><i>Description : </i></b>
+                </td>
+                <td>{!!$listing->description!!}</td>
+            </tr>
         </tbody>
     </table>
 </div>

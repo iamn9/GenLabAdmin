@@ -16,7 +16,8 @@ class Listing extends Migration
         Schema::create('listing',function (Blueprint $table){
 
         $table->increments('id');
-        
+        $table->String('name');
+        $table->text('description')->nullable();
         $table->String('owner_id');
         
         /**

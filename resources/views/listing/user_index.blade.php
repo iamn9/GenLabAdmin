@@ -15,7 +15,9 @@
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th style="width:200px">owner_id</th>
-            <th>Borrower Name</th>
+            <th style="width:200px">Borrower</th>
+            <th style="width:200px">Name of List</th>
+            <th>Description</th>
             <th style="width: 200px">actions</th>
         </thead>
         <tbody>
@@ -23,6 +25,8 @@
             <tr id='{!!$listing->id!!}'>
                 <td>{!!$listing->owner_id!!}</td>
                 <td>{!!$listing->getOwner()!!}</td>
+                <td>{!!$listing->name!!}</td>
+                <td>{!!$listing->description!!}</td>
                 <td>
                     <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing/{!!$listing->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
                     <a class = 'viewEdit btn btn-primary btn-xs' href = '/listing/{!!$listing->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
