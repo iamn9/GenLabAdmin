@@ -200,12 +200,22 @@ class ListingController extends Controller
     {
         $item = Item::findOrFail($id);
         $notif = 'toastr["success"]("'.$item->name.' successfully added to listing.","Success")';
-
-        $form = "<form id='addToListing'><input type='hidden' name='item_id' value='".$id."'>Listing:<input class='bootbox-input bootbox-input-number form-control' name='listing_id' id='listing_id' type='text'/><br/>QTY:<input class='bootbox-input bootbox-input-number form-control' type='number' name='qty' value='1' min='1'/></form>";
+        $listings = \App\Listing::all();
+        $formp1 = "<form id='addToListing'><input type='hidden' name='item_id' value='".$id."'>"
+        ."Listing: "
+        ."<select id='listing_id' name='listing_id' class='bootbox-input bootbox-input-number form-control'>";
+        $formp2 = "";
+        foreach ($listings as $listing){
+            $formp2 = $formp2."<option value='".$listing->id."'>".$listing->id."</option>";
+        }
+        $formp3 = "</select><br/>"
+        ."QTY:"
+        ."<input class='bootbox-input bootbox-input-number form-control' type='number' name='qty' value='1' min='1'/>"
+        ."</form>";
 
         $msg = '<script>bootbox.confirm({
-            message: "'.$form.'",
-            title: "Add Item to Listing",
+            message: "'.$formp1.$formp2.$formp3.'",
+            title: "Add <b>'.$item->name.'</b> to Listing",
             buttons: {
                 cancel: {
                     label: "Cancel",
