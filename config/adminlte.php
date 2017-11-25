@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 return [
 
@@ -188,6 +188,12 @@ return [
                     'url'         => 'cart/completed',
                 ],
             ]
+        ],
+        [
+            'text'        => 'Listing',
+            'url'         => 'listing',
+            'icon'        => 'book',
+            'label_color' => 'success',
         ],
         'TRANSACTIONS',
         [
