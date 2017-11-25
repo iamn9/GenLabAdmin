@@ -49,7 +49,7 @@ class ListingController extends Controller
             ->select('listing.id','listing.owner_id', 'listing.name', 'listing.description', 'users.name as owner_name')
             ->where('listing.owner_id',$userid)
             ->paginate(5)->appends(Input::except('page'));
-            return view('listing.index',compact('listings','title','searchWord'));
+            return view('listing.user_index',compact('listings','title','searchWord'));
         }
     }
 
