@@ -11,7 +11,6 @@ use App\Http\Controllers\Controller;
 use URL;
 use App\Listing;
 use App\listing_item;
-use App\Transaction;
 use App\Item;
 
 class ListingController extends Controller
@@ -263,7 +262,7 @@ class ListingController extends Controller
         $listing_id = Input::get('listing_id');
         if($listing_id == -1){
             $listing_id = DB::table('listing')->insertGetId(
-                ['owner_id' => $userid, 'name' => 'My list']
+                ['owner_id' => $userid, 'name' =>'My Listing']
             );                
         }
 
@@ -282,19 +281,35 @@ class ListingController extends Controller
     public function addToCart($listing_id, Request $request){
         //get the id_no of user logged in
         $userid = Auth::user()->id_no;
-        //get the current time and date (needs to fix timezone)
+        //get the current time and date
         $date = date('Y-m-d H:i:s');
 
-        $transaction_id = DB::table('transactions')->insertGetId(
-            ['listing_id' => $listing_id, 'submitted_at' => $date]
-        );
-        DB::table('listings')
-            ->where('id', $listing_id)
-            ->where('owner_id',$userid)
-            ->update(['status' => 'Pending']);
+        //get the cart of user
+        $cart_id = DB::table('carts')->where('borrower_id','=', $userid)->where('status','Draft')->value('id');
+        if(is_null($cart_id)){
+            $cart_id = DB::table('carts')->insertGetId(
+                ['borrower_id' => $userid, 'status' => 'Draft']
+            );                
+        }
 
-        \Session::flash('success','<b>Success</b></br>Your items have been reserved!'); //<--FLASH MESSAGE
+        //get items from $listing_id
+        $listing_items = DB::table('listing_items')->where('listing_id','=',$listing_id)->get();
 
-        return redirect('/home');
+        //insert each item from the list to cart_items
+        foreach($listing_items as $listing_item){
+            $countQtyItem = DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->count();
+            if($countQtyItem == 0){
+                    DB::table('cart_items')->insert([
+                    ['cart_id' => $cart_id, 'item_id' => $listing_item->item_id, 'qty' => $listing_item->qty]
+                    ]);
+            }
+            else{
+                DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->increment('qty',$listing_item->qty);
+            }
+        }
+
+        \Session::flash('success','<b>Success</b></br>Your items from have been added to cart!'); //<--FLASH MESSAGE
+
+        return redirect('/listing');
     }
 }
