@@ -17,6 +17,7 @@
             <th style="width: 120px">status</th>
             <th style="width:160px">borrower_id</th>
             <th style="width:170px">Borrower Name</th>
+            <th style="width:120px">No. of Items</th>
             <th>Remarks</th>
             <th style="width: 200px">actions</th>
         </thead>
@@ -40,6 +41,7 @@
                 {!!$cart->status!!}</span></td>
                 <td>{!!$cart->borrower_id!!}</td>
                 <td>{!!$cart->getOwner()!!}</td>
+                <td>{!!$count_of_items!!}</td>
                 <td>{!!$cart->remarks!!}</td>
                 <td>
                     @if($cart->status != "Completed" && $cart->status != "Released")
