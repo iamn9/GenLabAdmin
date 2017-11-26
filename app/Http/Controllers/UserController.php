@@ -95,7 +95,8 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->name = $request->name;
         $user->id_no = $request->id_no;
-        $user->password = Hash::make($request->password);
+        if ($request->password != "")
+            $user->password = Hash::make($request->password);
         if($request->isAdmin == 'on')
             $user->isAdmin = 1;
         else

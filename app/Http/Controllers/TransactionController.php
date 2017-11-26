@@ -34,34 +34,6 @@ class TransactionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return  \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $title = 'Create - transaction';
-        return view('transaction.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param    \Illuminate\Http\Request  $request
-     * @return  \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $transaction = new Transaction();
-        $transaction->cart_id = $request->cart_id;
-        $transaction->submitted_at = $request->submitted_at;
-        $transaction->released_at = $request->released_at;
-        $transaction->completed_at = $request->completed_at;
-        $transaction->save();
-        return redirect('transaction');
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param    \Illuminate\Http\Request  $request
@@ -81,7 +53,7 @@ class TransactionController extends Controller
         $userid = Cart::where('id', '=', $transaction->cart_id)->value('borrower_id');
         $user = User::where('id_no', '=', $userid)->first();
 
-        $carts = Cart::select('transactions.id', 'cart_id', 'carts.id', 'remarks', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+        $carts = Cart::select('transactions.id', 'cart_id', 'carts.id', 'remarks', 'submitted_at', 'prepared_at','completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('borrower_id','=', $userid)
         ->where('transactions.id','=', $transaction->id)
@@ -93,44 +65,7 @@ class TransactionController extends Controller
 
         $nameAdmin = Auth::user()->name;
 
-        return view('transaction.show',compact('title','carts','cart_items', 'user', 'date','nameAdmin')); 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param    \Illuminate\Http\Request  $request
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function edit($id,Request $request)
-    {
-        $title = 'Edit - transaction';
-        if($request->ajax())
-        {
-            return URL::to('transaction/'. $id . '/edit');
-        }
-
-        $transaction = Transaction::findOrfail($id);
-        return view('transaction.edit',compact('title','transaction'  ));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param    \Illuminate\Http\Request  $request
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function update($id,Request $request)
-    {
-        $transaction = Transaction::findOrfail($id);
-        $transaction->cart_id = $request->cart_id;
-        $transaction->submitted_at = $request->submitted_at;
-        $transaction->released_at = $request->released_at;
-        $transaction->completed_at = $request->completed_at;
-        $transaction->save();
-
-        return redirect('transaction');
+        return view('transaction.admin_show',compact('title','carts','cart_items', 'user', 'date','nameAdmin')); 
     }
 
     public function DeleteMsg($id,Request $request)
@@ -180,17 +115,6 @@ class TransactionController extends Controller
      	$transaction->delete();
         return URL::to('transaction');
     }
-
-     public function user_history(Request $request){ 
-        $title = 'Transaction History'; 
-        $userid = Auth::user()->id_no; 
-        $user = User::where('id_no', '=', $userid)->first();
-        $transactions = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
-            $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('borrower_id', '=', $userid)->where('status', '=', 'Completed')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.user_history',compact('transactions','title')); 
-    }
-
 
     public function index_pending(){ 
         $title = 'Pending Transactions'; 
@@ -292,34 +216,27 @@ class TransactionController extends Controller
         return redirect('transaction/released'); 
     }
 
-    public function user_active(){ 
-        $date = date('F j, Y');
-        $title = 'Active Transaction'; 
-        $userid = Auth::user()->id_no; 
-        $cart_id = Cart::where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->value('id');
-        if (!$cart_id)
-        return redirect('/cart');
-        $user = User::where('id_no', '=', $userid)->first();
-        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'remarks', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
-            $join->on('carts.id', '=', 'transactions.cart_id');
-        })
-        ->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->paginate(5)->appends(Input::except('page')); 
-        $cart_items = Cart_item::join('items', function($join){
-                $join->on('cart_items.item_id', '=', 'items.id');
-            })->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
-        return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
-    } 
-    public function user_history_info($id, Request $Request){
+    public function user_show($id){
         $date = date('F j, Y');
         $title = 'Transaction History'; 
         $userid = Auth::user()->id_no;
         $user = User::where('id_no', '=', $userid)->first();
-        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'prepared_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('cart_id', '=', $id)->paginate(5)->appends(Input::except('page')); 
         $cart_items = Cart_item::join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
         return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
+    }
+
+    public function user_index(Request $request){ 
+        $title = 'Transaction History'; 
+        $userid = Auth::user()->id_no; 
+        $user = User::where('id_no', '=', $userid)->first();
+        $transactions = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'prepared_at', 'released_at', 'completed_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->where('borrower_id', '=', $userid)->orderBy('cart_id','desc')->paginate(5)->appends(Input::except('page')); 
+        return view('transaction.user_index',compact('transactions','title')); 
     }
 }

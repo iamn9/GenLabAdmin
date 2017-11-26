@@ -40,6 +40,7 @@
                 {!!$cart->status!!}</span></td>
                 <td>{!!$cart->borrower_id!!}</td>
                 <td>{!!$cart->getOwner()!!}</td>
+                <td>{!!$cart->getSize()!!}</td>
                 <td>{!!$cart->remarks!!}</td>
                 <td>
                     @if($cart->status != "Completed" && $cart->status != "Released")

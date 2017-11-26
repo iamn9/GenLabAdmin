@@ -203,12 +203,16 @@ class CartController extends Controller
         }
 
         $searchWord = \Request::get('search');
-        if ($searchWord == "")
-            $cart_items = DB::table('cart_items')->paginate(5)->appends(Input::except('page'));
-        else{
-            $searchWord = (int) $searchWord;
-            $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
-        }
+        
+        $cart_items = Cart_item::join('items', function($join){
+                $join->on('cart_items.item_id', '=', 'items.id');
+            })
+            ->when($searchWord, function ($query) {
+                return $query->where('name','ilike','%'.$searchWord.'%')->orWhere('item_id','=',$searchInt);
+            })
+            ->where('cart_id',$id)
+            ->orderBy('items.name')
+            ->paginate(10)->appends(Input::except('page'));
 
         if(Auth::user()->isAdmin){
             $cart = Cart::findOrfail($id);
