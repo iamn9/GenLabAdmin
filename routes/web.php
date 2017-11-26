@@ -114,7 +114,6 @@ Route::group(['middleware'=> 'web'],function(){
   Route::post('cart_item/{id}/update','\App\Http\Controllers\Cart_itemController@update');
   Route::get('cart_item/{id}/delete','\App\Http\Controllers\Cart_itemController@destroy');
   Route::get('cart_item/{id}/deleteMsg','\App\Http\Controllers\Cart_itemController@DeleteMsg');
-  Route::get('cart_item/{id}/edit','\App\Http\Controllers\Cart_itemController@edit');
 });
 
 //transaction Routes
