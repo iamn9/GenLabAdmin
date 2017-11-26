@@ -13,6 +13,9 @@
 Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('/', function () {
+   if (Auth::user())
+    return redirect('/home');
+   else
     return view('welcome');
 });
 Route::get('/about', function () { 
