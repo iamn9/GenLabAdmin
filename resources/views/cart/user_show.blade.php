@@ -42,7 +42,6 @@
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>item_id</th>
-            <th>name</th>
             <th>qty</th>
             <th>actions</th>
         </thead>
@@ -50,7 +49,6 @@
             @foreach($cart_items as $cart_item) 
             <tr>
                 <td>{!!$cart_item->item_id!!}</td>
-                <td>{!!$cart_item->name!!}</td>
                 <td>{!!$cart_item->qty!!}</td>
                 <td>
                     @if($cart->status =="Draft")
