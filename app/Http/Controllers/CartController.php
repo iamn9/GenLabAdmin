@@ -35,8 +35,7 @@ class CartController extends Controller
             })
             ->select('carts.id','carts.borrower_id','carts.status', 'carts.remarks', 'users.name')
             ->paginate(5)->appends(Input::except('page'));
-             $count_of_items = DB::table('cart_items')->count('id');
-            return view('cart.index',compact('carts','title','searchWord','count_of_items'));
+            return view('cart.index',compact('carts','title','searchWord'));
         }
         else{
             $searchInt = (int) $searchWord;
@@ -210,17 +209,6 @@ class CartController extends Controller
             $searchWord = (int) $searchWord;
             $cart_items = DB::table('cart_items')->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
         }
-        
-        //added code to show name of items in show carts
-        $cart_items = Cart_item::join('items', function($join){
-                $join->on('cart_items.item_id', '=', 'items.id');
-            })
-            ->when($searchWord, function ($query) {
-                return $query->where('name','ilike','%'.$searchWord.'%')->orWhere('item_id','=',$searchInt);
-            })
-            ->orderBy('items.name')
-            ->paginate(10)->appends(Input::except('page'));
-        //end of added code
 
         if(Auth::user()->isAdmin){
             $cart = Cart::findOrfail($id);
