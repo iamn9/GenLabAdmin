@@ -50,7 +50,6 @@ Route::get('transaction/{id}/undo_submission','\App\Http\Controllers\Transaction
 Route::get('transaction/{id}/undo_release','\App\Http\Controllers\TransactionController@undo_release');
 Route::get('transaction/{id}/undo_prepare','\App\Http\Controllers\TransactionController@undo_prepare');
 Route::get('transaction/{id}/undo_complete','\App\Http\Controllers\TransactionController@undo_complete');
-Route::get('transaction/user/active','\App\Http\Controllers\TransactionController@user_active');
 
 //user Routes
 Route::group(['middleware'=> 'web'],function(){
@@ -123,9 +122,8 @@ Route::group(['middleware'=> 'web'],function(){
 //transaction Routes
 Route::group(['middleware'=> 'web'],function(){
   Route::resource('transaction','\App\Http\Controllers\TransactionController');
-  Route::get('transaction/{id}/show', '\App\Http\Controllers\TransactionController@user_history_info');
-  Route::post('transaction/{id}/update','\App\Http\Controllers\TransactionController@update');
+  Route::get('transaction/{id}/show', '\App\Http\Controllers\TransactionController@user_show');
   Route::get('transaction/{id}/delete','\App\Http\Controllers\TransactionController@destroy');
   Route::get('transaction/{id}/deleteMsg','\App\Http\Controllers\TransactionController@DeleteMsg');
-  Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_history');
+  Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_index'); //okay
 });

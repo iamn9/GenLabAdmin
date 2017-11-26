@@ -1,14 +1,7 @@
 @extends('adminlte::page')
 @section('title','Show')
 @section('content')
-<section class='content'>
-<div class="box box-primary no-print">
-<div class="box-header">
-    <h1><div class="center">{!!$title!!}</div></h1>
 
-    <br>
-</div>
-</div>
 <section class="invoice">
       <!-- title row -->
       <div class="row">
@@ -38,24 +31,35 @@
         
         <div class="col-sm-4 invoice-col">
         <strong>Transaction Details</strong><br>
-          <address>
+        <address>
           @foreach($carts as $cart)
             @if($cart->status == "Completed")
                 Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
                 Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}<br>
                 Released: {!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
-            @else
+                Completed: {!!date('F j, Y g:i A', strtotime($cart->completed_at))!!}<br>
+            @endif
+            @if($cart->status == "Released")
                 Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
-                Status: <b>{!!$cart->status!!}</b>
+                Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}<br>
+                Released: {!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
+            @endif
+            @if($cart->status == "Prepared")
+                Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
+                Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}<br>
+            @endif
+            @if($cart->status == "Pending")
+                Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
             @endif
           @endforeach
-          </address>
+        </address>
         </div>
         <!-- /.col -->
 
         <div class="col-sm-4 invoice-col">
           <b>Transaction #:</b> {!!$cart->trans_id!!} <br>
           <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
+          <b>Status:</b> {!!$cart->status!!}<br>
           <b>Processed by:</b> {!!$nameAdmin!!}<br>
         </div>
         <!-- /.col -->
