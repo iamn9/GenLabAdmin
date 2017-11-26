@@ -20,4 +20,10 @@ class Cart extends Model
         ->where('users.id_no',$this->borrower_id)
         ->value('name');
     }
+
+    public function getSize(){
+        return DB::table('cart_items')
+        ->where('cart_id', $this->id)
+        ->count();
+    }
 }
