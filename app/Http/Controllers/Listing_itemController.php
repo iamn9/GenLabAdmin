@@ -12,32 +12,6 @@ use URL;
 class Listing_itemController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return  \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $title = 'Index - listing_item';
-        $searchWord = \Request::get('search');
-        $listing_items = Listing_item::where('id','like','%'.$searchWord.'%')->orWhere('owner_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
-
-        return view('listing_item.index',compact('listing_items','title','searchWord'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return  \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $title = 'Create - listing_item';
-        
-        return view('listing_item.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param    \Illuminate\Http\Request  $request
@@ -55,45 +29,6 @@ class Listing_itemController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param    \Illuminate\Http\Request  $request
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function show($id,Request $request)
-    {
-        $title = 'Show - listing_item';
-
-        if($request->ajax())
-        {
-            return URL::to('listing_item/'.$id);
-        }
-
-        $listing_item = listing_item::findOrfail($id);
-        return view('listing_item.show',compact('title','listing_item'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param    \Illuminate\Http\Request  $request
-     * @param    int  $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function edit($id,Request $request)
-    {
-        $title = 'Edit - listing_item';
-        if($request->ajax())
-        {
-            return URL::to('listing_item/'. $id . '/edit');
-        }
-
-        
-        $listing_item = listing_item::findOrfail($id);
-        return view('listing_item.edit',compact('title','listing_item'));
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param    \Illuminate\Http\Request  $request
@@ -103,19 +38,10 @@ class Listing_itemController extends Controller
     public function update($id,Request $request)
     {
         $listing_item = listing_item::findOrfail($id);
-    	
-        //$listing_item->listing_id = $request->listing_id;
-        
-        //$listing_item->item_id = $request->item_id;
-        
         $listing_item->qty = $request->qty;
-        
         $listing_item->save();
-
         $item = \App\Item::findOrFail($listing_item->item_id);
-
         \Session::flash('info','<b>Info: </b>Qty of '.$item->name.' successfully Updated.'); //<--FLASH MESSAGE
-
         return redirect('listing');
     }
 
