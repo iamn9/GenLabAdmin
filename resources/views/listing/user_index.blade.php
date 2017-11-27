@@ -14,7 +14,8 @@
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width:200px">owner_id</th>
+            <th style="width:80px">Shared</th>
+            <th style="width:130px">owner_id</th>
             <th style="width:200px">Borrower</th>
             <th style="width:200px">Name of List</th>
             <th>Description</th>
@@ -23,7 +24,12 @@
         <tbody>
             @foreach($listings as $listing) 
             <tr id='{!!$listing->id!!}'>
-                <td>{!!$listing->owner_id!!}</td>
+            @if ($listing->isShared)
+                <td><i class='glyphicon glyphicon-ok'></i>  true</td>
+            @else
+                <td><i class='glyphicon glyphicon-remove'></i>  false</td>
+            @endif
+            <td>{!!$listing->owner_id!!}</td>
                 <td>{!!$listing->getOwner()!!}</td>
                 <td>{!!$listing->name!!}</td>
                 <td>{!!$listing->description!!}</td>

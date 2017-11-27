@@ -41,6 +41,16 @@
                 </td>
                 <td>{!!$listing->description!!}</td>
             </tr>
+            <tr>
+                <td>
+                    <b><i>Shared : </i></b>
+                </td>
+                @if ($listing->isShared)
+                    <td><i class='glyphicon glyphicon-ok'></i>  true</td>
+                @else
+                    <td><i class='glyphicon glyphicon-remove'></i>  false</td>
+                @endif
+            </tr>
         </tbody>
     </table>
 </div>
