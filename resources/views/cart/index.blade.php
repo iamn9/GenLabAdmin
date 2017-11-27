@@ -8,7 +8,7 @@
     @include('search')
     <br>
     <form class = 'col s3' method = 'get' action = '{!!url("cart")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create New cart</button>
+        <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New cart</button>
     </form>
 </div>
 <div class="box-body">

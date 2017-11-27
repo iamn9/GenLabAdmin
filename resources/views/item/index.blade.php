@@ -10,7 +10,7 @@
 
 <div class="box-body">
     <form class = 'col s3' method = 'get' action = '{!!url("item")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create New item</button>
+        <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New item</button>
     </form>
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>

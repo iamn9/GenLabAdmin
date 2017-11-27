@@ -9,7 +9,7 @@
 </div>
 <div class="box-body">
     <form class = 'col s3' method = 'get' action = '{!!url("news")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create News</button>
+        <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create News</button>
     </form>
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
