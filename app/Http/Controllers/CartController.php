@@ -370,6 +370,11 @@ class CartController extends Controller
         //get the current time and date (needs to fix timezone)
         $date = date('Y-m-d H:i:s');
 
+        $item_count = Cart_item::where('cart_id',$cart_id)->count();
+        if($item_count == 0){
+            return redirect('cart');
+        }
+
         $transaction_id = DB::table('transactions')->insertGetId(
             ['cart_id' => $cart_id, 'submitted_at' => $date]
         );
