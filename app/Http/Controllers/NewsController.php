@@ -19,23 +19,24 @@ class NewsController extends Controller
      */
     public function index()
     {
-         $searchWord = \Request::get('search');
-         $news = News::join('users', function($join){
-                $join->on('news.reporter_id', '=', 'users.id_no');
-            })
-            ->when($searchWord, function ($query) use ($searchWord) {
-                return $query
-                ->where('users.name', 'ilike','%'.$searchWord.'%')
-                ->orWhere('news.content', 'ilike','%'.$searchWord.'%');
-            })
-            ->select('news.id','news.date_posted','news.content','users.name')
-            ->orderBy('news.date_posted','desc')
-            ->paginate(5)->appends(Input::except('page'));
+        $title = 'News Index';
+        $searchWord = \Request::get('search');
+        $news = News::join('users', function($join){
+            $join->on('news.reporter_id', '=', 'users.id_no');
+        })
+        ->when($searchWord, function ($query) use ($searchWord) {
+            return $query
+            ->where('users.name', 'ilike','%'.$searchWord.'%')
+            ->orWhere('news.content', 'ilike','%'.$searchWord.'%');
+        })
+        ->select('news.id','news.date_posted','news.content','users.name')
+        ->orderBy('news.date_posted','desc')
+        ->paginate(5)->appends(Input::except('page'));
 
         if(Auth::check() && Auth::user()->isAdmin)
-            return view('news.index',compact('news','searchWord')); 
+            return view('news.index',compact('news','searchWord', 'title')); 
         else
-            return view('news.user_index',compact('news','searchWord')); 
+            return view('news.user_index',compact('news','searchWord','title')); 
     }
 
     /**
@@ -45,7 +46,8 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('news.create');
+        $title = 'Create News Post';
+        return view('news.create',compact('title'));
     }
 
     /**
@@ -74,6 +76,7 @@ class NewsController extends Controller
      */
     public function show($id,Request $request)
     {
+        $title = 'Show News';
         $news = News::join('users', function($join){
             $join->on('news.reporter_id', '=', 'users.id_no');
         })->select('news.id','news.date_posted','news.content','users.name')->findOrfail($id);
@@ -89,7 +92,7 @@ class NewsController extends Controller
      */
     public function edit($id,Request $request)
     {
-        $title = 'Edit - news';
+        $title = 'Edit News';
         if($request->ajax())
         {
             return URL::to('news/'. $id . '/edit');

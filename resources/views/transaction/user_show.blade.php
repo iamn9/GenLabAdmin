@@ -1,5 +1,5 @@
 @extends('adminlte::page_user')
-@section('title','Show')
+@section('title','GLS | '.$title)
 @section('content')
 
 <section class="invoice">

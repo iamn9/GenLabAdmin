@@ -164,9 +164,9 @@ class CartController extends Controller
      */
     public function create()
     {
-        $title = 'Create - cart';
+        $title = 'Create Cart';
         
-        return view('cart.create');
+        return view('cart.create', compact('title'));
     }
 
     /**
@@ -195,7 +195,7 @@ class CartController extends Controller
      */
     public function show($id,Request $request)
     {
-        $title = 'Show - cart';
+        $title = 'Show Cart';
 
         if($request->ajax())
         {

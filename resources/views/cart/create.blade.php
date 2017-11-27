@@ -1,10 +1,10 @@
 @extends('adminlte::page')
-@section('title','Create')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Create cart</h1>
+    <h1>{{$title}}</h1>
     <form method = 'get' action = '{!!url("cart")!!}'>
         <button class = 'btn btn-danger'>cart Index</button>
     </form>

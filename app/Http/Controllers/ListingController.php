@@ -60,7 +60,7 @@ class ListingController extends Controller
      */
     public function create()
     {
-        $title = 'Create - listing';
+        $title = 'Create Listing';
         
         return view('listing.create');
     }
@@ -94,7 +94,7 @@ class ListingController extends Controller
      */
     public function show($id,Request $request)
     {
-        $title = 'Show - listing';
+        $title = 'Show Listing';
 
         if($request->ajax())
         {
@@ -132,7 +132,7 @@ class ListingController extends Controller
      */
     public function edit($id,Request $request)
     {
-        $title = 'Edit - listing';
+        $title = 'Edit Listing';
         if($request->ajax())
         {
             return URL::to('listing/'. $id . '/edit');

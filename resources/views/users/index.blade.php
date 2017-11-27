@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">

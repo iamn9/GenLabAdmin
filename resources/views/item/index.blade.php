@@ -1,10 +1,10 @@
 @extends('adminlte::page')
-@section('title','Index')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Item Index</h1>
+    <h1>{{$title}}</h1>
     @include('search')
 </div>
 
