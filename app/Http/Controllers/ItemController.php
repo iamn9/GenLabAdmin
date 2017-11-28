@@ -75,7 +75,10 @@ class ItemController extends Controller
         }
 
         $item = Item::findOrfail($id);
-        return view('item.show',compact('title','item'));
+        if (Auth::user()->isAdmin)
+            return view('item.show',compact('title','item'));
+        else
+            return view('item.user_show',compact('title','item'));
     }
 
     public function showModal($id, Request $request){

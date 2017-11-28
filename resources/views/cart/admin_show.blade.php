@@ -2,7 +2,6 @@
 @section('title','GLS | '.$title)
 @section('content')
 
-<section class='content'>
 <div class="box box-primary">
 <div class="box-header">
     <h1>{{$title}}</h1>
@@ -67,5 +66,4 @@
     <div class='text-center'>{!! $cart_items->render() !!}</div>
 </div>
 </div>
-</section>
 @endsection
