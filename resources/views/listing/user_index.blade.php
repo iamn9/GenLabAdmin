@@ -37,7 +37,7 @@
                     <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing/{!!$listing->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
                     <a class = 'viewEdit btn btn-primary btn-xs' href = '/listing/{!!$listing->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
                     <a class = 'viewShow btn btn-info btn-xs' href = '/listing/{!!$listing->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
-                    <a class = 'update btn btn-success btn-xs' href = '/listing/{!!$listing->id!!}/addToCart/process'><i class="fa fa-info" aria-hidden="true"></i>  Add to Cart</a>
+                    <a class = 'update btn btn-success btn-xs' href = '/listing/{!!$listing->id!!}/addToCart/process'><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
                 </td>
             </tr>
             @endforeach 

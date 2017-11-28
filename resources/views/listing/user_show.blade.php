@@ -7,10 +7,9 @@
     <h1>Show listing</h1>
     @include('search')
     <br>
-    <form method = 'get' action = '{!!url("listing")!!}'>
-        <button class = 'btn btn-primary'>listing Index</button>
-    </form>
-    <br>
+    <a class = 'btn btn-primary' href = '{!!url("listing")!!}'> listing Index</a>&nbsp&nbsp
+    <a class = 'update btn btn-success' href = '/listing/{!!$listing->id!!}/addToCart/process'><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
+    <br><br>
     <table class = 'table table-bordered'>
         <thead>
             <th>Key</th>
