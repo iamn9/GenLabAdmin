@@ -7,10 +7,9 @@
     <h1>Show listing</h1>
     @include('search')
     <br>
-    <form method = 'get' action = '{!!url("listing")!!}'>
-        <button class = 'btn btn-primary'>listing Index</button>
-    </form>
-    <br>
+    <a class = 'btn btn-primary' href = '{!!url("listing")!!}'> listing Index</a>&nbsp&nbsp
+    <a class = 'update btn btn-success' href = '/listing/{!!$listing->id!!}/addToCart/process'><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
+    <br><br>
     <table class = 'table table-bordered'>
         <thead>
             <th>Key</th>
@@ -41,6 +40,16 @@
                 </td>
                 <td>{!!$listing->description!!}</td>
             </tr>
+            <tr>
+                <td>
+                    <b><i>Shared : </i></b>
+                </td>
+                @if ($listing->isShared)
+                    <td><i class='glyphicon glyphicon-ok'></i>  true</td>
+                @else
+                    <td><i class='glyphicon glyphicon-remove'></i>  false</td>
+                @endif
+            </tr>
         </tbody>
     </table>
 </div>
@@ -55,7 +64,17 @@
             @foreach($listing_items as $listing_item) 
             <tr id={!!$listing_item->id!!}>
                 <td>{!!$listing_item->item_id!!}</td>
-                <td>{!!$listing_item->qty!!}</td>
+                <td>
+                    @if($listing->owner_id == Auth::user()->id_no)
+                        <form method="POST" action='{!! url("listing_item")!!}/{!!$listing_item->id!!}/update'>
+                            <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
+                            <input type = "number" id="qty" name="qty" min="1" value="{!!$listing_item->qty!!}" style="width: 80px;">
+                            <button class = 'update btn btn-warning btn-xs' type ='submit' ><i class="fa fa-refresh" aria-hidden="true"></i>  Update</button>
+                        </form>
+                    @else
+                        {!!$listing_item->qty!!}
+                    @endif
+                </td>
                 <td>
                 <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing_item/{!!$listing_item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
                     <a href = '/item/{!!$listing_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>

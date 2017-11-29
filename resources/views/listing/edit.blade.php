@@ -34,6 +34,14 @@
             <label for="description">description</label>
             <textarea id="description" name="description" class="textarea" style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{!!$listing->description!!}</textarea>
         </div>
+        <div class="form-group">
+            <label for="isShared">Shared</label>
+            @if ($listing->isShared)
+                <input type="checkbox" name="isShared" checked = "checked">
+            @else
+                <input type="checkbox" name="isShared">
+            @endif
+        </div>
         <button class = 'btn btn-primary' type ='submit'>Update</button>
     </form>
 </div>

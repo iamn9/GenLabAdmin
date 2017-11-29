@@ -32,7 +32,7 @@ class ListingController extends Controller
                 return $query->where('listing.owner_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
-            ->select('listing.id','listing.owner_id', 'listing.name', 'listing.description', 'users.name as owner_name')
+            ->select('listing.id','listing.owner_id', 'listing.name', 'listing.description', 'listing.isShared', 'users.name as owner_name')
             ->paginate(5)->appends(Input::except('page'));
             return view('listing.index',compact('listings','title','searchWord'));
         }
@@ -46,7 +46,7 @@ class ListingController extends Controller
                 return $query->where('listing.owner_id','like','%'.$searchWord.'%')
                 ->orWhere('users.name', 'ilike','%'.$searchWord.'%');
             })
-            ->select('listing.id','listing.owner_id', 'listing.name', 'listing.description', 'users.name as owner_name')
+            ->select('listing.id','listing.owner_id', 'listing.name', 'listing.description', 'listing.isShared', 'users.name as owner_name')
             ->where('listing.owner_id',$userid)
             ->paginate(5)->appends(Input::except('page'));
             return view('listing.user_index',compact('listings','title','searchWord'));
@@ -80,6 +80,10 @@ class ListingController extends Controller
             $listing->owner_id = Auth::user()->id_no;
         $listing->name = $request->name;
         $listing->description = $request->description;
+        if($request->isShared == 'on')
+            $listing->isShared = 1;
+        else
+            $listing->isShared = 0;
         $listing->save();
         
         return redirect('listing');
@@ -101,11 +105,7 @@ class ListingController extends Controller
             return URL::to('listing/'.$id);
         }
      
-        if(Auth::user()->isAdmin){
-            $listing = listing::findOrfail($id);
-        }else{
-            $listing = listing::where('owner_id','=',Auth::user()->id_no)->findOrfail($id);
-        }
+        $listing = listing::findOrfail($id);
 
         $searchWord = \Request::get('search');
         if ($searchWord == "")
@@ -117,8 +117,12 @@ class ListingController extends Controller
 
         if(Auth::user()->isAdmin){
             return view('listing.show',compact('searchWord','title','listing','listing_items'));
-        }else{
+        }else if ($listing->isShared || $listing->owner_id == Auth::user()->id_no){
             return view('listing.user_show',compact('searchWord','title','listing','listing_items'));
+        }
+        else{
+            \Session::flash('warning','<b>Warning</b></br>Listing #'.$id.' may not be available or is private!'); //<--FLASH MESSAGE
+            return redirect('/listing');
         }
 
         
@@ -158,6 +162,10 @@ class ListingController extends Controller
             $listing->owner_id = Auth::user()->id_no;
         $listing->name = $request->name;
         $listing->description = $request->description;
+        if($request->isShared == 'on')
+            $listing->isShared = 1;
+        else
+            $listing->isShared = 0;
         $listing->save();
 
         return redirect('listing');
