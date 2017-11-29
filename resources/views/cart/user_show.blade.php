@@ -1,10 +1,10 @@
 @extends('adminlte::page_user')
-@section('title','Show')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Show cart</h1>
+    <h1>{{$title}}</h1>
     @include('search')
     <br>
     <form method = 'get' action = '{!!url("cart")!!}'>

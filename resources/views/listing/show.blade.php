@@ -1,10 +1,10 @@
 @extends('adminlte::page')
-@section('title','Show')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Show listing</h1>
+    <h1>{{$title}}</h1>
     @include('search')
     <br>
     <form method = 'get' action = '{!!url("listing")!!}'>

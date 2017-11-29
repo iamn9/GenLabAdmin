@@ -36,7 +36,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $title = 'Create User';
+        return view('users.create', compact('title'));
     }
 
     /**
@@ -77,8 +78,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = \App\User::findOrfail($id);
-
-        return view('users.edit', compact('user'));
+        $title = 'Edit User';
+        return view('users.edit', compact('user', 'title'));
     }
 
     /**

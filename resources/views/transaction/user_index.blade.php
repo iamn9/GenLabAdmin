@@ -1,5 +1,5 @@
 @extends('adminlte::page_user')
-@section('title','Transaction History')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">

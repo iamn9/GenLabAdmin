@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('adminlte::page_user')
 @section('title','GLS | '.$title)
 @section('content')
 

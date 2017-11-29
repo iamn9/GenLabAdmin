@@ -19,7 +19,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $title = 'Index - item';
+        $title = 'Item Index';
 
         $searchWord = \Request::get('search');
         $items = Item::where('name','like','%'.$searchWord.'%')->orWhere('description','like','%'.$searchWord.'%')->orderBy('name')->paginate(5)->appends(Input::except('page'));
@@ -37,9 +37,9 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $title = 'Create - item';
+        $title = 'Create Item';
         
-        return view('item.create');
+        return view('item.create', compact('title'));
     }
 
     /**
@@ -75,7 +75,7 @@ class ItemController extends Controller
      */
     public function show($id,Request $request)
     {
-        $title = 'Show - item';
+        $title = 'Show Item';
 
         if($request->ajax())
         {
@@ -83,7 +83,10 @@ class ItemController extends Controller
         }
 
         $item = Item::findOrfail($id);
-        return view('item.show',compact('title','item'));
+        if (Auth::user()->isAdmin)
+            return view('item.show',compact('title','item'));
+        else
+            return view('item.user_show',compact('title','item'));
     }
 
     public function showModal($id, Request $request){
@@ -108,14 +111,14 @@ class ItemController extends Controller
      */
     public function edit($id,Request $request)
     {
-        $title = 'Edit - item';
+        $title = 'Edit Item';
         if($request->ajax())
         {
             return URL::to('item/'. $id . '/edit');
         }
 
         $item = Item::findOrfail($id);
-        return view('item.edit',compact('title','item'  ));
+        return view('item.edit',compact('title','item'));
     }
 
     /**

@@ -1,10 +1,10 @@
 @extends('adminlte::page_user')
-@section('title','Show')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">
     <div class="box-header">
-        <h1>USER CART</h1>
+        <h1>{{$title}}</h1>
         @include('search')
     </div>
     <div class="box-body">

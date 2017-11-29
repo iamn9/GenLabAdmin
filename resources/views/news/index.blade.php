@@ -1,10 +1,10 @@
 @extends('adminlte::page')
-@section('title','Index')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary" style="background-color: rgba(250,250,250,0.2);">
     <div class="box-header" style="background-color: white;">
-        <h1>News Index</h1>
+        <h1>{!!$title!!}</h1>
         @include('search')
         <br>
         <a class="btn btn-primary" href = '{!!url("news")!!}/create'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create News</a>

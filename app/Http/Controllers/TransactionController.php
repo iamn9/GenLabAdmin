@@ -22,7 +22,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $title = 'Index - transaction';
+        $title = 'Transaction Index';
         $searchWord = \Request::get('search');
         if($searchWord == "")            
             $transactions = Transaction::orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
@@ -43,7 +43,7 @@ class TransactionController extends Controller
     public function show($id,Request $request)
     {
         $date = date('F j, Y g:i A');
-        $title = 'Show - transaction';
+        $title = 'Show Transaction';
         if($request->ajax())
         {
             return URL::to('transaction/'.$id);
@@ -218,7 +218,7 @@ class TransactionController extends Controller
 
     public function user_show($id){
         $date = date('F j, Y');
-        $title = 'Transaction History'; 
+        $title = 'Show Transaction'; 
         $userid = Auth::user()->id_no;
         $user = User::where('id_no', '=', $userid)->first();
         $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'prepared_at', 'borrower_id', 'status')->join('transactions', function($join){

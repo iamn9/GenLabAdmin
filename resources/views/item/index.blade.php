@@ -1,16 +1,16 @@
 @extends('adminlte::page')
-@section('title','Index')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Item Index</h1>
+    <h1>{{$title}}</h1>
     @include('search')
 </div>
 
 <div class="box-body">
     <form class = 'col s3' method = 'get' action = '{!!url("item")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create New item</button>
+        <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New item</button>
     </form>
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>

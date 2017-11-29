@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title','Index')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">
@@ -8,7 +8,7 @@
     @include('search')
     <br>
     <form class = 'col s3' method = 'get' action = '{!!url("cart")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create New cart</button>
+        <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New cart</button>
     </form>
 </div>
 <div class="box-body">
@@ -17,6 +17,7 @@
             <th style="width: 120px">status</th>
             <th style="width:160px">borrower_id</th>
             <th style="width:170px">Borrower Name</th>
+            <th style="width:90px"># of Items</th>
             <th>Remarks</th>
             <th style="width: 200px">actions</th>
         </thead>

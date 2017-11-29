@@ -1,9 +1,10 @@
 @extends('adminlte::page')
+@section('title','GLS | '.$title)
 @section('content')
 
 	<div class="box box-primary">
 		<div class="box-header">
-			<h3>Edit User ({{$user->name}})</h3>
+			<h1>{{$title}}</h1>
 		</div>
 		<div class="box-body">
 			<form action="{{url('users/update')}}" method = "post">

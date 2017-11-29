@@ -8,6 +8,57 @@
 
 <div class="box box-info">
   <div class="box-header with-border">
+    <h3 class="box-title">General Summary</h3>
+
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  
+  <div class="box-body">
+      <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-red">
+        <div class="inner">
+          <h3>{!!$count_unreturnedCarts!!}</h3>
+          <p>Unreturned Carts</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-bars"></i>
+        </div>
+        <a href="#" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-orange">
+        <div class="inner">
+          <h3>{!!$count_pendingCarts!!}</h3>
+          <p>Pending Carts</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-bars"></i>
+        </div>
+        <a href="#" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-green">
+        <div class="inner">
+          <h3>{!!$count_readyCarts!!}</h3>
+          <p>Carts Ready</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-bars"></i>
+        </div>
+        <a href="#" class="small-box-footer">
+          More info <i class="fa fa-arrow-circle-right"></i>
+        </a>
+      </div>
+  </div>
+</div>
+
+<div class="box box-info">
+  <div class="box-header with-border">
     <h3 class="box-title">Fresh Announcements</h3>
     <div class="box-tools pull-right">
       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -67,18 +118,16 @@
          <td> {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}</td>
          <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>
          <td>
-            @if($transaction->status == "Draft")
-                <span class="label label-info">
-            @elseif($transaction->status == "Pending")
-                <span class="label label-danger">
+            @if($transaction->status == "Pending")
+              <span class="label label-warning">
             @elseif($transaction->status == "Prepared")
-                <span class="label label-warning">
-            @elseif($transaction->status == "Released")
-                <span class="label label-primary">
+              <span class="label label-success">
+            @elseif($transaction->status == "Released")    
+                <span class="label label-danger">
             @elseif($transaction->status == "Completed")
-                <span class="label label-success">
+              <span class="label label-primary">
             @else
-                <span class="label label-info">
+              <span class="label label-info">
             @endif{!!$transaction->status!!}</span></td>
        </tr>
        @endforeach

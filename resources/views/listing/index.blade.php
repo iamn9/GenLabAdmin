@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title','Index')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">
@@ -8,7 +8,7 @@
     @include('search')
     <br>
     <form class = 'col s3' method = 'get' action = '{!!url("listing")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'>Create New Listing</button>
+        <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New Listing</button>
     </form>
 </div>
 <div class="box-body">

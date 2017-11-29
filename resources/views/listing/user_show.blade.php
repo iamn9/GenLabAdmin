@@ -1,10 +1,10 @@
 @extends('adminlte::page_user')
-@section('title','Show')
+@section('title','GLS | '.$title)
 @section('content')
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>Show listing</h1>
+    <h1>{{$title}}</h1>
     @include('search')
     <br>
     <a class = 'btn btn-primary' href = '{!!url("listing")!!}'> listing Index</a>&nbsp&nbsp
