@@ -55,6 +55,14 @@ class ItemController extends Controller
         $item->description = $request->description;
         $item->save();
 
+        $news = new \App\News();
+        $news->content = $request->name." - ".$request->description;
+        $news->reporter_id = Auth::user()->id_no;
+        $news->date_posted =  date('Y-m-d H:i:s');
+        $news->type = "item-add";
+        $news->title = "New Item";
+        $news->save();
+
         return redirect('item');
     }
 

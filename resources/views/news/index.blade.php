@@ -13,7 +13,11 @@
         <ul class="timeline">
             @foreach($news as $entry) 
                 <li id="{!!$entry->id!!}">
+                    @if($entry->type == "item-add")
+                        <i class="fa fa-flask bg-green"></i>
+                    @else
                         <i class="fa fa-newspaper-o bg-blue"></i>
+                    @endif
                     <div class="timeline-item">
                         <span class="time"><i class="fa fa-clock-o"></i> {!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</span>
                         <span class="time"><i class="fa fa-user"></i> {!!$entry->name!!}</span>
