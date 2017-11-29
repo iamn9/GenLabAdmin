@@ -27,10 +27,10 @@
 					<input type="password" name = "password" class = "form-control" placeholder = "Password" required>
 				</div>
 				<div class="form-group">
-					<label for="isAdmin">Admin</label>
+					<label data-toggle="tooltip" title="User is a GenLab Staff." for="isAdmin">Admin</label>
 					<input type="checkbox" name="isAdmin">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label for="isActivated">Activated</label>
+					<label data-toggle="tooltip" title="Activate Account." for="isActivated">Activated</label>
 					<input type="checkbox" name="isActivated">
 				</div>
 				<button class = "btn btn-primary" type="submit">Create</button>

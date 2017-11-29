@@ -54,10 +54,10 @@
                 <td>{!!$cart_item->qty!!}</td>
                 <td>
                     @if($cart->status != "Completed" && $cart->status != "Released")
-                        <a href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
-                        <a href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
+                        <a data-toggle="tooltip" title="Remove item from cart." href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
+                        <a data-toggle="tooltip" title="Edit item QTY." href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
                     @endif
-                    <a href = '/item/{!!$cart_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
+                    <a data-toggle="tooltip" title="View Item Information." href = '/item/{!!$cart_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
                 </td>
             </tr>
             @endforeach 

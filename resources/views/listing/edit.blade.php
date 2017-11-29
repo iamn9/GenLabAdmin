@@ -17,10 +17,10 @@
         <div class="form-group">
             <label for="owner_id">owner_id</label>
             @if(Auth::user()->isAdmin)
-                <input id="owner_id" name = "owner_id" type="text" class="form-control" value="{!!$listing->
+                <input data-toggle="tooltip" title="Enter User ID Number." id="owner_id" name = "owner_id" type="text" class="form-control" value="{!!$listing->
                 owner_id!!}"> 
             @else
-                <input id="owner_id" name = "owner_id" type="text" class="form-control" value="{!!$listing->
+                <input data-toggle="tooltip" title="Your ID Number." id="owner_id" name = "owner_id" type="text" class="form-control" value="{!!$listing->
                 owner_id!!}" disabled> 
             @endif
         </div>
@@ -33,7 +33,7 @@
             <textarea id="description" name="description" class="textarea" style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{!!$listing->description!!}</textarea>
         </div>
         <div class="form-group">
-            <label for="isShared">Shared</label>
+            <label data-toggle="tooltip" title="Allow the listing to be viewed by anyone with a link." for="isShared">Shared</label>
             @if ($listing->isShared)
                 <input type="checkbox" name="isShared" checked = "checked">
             @else

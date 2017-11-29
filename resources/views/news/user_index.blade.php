@@ -13,13 +13,13 @@
             @foreach($news as $entry) 
                 <li id="{!!$entry->id!!}">
                     @if($entry->type == "item-add")
-                        <i class="fa fa-flask bg-green"></i>
+                        <i data-toggle="tooltip" title="New Item" class="fa fa-flask bg-green"></i>
                     @else
-                        <i class="fa fa-newspaper-o bg-blue"></i>
+                        <i data-toggle="tooltip" title="Information" class="fa fa-newspaper-o bg-blue"></i>
                     @endif
                     <div class="timeline-item">
-                        <span class="time"><i class="fa fa-clock-o"></i> {!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</span>
-                        <span class="time"><i class="fa fa-user"></i> {!!$entry->name!!}</span>
+                        <span data-toggle="tooltip" title="Date Posted" class="time"><i class="fa fa-clock-o"></i> {!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</span>
+                        <span data-toggle="tooltip" title="Posted by" class="time"><i class="fa fa-user"></i> {!!$entry->name!!}</span>
                         <h3 class="timeline-header"><b>{!!$entry->title!!}</b></h3>
 
                         <div class="timeline-body">

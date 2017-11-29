@@ -67,14 +67,14 @@
                 <td>{!!$listing_item->item_id!!}</td>
                 <td>
                     <form method="POST" action='{!! url("listing_item")!!}/{!!$listing_item->id!!}/update'>
-                            <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
-                            <input type = "number" id="qty" name="qty" min="1" value="{!!$listing_item->qty!!}" style="width: 80px;">
-                            <button class = 'update btn btn-warning btn-xs' type ='submit' ><i class="fa fa-refresh" aria-hidden="true"></i>  Update</button>
+                        <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
+                        <input type = "number" id="qty" name="qty" min="1" value="{!!$listing_item->qty!!}" style="width: 80px;">
+                        <button data-toggle="tooltip" title="Update QTY of this item." class = 'update btn btn-warning btn-xs' type ='submit' ><i class="fa fa-refresh" aria-hidden="true"></i>  Update</button>
                     </form>
                 </td>
                 <td>
-                    <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing_item/{!!$listing_item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
-                    <a href = '/item/{!!$listing_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
+                    <a data-toggle="tooltip" title="Remove this item from the listing." href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing_item/{!!$listing_item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
+                    <a data-toggle="tooltip" title="View Item Information" href = '/item/{!!$listing_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
                 </td>
             </tr>
             @endforeach 

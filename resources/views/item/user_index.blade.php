@@ -23,9 +23,9 @@
                     <td>{!!$item->name!!}</td>
                     <td>{!!$item->description!!}</td>
                     <td>
-                        <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-success btn-xs' data-link = "/cart/add/{!!$item->id!!}/addItemMsg" ><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
-                        <a data-toggle="modal" data-target="#myModal" class = 'create btn btn-success btn-xs' data-link = "/listing/add/{!!$item->id!!}/addItemMsg" ><i class="fa fa-book" aria-hidden="true"></i>  Add to Listing</a>
-                        <a class = 'viewShow btn btn-primary btn-xs' href = '/item/{!!$item->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+                        <a data-toggle="tooltip" title="Add item to your current cart." data-toggle="modal" data-target="#myModal" class = 'delete btn btn-success btn-xs' data-link = "/cart/add/{!!$item->id!!}/addItemMsg" ><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
+                        <a data-toggle="tooltip" title="Add item to the listing of your choice." data-toggle="modal" data-target="#myModal" class = 'create btn btn-success btn-xs' data-link = "/listing/add/{!!$item->id!!}/addItemMsg" ><i class="fa fa-book" aria-hidden="true"></i>  Add to Listing</a>
+                        <a data-toggle="tooltip" title="Show Item Information." class = 'viewShow btn btn-primary btn-xs' href = '/item/{!!$item->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                     </td>
                 </tr>
                 @endforeach 
