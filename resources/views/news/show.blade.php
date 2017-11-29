@@ -26,6 +26,12 @@
                     </tr>
                     <tr>
                         <td>
+                            <b><i>Title: </i></b>
+                        </td>
+                        <td>{!!$news->title!!}</td>
+                    </tr
+                    <tr>
+                        <td>
                             <b><i>Content: </i></b>
                         </td>
                         <td>{!!$news->content!!}</td>

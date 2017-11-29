@@ -29,6 +29,10 @@
             <label for="description">description</label>
             <textarea id="description" name="description" class="textarea" style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
         </div>
+        <div class="form-group">
+            <label for="isShared">Shared</label>
+            <input type="checkbox" name="isShared">
+        </div>
         <button class = 'btn btn-primary' type ='submit'>Create</button>
     </form>
 </div>
