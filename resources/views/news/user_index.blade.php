@@ -16,7 +16,7 @@
                     <div class="timeline-item">
                         <span class="time"><i class="fa fa-clock-o"></i> {!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</span>
                         <span class="time"><i class="fa fa-user"></i> {!!$entry->name!!}</span>
-                        <h3 class="timeline-header"> Announcement</h3>
+                        <h3 class="timeline-header"><b>{!!$entry->title!!}</b></h3>
 
                         <div class="timeline-body">
                             {!!$entry->content!!}
