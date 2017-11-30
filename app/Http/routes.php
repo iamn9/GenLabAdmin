@@ -22,6 +22,7 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('cart_item/{id}/delete','\App\Http\Controllers\Cart_itemController@destroy');
   Route::get('cart_item/{id}/deleteMsg','\App\Http\Controllers\Cart_itemController@DeleteMsg');
 });
+
 //transaction Routes
 Route::group(['middleware'=> 'web'],function(){
   Route::resource('transaction','\App\Http\Controllers\TransactionController');

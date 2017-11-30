@@ -42,6 +42,9 @@ Route::get('transaction/{id}/undo_release','\App\Http\Controllers\TransactionCon
 Route::get('transaction/{id}/undo_prepare','\App\Http\Controllers\TransactionController@undo_prepare');
 Route::get('transaction/{id}/undo_complete','\App\Http\Controllers\TransactionController@undo_complete');
 Route::get('transaction/user/active','\App\Http\Controllers\TransactionController@user_active');
+Route::get('accountability/all','\App\Http\Controllers\AccountabilityController@index');
+Route::get('accountability/pending','\App\Http\Controllers\AccountabilityController@index_pending');
+Route::get('accountability/completed','\App\Http\Controllers\AccountabilityController@index_completed');
 
 //user Routes
 Route::group(['middleware'=> 'web'],function(){

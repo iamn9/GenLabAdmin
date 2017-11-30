@@ -7,13 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Accountability;
 use App\Transaction;
 use App\Cart;
 use App\Cart_item;
 use App\User;
 use URL;
 
-class TransactionController extends Controller
+class AccountabilityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,15 +23,16 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $title = 'hjahfausdf';
-        $searchWord = \Request::get('search');
+        $title = 'Accountability Index';
+		$searchWord = \Request::get('search');       
+	   
         if($searchWord == "")            
-            $transactions = Transaction::orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+            $accountabilities = Accountability::whereNotNull('id')->whereNull('borrower_id')->whereNull('borrower_name')->whereNull('date_borrowed')->orderBy('due_date')->paginate(5)->appends(Input::except('page'));
         else{
             $searchWord = (int) $searchWord;
             $transactions = Transaction::where('cart_id','=',$searchWord)->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
         }
-        return view('transaction.index',compact('transactions','title','searchWord'));
+        return view('accountability.index',compact('accountabilities','title','searchWord'));
     }
 
     /**
@@ -193,36 +195,22 @@ class TransactionController extends Controller
 
 
     public function index_pending(){ 
-        $title = 'Pending Transactions'; 
+        $title = 'Pending - accountabilities'; 
         $searchWord = \Request::get('search'); 
         if($searchWord == "")           
-            $transactions = Transaction::whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+            $accountabilities = Accountability::whereNotNull('id')->whereNull('borrower_id')->whereNull('borrower_name')->whereNull('date_borrowed')->orderBy('due_date')->paginate(5)->appends(Input::except('page'));
         else{ 
             $searchWord = (int) $searchWord;
             $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
         }
-        return view('transaction.index_pending',compact('transactions','title','searchWord')); 
-    } 
- 
-    public function index_prepared(){ 
-        $title = 'Prepared Carts'; 
-        $searchWord = \Request::get('search'); 
-        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('prepared_at')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.index_prepared',compact('transactions','title','searchWord')); 
-    } 
-
-    public function index_released(){ 
-        $title = 'Released Carts'; 
-        $searchWord = \Request::get('search'); 
-        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('released_at')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.index_released',compact('transactions','title','searchWord')); 
+        return view('accountability.index_pending',compact('accountabilities','title','searchWord')); 
     } 
  
     public function index_completed(){ 
-        $title = 'Completed Transactions'; 
+        $title = 'Completed - accountabilities'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('completed_at')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.index_completed',compact('transactions','title','searchWord')); 
+        $accountabilities = Accountability::whereNotNull('id')->whereNull('borrower_id')->whereNull('borrower_name')->whereNull('date_borrowed')->orderBy('due_date')->paginate(5)->appends(Input::except('page'));
+        return view('accountability.index_completed',compact('accountabilities','title','searchWord')); 
     } 
  
     public function undo_submission($id, Request $Request){
