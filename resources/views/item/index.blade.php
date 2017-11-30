@@ -15,16 +15,20 @@
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width: 60px">id</th>
-            <th style="width: 210px">name</th>
+          <th style="width: 60px">id</th>
+          <th style="width: 150px">name</th>
+          <th style="width: 150px">brand</th>
+          <th style="width: 100px">quantity</th>
             <th>description</th>
             <th style="width: 170px">actions</th>
         </thead>
         <tbody>
-            @foreach($items as $item) 
+            @foreach($items as $item)
             <tr id='{!!$item->id!!}'>
                 <td>{!!$item->id!!}</td>
                 <td>{!!$item->name!!}</td>
+                <td>{!!$item->brand!!}</td>
+                <td>{!!$item->quantity!!}</td>
                 <td>{!!$item->description!!}</td>
                 <td>
                     <a data-toggle="tooltip" title="Remove the Item" href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/item/{!!$item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
@@ -32,7 +36,7 @@
                     <a class = 'viewShow btn btn-warning btn-xs' href = '/item/{!!$item->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>
             </tr>
-            @endforeach 
+            @endforeach
         </tbody>
     </table>
     <div class='text-center'>{!! $items->render() !!}</div>

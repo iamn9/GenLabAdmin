@@ -226,7 +226,30 @@ return [
                     'url'         => 'transaction/completed',
                 ],
             ]
-        ],
+        ],			
+		[
+            'text'        => 'Accountabilites',
+            'url'         => 'cart',
+            'icon'        => 'money',
+            'label_color' => 'success',
+            'submenu'   =>[
+                [
+                    'text'       => 'Show All',
+                    'icon_color' => 'acqua',
+                    'url'         => 'cart/all',
+                ],                
+                [
+                    'text'       => 'Pending',
+                    'icon_color' => 'red',
+                    'url'         => 'cart/pending',
+                ],                
+                [
+                    'text'       => 'Completed',
+                    'icon_color' => 'green',
+                    'url'         => 'cart/completed',
+                ],
+			]
+		],
         "NEWS",
         [
             'text'        => 'Updates',

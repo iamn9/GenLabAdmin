@@ -26,9 +26,9 @@ class ItemController extends Controller
         $items = Item::where('name','like','%'.$searchWord.'%')->orWhere('description','like','%'.$searchWord.'%')->orderBy('name')->paginate(5)->appends(Input::except('page'));
 
         if(Auth::check() && Auth::user()->isAdmin)
-            return view('item.index',compact('items','title','searchWord')); 
+            return view('item.index',compact('items','title','searchWord'));
         else
-            return view('item.user_index',compact('items','title','searchWord')); 
+            return view('item.user_index',compact('items','title','searchWord'));
     }
 
     /**
@@ -63,6 +63,12 @@ class ItemController extends Controller
 
         $item = new Item();
         $item->name = $request->name;
+        $item->brand = $request->brand;
+        $item->quantity = $request->quantity;
+        $item->acquisitioncost = $request->acquisitioncost;
+        $item->wattage = $request->wattage;
+        $item->firsthour = $request->firsthour;
+        $item->succeeding = $request->succeeding;
         $item->description = $request->description;
         $item->save();
 
@@ -142,12 +148,17 @@ class ItemController extends Controller
     public function update($id,Request $request)
     {
         $item = Item::findOrfail($id);
-    	
+
         $item->name = $request->name;
-        
+        $item->brand = $request->brand;
+        $item->quantity = $request->quantity;
+        $item->acquisitioncost = $request->acquisitioncost;
+        $item->wattage = $request->wattage;
+        $item->firsthour = $request->firsthour;
+        $item->succeeding = $request->succeeding;
         $item->description = $request->description;
-        
-        
+
+
         $item->save();
 
         return redirect('item');
@@ -177,7 +188,7 @@ class ItemController extends Controller
                     $.ajax({
                         type: "GET",
                         url: "/item/'.$id.'/delete"
-                    });      
+                    });
                 }
             }
         });
