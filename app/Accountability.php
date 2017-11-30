@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Accountability extends Model
 {
     public $timestamps = false;  
-    protected $table = 'accountability';
+    protected $table = 'accountabilities';
 
 	public function getID(){
         return $this->id;
