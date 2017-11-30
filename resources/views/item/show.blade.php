@@ -28,9 +28,27 @@
                     </tr>
                     <tr>
                         <td>
-                            <b><i>description : </i></b>
+                            <b><i>brand : </i></b>
                         </td>
-                        <td>{!!$item->description!!}</td>
+                        <td>{!!$item->brand!!}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><i>quantity : </i></b>
+                        </td>
+                        <td>{!!$item->quantity!!}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><i>first hour : </i></b>
+                        </td>
+                        <td>{!!$item->firsthour!!}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><i>succeeding hour: </i></b>
+                        </td>
+                        <td>{!!$item->succeeding!!}</td>
                     </tr>
                 </tbody>
             </table>

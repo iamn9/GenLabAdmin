@@ -14,12 +14,12 @@ class AddColumnsToItemsTable extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-              $table->String('brand')->default('None');
-              $table->integer('quantity')->default(0);
-              $table->decimal('acquisitioncost',10,2)->default(0);
-              $table->decimal('wattage',10,2)->default(0);
-              $table->decimal('firsthour',10,2)->default(0);
-              $table->decimal('succeeding',10,2)->default(0);
+              $table->String('brand') ->default('None');
+              $table->integer('quantity') ->default(0);
+              $table->decimal('acquisitioncost',10,2) ->default(0);
+              $table->decimal('wattage',10,2) ->default(0);
+              $table->decimal('firsthour',10,2) ->default(0);
+              $table->decimal('succeeding',10,2) ->default(0);
 
         });
     }
