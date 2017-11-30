@@ -15,7 +15,7 @@
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
         <div class="form-group">
             <label for="borrower_id">borrower_id</label>
-            <input id="borrower_id" name = "borrower_id" type="text" class="form-control">
+            <input id="borrower_id" name = "borrower_id" type="text" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="status">status</label>

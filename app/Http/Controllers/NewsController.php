@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -58,6 +59,16 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'content' => 'required',
+            'title' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            \Session::flash('error','<b>Error: </b><br>Make sure to fill in all the fields.');
+            return redirect('news/create');
+        }
+
         $news = new News();
         $news->content = $request->content;
         $news->reporter_id = Auth::user()->id_no;

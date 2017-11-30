@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
@@ -177,6 +178,16 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'borrower_id' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            \Session::flash('error','<b>Error: </b><br>Make sure to fill in the required fields.');
+            return redirect('cart/create');
+        }
+        
         $cart = new Cart();
         $cart->borrower_id = $request->borrower_id;
         $cart->status = $request->status;
