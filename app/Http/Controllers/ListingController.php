@@ -63,7 +63,7 @@ class ListingController extends Controller
     {
         $title = 'Create Listing';
         
-        return view('listing.create');
+        return view('listing.create', compact('title'));
     }
 
     /**
