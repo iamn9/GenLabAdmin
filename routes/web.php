@@ -50,6 +50,9 @@ Route::get('transaction/{id}/undo_submission','\App\Http\Controllers\Transaction
 Route::get('transaction/{id}/undo_release','\App\Http\Controllers\TransactionController@undo_release');
 Route::get('transaction/{id}/undo_prepare','\App\Http\Controllers\TransactionController@undo_prepare');
 Route::get('transaction/{id}/undo_complete','\App\Http\Controllers\TransactionController@undo_complete');
+Route::get('accountability/all','\App\Http\Controllers\AccountabilityController@index');
+Route::get('accountability/pending','\App\Http\Controllers\AccountabilityController@index_pending');
+Route::get('accountability/completed','\App\Http\Controllers\AccountabilityController@index_completed');
 
 //analytics
 Route::get('analytics/borroweditems','\App\Http\Controllers\AnalyticsController@most_borrowed');

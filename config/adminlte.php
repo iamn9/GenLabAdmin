@@ -229,24 +229,24 @@ return [
         ],			
 		[
             'text'        => 'Accountabilites',
-            'url'         => 'cart',
+            'url'         => 'accountability',
             'icon'        => 'money',
             'label_color' => 'success',
             'submenu'   =>[
                 [
                     'text'       => 'Show All',
                     'icon_color' => 'acqua',
-                    'url'         => 'cart/all',
+                    'url'         => 'accountability/all',
                 ],                
                 [
                     'text'       => 'Pending',
                     'icon_color' => 'red',
-                    'url'         => 'cart/pending',
+                    'url'         => 'accountability/pending',
                 ],                
                 [
                     'text'       => 'Completed',
                     'icon_color' => 'green',
-                    'url'         => 'cart/completed',
+                    'url'         => 'accountability/completed',
                 ],
 			]
 		],
