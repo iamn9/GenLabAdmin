@@ -51,6 +51,10 @@ Route::get('transaction/{id}/undo_release','\App\Http\Controllers\TransactionCon
 Route::get('transaction/{id}/undo_prepare','\App\Http\Controllers\TransactionController@undo_prepare');
 Route::get('transaction/{id}/undo_complete','\App\Http\Controllers\TransactionController@undo_complete');
 
+//analytics
+Route::get('analytics/borroweditems','\App\Http\Controllers\AnalyticsController@most_borrowed');
+
+
 //user Routes
 Route::group(['middleware'=> 'web'],function(){
   Route::resource('users', '\App\Http\Controllers\UserController');

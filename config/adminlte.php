@@ -233,7 +233,20 @@ return [
             'url'         => 'news',
             'icon'        => 'info',
             'label_color' => 'success',
-        ]        
+        ],
+           'ANALYTICS',
+        [
+            'text'       => 'Analytics',
+            'icon' => 'folder-o',
+            'submenu'   =>[
+                [
+                    'text'       => 'Borrowed Items',
+                    'icon_color' => 'white',
+                    'url'         => 'analytics/borroweditems',
+                ],
+               
+            ]
+        ],        
     ],
 
     /*
