@@ -24,12 +24,12 @@
                         <form method="POST" action='{!! url("cart_item")!!}/{!!$cart_item->id!!}/update'>
                             <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
                             <input type = "number" id="qty" name="qty" min="1" value="{!!$cart_item->qty!!}" style="width: 80px;">
-                            <button class = 'update btn btn-warning btn-xs' type ='submit' ><i class="fa fa-refresh" aria-hidden="true"></i>  Update</button>
+                            <button data-toggle="tooltip" title="Update Item QTY." class = 'update btn btn-warning btn-xs' type ='submit' ><i class="fa fa-refresh" aria-hidden="true"></i>  Update</button>
                         </form>
                     </td>
                     <td>
-                        <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart_item/{!!$cart_item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Remove</a>
-                        <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-primary btn-xs' data-link = "/item/{!!$cart_item->item_id!!}/showModal" ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
+                        <a data-toggle="tooltip" title="Remove this Item from cart." href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart_item/{!!$cart_item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Remove</a>
+                        <a data-toggle="tooltip" title="View Item Information." href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-primary btn-xs' data-link = "/item/{!!$cart_item->item_id!!}/showModal" ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
                     </td>
                 </tr>
                 @endforeach 
@@ -40,8 +40,8 @@
             <form method = 'POST' action = '/cart/{{$cart_id}}/checkout'>
                 <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
                 <h4>Remarks: <small>(Type message before checkout)</small></h4>
-                <textarea id="remarks" name="remarks" class="textarea" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$remarks}}</textarea>
-                <button class = 'btn btn-success btn-lg' style="float:right;"type="submit">CHECKOUT</button>
+                <textarea data-toggle="tooltip" title="Add a note to your reservation."  id="remarks" name="remarks" class="textarea" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{$remarks}}</textarea>
+                <button data-toggle="tooltip" title="Reserve the items."  class = 'btn btn-success btn-lg' style="float:right;"type="submit">CHECKOUT</button>
             </form>
             </div>
         @endif

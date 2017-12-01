@@ -45,10 +45,10 @@
                 <td>{!!$cart->remarks!!}</td>
                 <td>
                     @if($cart->status != "Completed" && $cart->status != "Released")
-                        <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart/{!!$cart->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
-                        <a class = 'viewEdit btn btn-primary btn-xs' href = '/cart/{!!$cart->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
+                        <a data-toggle="tooltip" title="Delete user request." href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart/{!!$cart->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
+                        <a data-toggle="tooltip" title="Edit Cart Information." class = 'viewEdit btn btn-primary btn-xs' href = '/cart/{!!$cart->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
                     @endif
-                    <a class = 'viewShow btn btn-info btn-xs' href = '/cart/{!!$cart->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+                    <a data-toggle="tooltip" title="Show cart information and its items" class = 'viewShow btn btn-info btn-xs' href = '/cart/{!!$cart->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>
             </tr>
             @endforeach 

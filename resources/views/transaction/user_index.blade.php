@@ -39,9 +39,7 @@
                     @endif
                 </td>
                 <td>
-                    <form method = 'GET' action = '/transaction/{{$transaction->cart_id}}/show'>
-                        <button class = 'btn btn-success'>INFO</button>
-                    </form>
+                    <a data-toggle="tooltip" title="View Receipt" class = 'btn btn-success btn-sm' href = '/transaction/{{$transaction->cart_id}}/show'>INFO</a>
                 </td>
             </tr>
             @endforeach 

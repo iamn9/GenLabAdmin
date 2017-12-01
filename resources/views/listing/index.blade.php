@@ -8,7 +8,7 @@
     @include('search')
     <br>
     <form class = 'col s3' method = 'get' action = '{!!url("listing")!!}/create'>
-        <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New Listing</button>
+        <button data-toggle="tooltip" title="Create Listing for a User." class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New Listing</button>
     </form>
 </div>
 <div class="box-body">
@@ -34,9 +34,9 @@
                 <td>{!!$listing->name!!}</td>
                 <td>{!!$listing->description!!}</td>
                 <td>
-                    <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing/{!!$listing->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
-                    <a class = 'viewEdit btn btn-primary btn-xs' href = '/listing/{!!$listing->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
-                    <a class = 'viewShow btn btn-info btn-xs' href = '/listing/{!!$listing->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+                    <a data-toggle="tooltip" title="Delete this listing." href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing/{!!$listing->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
+                    <a data-toggle="tooltip" title="Edit listing name and description of this listing." class = 'viewEdit btn btn-primary btn-xs' href = '/listing/{!!$listing->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>
+                    <a data-toggle="tooltip" title="Show items and edit QTY of this listing." class = 'viewShow btn btn-info btn-xs' href = '/listing/{!!$listing->id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
                 </td>
             </tr>
             @endforeach 

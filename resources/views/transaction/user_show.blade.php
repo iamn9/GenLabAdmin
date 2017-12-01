@@ -88,7 +88,7 @@
 
   <div class="row">
     <div class="col-xs-12">
-        <button onclick="javascript:window.print();" target="_blank" class="btn btn-primary pull-right no-print" style="margin-right: 5px;"><i class="fa fa-print"></i> Print</button>
+        <button data-toggle="tooltip" title="Print Receipt"  onclick="javascript:window.print();" target="_blank" class="btn btn-primary pull-right no-print" style="margin-right: 5px;"><i class="fa fa-print"></i> Print</button>
         University of The Philippines Visayas - Tacloban College<br>
         Division of Natural Sciences and Mathematics
     </div>

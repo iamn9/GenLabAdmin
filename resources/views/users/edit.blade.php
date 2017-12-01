@@ -23,18 +23,18 @@
 					<input type="text" name = "id_no" value = "{{$user->id_no}}" class = "form-control" required>
 				</div>
 				<div class="form-group">
-					<label for="">Password</label>
+					<label data-toggle="tooltip" title="Leave empty to keep user password." for="">Password</label>
 					<input type="password" name = "password" class = "form-control" placeholder = "password (leave empty to keep password)">
 				</div>
 				<div class="form-group">
-					<label for="isAdmin">Admin</label>
+					<label data-toggle="tooltip" title="User is a GenLab Staff." for="isAdmin">Admin</label>
 					@if ($user->isAdmin())
 						<input type="checkbox" name="isAdmin" checked = "checked">
 					@else
 						<input type="checkbox" name="isAdmin">
 					@endif
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label for="isActivated">Activated</label>
+					<label data-toggle="tooltip" title="Activate Account." for="isActivated">Activated</label>
 					@if ($user->isActivated())
 						<input type="checkbox" name="isActivated" checked = "checked">
 					@else
