@@ -6,6 +6,8 @@ use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -69,5 +71,17 @@ class RegisterController extends Controller
             'id_no' => $data['id_no'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+        
+        \Session::flash('success','Success! Please visit the GenLab office for Account Activation.');
+        
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
     }
 }

@@ -64,7 +64,15 @@
                 <div style="margin-bottom: 30px; font-size: 84px;">
                     GenLab System
                 </div>
-
+                @if( Session::has( 'success' ))
+                   <div style="color: green"><b>{{ Session::get( 'success' ) }}</b></div><br>
+                @elseif( Session::has( 'error' ))
+                    <div style="color: red"><b>{{ Session::get( 'error' ) }}</b></div><br>
+                @elseif( Session::has( 'warning' ))
+                    <div style="color: yellow"><b>{{ Session::get( 'warning' ) }}</b></div><br>
+                @elseif( Session::has( 'info' ))
+                    <div style="color: blue"><b>{{ Session::get( 'info' ) }}</b></div><br>
+                @endif
                 <div class="links">
                     @if (Route::has('login'))
                         <a href="{{ url('/login') }}">Login</a>

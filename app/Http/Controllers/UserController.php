@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
@@ -49,8 +50,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new \App\User();
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'id_no' => 'required',
+            'password' => 'required',
+        ]);
 
+        if ($validator->fails()) {
+            \Session::flash('error','<b>Error: </b><br>Make sure to fill in the required fields.');
+            return redirect('user/create');
+        }
+
+        $user = new \App\User();
         $user->email = $request->email;
         $user->name = $request->name;
         $user->id_no = $request->id_no;

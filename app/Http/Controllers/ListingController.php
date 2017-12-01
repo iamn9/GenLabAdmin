@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,7 @@ class ListingController extends Controller
     {
         $title = 'Create Listing';
         
-        return view('listing.create');
+        return view('listing.create', compact('title'));
     }
 
     /**
@@ -73,6 +74,16 @@ class ListingController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            \Session::flash('error','<b>Error: </b><br>Make sure to fill in all the fields.');
+            return redirect('listing/create');
+        }
+
         $listing = new Listing();
         if (Auth::user()->isAdmin)
             $listing->owner_id = $request->owner_id;

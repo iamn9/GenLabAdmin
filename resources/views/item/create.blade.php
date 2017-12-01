@@ -15,11 +15,11 @@
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
         <div class="form-group">
             <label for="name">name</label>
-            <input id="name" name = "name" type="text" class="form-control">
+            <input id="name" name = "name" type="text" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="description">description</label>
-            <input id="description" name = "description" type="text" class="form-control">
+            <input id="description" name = "description" type="text" class="form-control" required>
         </div>
         <button class = 'btn btn-primary' type ='submit'>Create</button>
     </form>

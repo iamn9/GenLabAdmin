@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -50,6 +51,16 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            \Session::flash('error','<b>Error: </b><br>Make sure to fill in all the fields.');
+            return redirect('item/create');
+        }
+
         $item = new Item();
         $item->name = $request->name;
         $item->description = $request->description;

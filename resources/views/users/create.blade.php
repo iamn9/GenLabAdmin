@@ -16,15 +16,15 @@
 				</div>
 				<div class="form-group">
 					<label for="">Email</label>
-					<input type="email" name = "email" class = "form-control" placeholder = "Email">
+					<input type="email" name = "email" class = "form-control" placeholder = "Email" required>
 				</div>
 				<div class="form-group">
 					<label for="">ID Number</label>
-					<input type="text" name = "id_no" class = "form-control" placeholder = "Name">
+					<input type="text" name = "id_no" class = "form-control" placeholder = "Name" required>
 				</div>
 				<div class="form-group">
 					<label for="">Password</label>
-					<input type="password" name = "password" class = "form-control" placeholder = "Password">
+					<input type="password" name = "password" class = "form-control" placeholder = "Password" required>
 				</div>
 				<div class="form-group">
 					<label for="isAdmin">Admin</label>
