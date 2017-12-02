@@ -22,7 +22,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $title = 'hjahfausdf';
+        $title = 'Transaction Index';
         $searchWord = \Request::get('search');
         if($searchWord == "")            
             $transactions = Transaction::orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
@@ -235,7 +235,7 @@ class TransactionController extends Controller
     }
 
     public function prepare($id, Request $Request){ 
-        $date = date('F j, Y g:i A'); 
+        $date = date("Y-m-d H:i:s"); 
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
  
         Cart::where('id', $cart_id)->update(['status' => 'Prepared']); 
@@ -255,7 +255,7 @@ class TransactionController extends Controller
     }
 
     public function release($id, Request $Request){ 
-        $date = date('F j, Y g:i A'); 
+        $date = date("Y-m-d H:i:s"); 
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
  
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
@@ -274,7 +274,7 @@ class TransactionController extends Controller
     }
  
     public function complete($id, Request $Request){ 
-        $date = date('F j, Y g:i A'); 
+        $date = date("Y-m-d H:i:s"); 
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
  
         Cart::where('id', $cart_id)->update(['status' => 'Completed']); 
