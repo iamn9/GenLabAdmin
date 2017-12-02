@@ -26,8 +26,8 @@
             <input id="quantity" name = "quantity" type="text" class="form-control">
         </div>
         <div class="form-group">
-            <label for="acquisition">acquisition</label>
-            <input id="acqusition" name = "acquisition" type="text" class="form-control">
+            <label for="acquisition_cost">acquisition</label>
+            <input id="acqusition_cost" name = "acquisitioncost" type="text" class="form-control">
         </div>
         <div class="form-group">
             <label for="wattage">wattage</label>

@@ -159,7 +159,7 @@ class TransactionController extends Controller
     }
 
     public function prepare($id, Request $Request){ 
-        $date = date('F j, Y g:i A'); 
+        $date = date("Y-m-d H:i:s"); 
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
  
         Cart::where('id', $cart_id)->update(['status' => 'Prepared']); 
@@ -179,7 +179,7 @@ class TransactionController extends Controller
     }
 
     public function release($id, Request $Request){ 
-        $date = date('F j, Y g:i A'); 
+        $date = date("Y-m-d H:i:s"); 
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
  
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
@@ -198,7 +198,7 @@ class TransactionController extends Controller
     }
  
     public function complete($id, Request $Request){ 
-        $date = date('F j, Y g:i A'); 
+        $date = date("Y-m-d H:i:s"); 
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
  
         Cart::where('id', $cart_id)->update(['status' => 'Completed']); 
