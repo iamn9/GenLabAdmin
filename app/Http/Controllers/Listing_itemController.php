@@ -37,12 +37,16 @@ class Listing_itemController extends Controller
      */
     public function update($id,Request $request)
     {
+
         $listing_item = listing_item::findOrfail($id);
         $listing_item->qty = $request->qty;
         $listing_item->save();
         $item = \App\Item::findOrFail($listing_item->item_id);
+        
         \Session::flash('info','<b>Info: </b>Qty of '.$item->name.' successfully Updated.'); //<--FLASH MESSAGE
+        
         return redirect('listing/'.$listing_item->listing_id);
+        //return redirect('listing');
     }
 
     public function DeleteMsg($id,Request $request)

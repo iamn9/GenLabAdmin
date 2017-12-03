@@ -57,6 +57,7 @@
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>item_id</th>
+            <th>name</th>
             <th>qty</th>
             <th>actions</th>
         </thead>
@@ -64,6 +65,7 @@
             @foreach($listing_items as $listing_item) 
             <tr id={!!$listing_item->id!!}>
                 <td>{!!$listing_item->item_id!!}</td>
+                <td>{!!$listing_item->name!!}</td>
                 <td>
                     @if($listing->owner_id == Auth::user()->id_no)
                         <form method="POST" action='{!! url("listing_item")!!}/{!!$listing_item->id!!}/update'>

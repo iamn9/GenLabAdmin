@@ -58,6 +58,7 @@
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>item_id</th>
+            <th>name</th>
             <th>qty</th>
             <th>actions</th>
         </thead>
@@ -65,6 +66,7 @@
             @foreach($listing_items as $listing_item) 
             <tr id={!!$listing_item->id!!}>
                 <td>{!!$listing_item->item_id!!}</td>
+                <td>{!!$listing_item->name!!}</td>
                 <td>
                     <form method="POST" action='{!! url("listing_item")!!}/{!!$listing_item->id!!}/update'>
                             <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
