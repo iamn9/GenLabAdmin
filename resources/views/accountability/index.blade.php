@@ -11,6 +11,7 @@
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
 			<th>#</th>
+			<th>Transaction #</th>
             <th>Borrower ID</th>
             <th>Name</th>
             <th>Date borrowed</th>
@@ -22,6 +23,7 @@
              @foreach($accountabilities as $accountability) 
             <tr id='{!!$accountability->id!!}'>
                 <td>{!!$accountability->id!!}'</td>
+				<td>{!!$accountability->transaction_id!!}'</td>
                 <td>{!!$accountability->borrower_id!!}</td>
 				<td>{!!$accountability->borrower_name!!}</td>
                 <td> {!!date('F j, Y g:i A', strtotime($accountability->date_borrowed))!!}</td>                
