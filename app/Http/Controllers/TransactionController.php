@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Transaction;
+use App\Accountability;
 use App\Cart;
 use App\Cart_item;
 use App\User;
@@ -240,16 +241,18 @@ class TransactionController extends Controller
  
         Cart::where('id', $cart_id)->update(['status' => 'Prepared']); 
         Transaction::where('id',$id)->update(['prepared_at' => $date]); 
+								
         \Session::flash('success','Cart prepared');
 
         return redirect('transaction/pending'); 
     }
-
+		
     public function undo_prepare($id, Request $Request){
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
-
-        Cart::where('id', $cart_id)->update(['status' => 'Pending']); 
-        Transaction::where('id',$id)->update(['prepared_at' => null]);
+        
+        Transaction::where('id',$id)->update(['prepared_at' => null, 'released_at' => null]);
+		Cart::where('id', $cart_id)->update(['status' => 'Pending']); 
+		
         \Session::flash('info','Cart undone.');
         return redirect('transaction/pending'); 
     }
@@ -260,18 +263,65 @@ class TransactionController extends Controller
  
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
         Transaction::where('id',$id)->update(['released_at' => $date]); 
+		
+		self::check_if_payable($id);
+		
         \Session::flash('success','Cart released to User.');      
         return redirect('transaction/prepared'); 
     } 
+	
+	public function check_if_payable($id){
+		
+		$firsthour = Transaction::where('id', $id)
+									->where('firsthour', '>', '0');
+		
+		if(count($firsthour) > 0){
+			self::store_as_accountability($id);
+		}
+	}
+	
+	public function store_as_accountability($id){
+				
+		$currentTransaction = Transaction::where('id', '=', $id);
+		$cart_id = Transaction::where('id', '=', $id)->value('cart_id');
+		$borrower_id = Cart::where('id', '=', $cart_id)->value('borrower_id');
+		$borrower_name = User::where('id_no', '=', $borrower_id)->value('name');
+		$released_at = Transaction::where('id', '=', $id)->value('released_at');
+		
+		$accountability = new Accountability();
+		$accountability->transaction_id = $id;
+        $accountability->borrower_id = $borrower_id;
+        $accountability->borrower_name = $borrower_name;
+        $accountability->date_borrowed = $released_at;
+        $accountability->due_date = null;
+		$accountability->elapsed_time = null;
+		$accountability->total_fee = 0.0;
+        $accountability->save();
+        return redirect('accountability');
+		
+	}
 
     public function undo_release($id, Request $Request){
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
 
         Transaction::where('id',$id)->update(['released_at' => null]); 
         Cart::where('id', $cart_id)->update(['status' => 'Prepared']); 
+		
+		self::undo_accountability($id);
+		
         \Session::flash('info','Cart undone.');
         return redirect('transaction/prepared');
     }
+	
+	public function undo_accountability($id){
+		
+		$transaction_id = Transaction::where('id', '=', $id)->value('id');
+		
+		$accountability = Accountability::where('transaction_id', '=', $transaction_id);
+     	$accountability->delete();
+        //return URL::to('accountability');
+		
+	}
  
     public function complete($id, Request $Request){ 
         $date = date("Y-m-d H:i:s"); 
