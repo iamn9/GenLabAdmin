@@ -34,7 +34,7 @@
 				<td><?php echo AccountabilityController::get_time_consumed($accountability->date_borrowed, $accountability->date_returned); ?></td>
 				<td>{!!$accountability->total_fee!!}</td>			
 				<td>					 
-                    <a class = 'viewShow btn btn-primary btn-xs' href =  '/accountability/{!!$accountability->id!!}/show'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+                    <a class = 'viewShow btn btn-primary btn-success btn-xs' href =  '/accountability/{!!$accountability->id!!}/show'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
 				</td>				
             </tr>
             @endforeach 

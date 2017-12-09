@@ -63,8 +63,6 @@ class AccountabilityController extends Controller
 		return $total_fee;
 	}
 	
-	
-	
 	public static function get_item_name($item_id){		
 		return Item::where('id', '=', $item_id)->value('name');				
 	}

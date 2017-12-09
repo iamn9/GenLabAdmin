@@ -52,7 +52,11 @@
 					@endif
 				</td>								
 				<td>					 
-                    <a class = 'viewShow btn btn-primary btn-xs' href =  '/accountability/{!!$accountability->id!!}/show'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+					@if($accountability->date_returned != NULL)
+						<a class = 'viewShow btn btn-primary btn-success btn-xs' href =  '/accountability/{!!$accountability->id!!}/show'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+					@else
+						<a class = 'viewShow btn btn-primary btn-danger btn-xs' href =  '/accountability/{!!$accountability->id!!}/show'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
+					@endif                    
 				</td>
             </tr>
             @endforeach 

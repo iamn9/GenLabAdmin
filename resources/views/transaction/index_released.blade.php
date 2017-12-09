@@ -2,6 +2,8 @@
 @section('title','GLS | '.$title)
 @section('content')
 
+<?php use App\Http\Controllers\TransactionController;?>
+
 <div class="box box-primary">
 <div class="box-header">
     <h1>{!!$title!!}</h1>
@@ -10,9 +12,10 @@
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
+			<th>Transaction ID</th>
             <th>Borrower</th>
             <th>Cart ID</th>
-            <th>Released at</th>
+            <th>Date released</th>
             <th>Actions</th>
         </thead>
         <tbody>
