@@ -2,7 +2,7 @@
 @section('title','Show')
 @section('content')
 
-<?php use App\Http\Controllers\AccountabilityController; ?>
+<?php use App\Http\Controllers\TransactionController; ?>
 
 <section class='content'>
 <div class="box box-primary no-print">
@@ -71,7 +71,7 @@
             <thead>
             <tr>
               <th>Qty</th>
-              <th>Item</th>
+              <th>Item id</th>
               <th>Name</th>
               <th>Description</th>
 			  <th>Total fee</th>
@@ -80,11 +80,11 @@
             <tbody>
             @foreach($cart_items as $cart_item)
             <tr>
-             <td><?php echo AccountabilityController::get_qty($cart_item->transaction_id); ?></td>
-              <td>{!!$cart_item->item_id!!}</td>
-              <td><?php echo AccountabilityController::get_item_name($cart_item->item_id); ?></td>
-              <td><?php echo AccountabilityController::get_description($cart_item->item_id)?></td>
-			  <td><?php echo AccountabilityController::get_amount_payable($cart_item->date_borrowed, $cart_item->item_id)?></td>
+             <td><?php echo TransactionController::get_qty($cart_item->id); ?></td>
+              <td><?php echo TransactionController::get_item_id($cart_item->id); ?></td>
+              <td><?php echo TransactionController::get_item_name($cart_item->id); ?></td>
+              <td><?php echo TransactionController::get_description($cart_item->id)?></td>
+			  <td><?php echo TransactionController::get_amount_payable($cart_item->released_at, $cart_item->id)?></td>
             </tr>
             @endforeach
             </tbody>

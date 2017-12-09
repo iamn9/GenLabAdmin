@@ -36,6 +36,55 @@ class TransactionController extends Controller
         return view('transaction.index',compact('transactions','title','searchWord'));
     }
 
+	public static function get_borrower_name($transaction_id){
+		$cart_id = Transaction::where('id', '=', $transaction_id)->value('cart_id');
+		$borrower_id = Cart::where('id', '=', $cart_id)->value('borrower_id');		
+		return User::where('id_no', '=', $borrower_id)->value('name');				
+	}
+	
+	public static function get_item_name($item_id){		
+		return Item::where('id', '=', $item_id)->value('name');				
+	}
+
+	public static function get_qty($transaction_id){
+		
+		$cart_id = Transaction::where('id', '=', $transaction_id)->value('cart_id');
+		$qty = Cart_item::where('cart_id', '=', $cart_id)->value('qty');
+		return $qty;		
+	}
+	
+	public static function get_description($id){
+		$item_id = self::get_item_id($id);		
+		return Item::where('id', '=', $item_id)->value('description');		
+	}
+	
+	public static function get_item_id($transaction_id){		
+		$cart_id = Transaction::where('id', '=', $transaction_id)->value('cart_id');
+		$item_id = Cart_item::where('cart_id', '=', $cart_id)->value('item_id');		
+		return $item_id;
+	}
+	
+	public static function get_amount_payable($date_borrowed, $transaction_id){
+		$item_id = self::get_item_id($transaction_id);		
+		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');		
+		if($firsthour == 0){
+			return $firsthour;
+		}		
+		$current = Carbon::now();
+		$elapsed_hours = Carbon::parse($date_borrowed)->diffInHours($current);		
+		if($elapsed_hours < 1){
+			return 0.0;
+		}				
+		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');
+		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;
+		return $total_fee;
+	}
+	
+	public static function get_cart_status($transaction_id){
+		$cart_id = Transaction::where('id', '=', $transaction_id)->value('cart_id');
+		return Cart::where('id', '=', $cart_id)->value('status');
+	}
+	
     /**
      * Show the form for creating a new resource.
      *
@@ -91,7 +140,8 @@ class TransactionController extends Controller
         ->where('transactions.id','=', $transaction->id)
         ->paginate(5)->appends(Input::except('page')); 
 
-		$cart_items = Accountability::where('id', '=', $id)->get();
+		echo $id;
+		$cart_items = Transaction::where('id', '=', $id)->get();
 
         $nameAdmin = Auth::user()->name;
 
@@ -217,14 +267,14 @@ class TransactionController extends Controller
     } 
  
     public function index_prepared(){ 
-        $title = 'Prepared Carts'; 
+        $title = 'Prepared Transactions'; 
         $searchWord = \Request::get('search'); 
         $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('prepared_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_prepared',compact('transactions','title','searchWord')); 
     } 
 
     public function index_released(){ 
-        $title = 'Released Carts'; 
+        $title = 'Released Transactions'; 
         $searchWord = \Request::get('search'); 
         $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('released_at')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_released',compact('transactions','title','searchWord')); 
@@ -255,7 +305,7 @@ class TransactionController extends Controller
 								
         \Session::flash('success','Cart prepared');
 
-        return redirect('transaction/pending'); 
+        return redirect('transaction/prepared'); 
     }
 		
     public function undo_prepare($id, Request $Request){
@@ -278,7 +328,7 @@ class TransactionController extends Controller
 		self::check_if_payable($id);
 		
         \Session::flash('success','Cart released to User.');      
-        return redirect('transaction/prepared'); 
+        return redirect('transaction/released'); 
     } 
 	
 	public function check_if_payable($id){
@@ -324,7 +374,7 @@ class TransactionController extends Controller
 		self::undo_accountability($id);
 		
         \Session::flash('info','Cart undone.');
-        return redirect('transaction/prepared');
+        return redirect('transaction/released');
     }
 	
 	public function undo_accountability($id){
