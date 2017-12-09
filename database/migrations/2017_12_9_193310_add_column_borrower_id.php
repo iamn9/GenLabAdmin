@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnsOnAccountabilities extends Migration
+class AddColumnBorrowerId extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddColumnsOnAccountabilities extends Migration
     {        
 		
 		 Schema::table('accountabilities', function (Blueprint $table) {
-          $table->integer('item_id');
-		  $table->datetime('date_returned')->default(null);
+          $table->integer('borrower_id');		  
         });        
     }
 
@@ -26,9 +25,8 @@ class AddColumnsOnAccountabilities extends Migration
      */
     public function down()
     {
-       Schema::table('accountabilities', function (Blueprint $table) {
-              $table->dropColumn('item_id');
-			  $table->dropColumn('date_returned');
+       Schema::table('accountabilities', function (Blueprint $table) {              
+			  $table->dropColumn('borrower_id');
         });
     }
 }

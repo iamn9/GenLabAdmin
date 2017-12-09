@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ReaddColumnBorrowerIdAsNotUnique extends Migration
+class DropColumnBorrowerId extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class ReaddColumnBorrowerIdAsNotUnique extends Migration
     {        
 		
 		 Schema::table('accountabilities', function (Blueprint $table) {
-          $table->dropColumn('borrower_id');
-		  $table->integer('borrower_id', 11);
+          $table->dropColumn('borrower_id');		  
         });        
     }
 
@@ -26,8 +25,7 @@ class ReaddColumnBorrowerIdAsNotUnique extends Migration
      */
     public function down()
     {
-       Schema::table('accountabilities', function (Blueprint $table) {
-              $table->dropColumn('borrower_id');
+       Schema::table('accountabilities', function (Blueprint $table) {              
 			  $table->integer('borrower_id')->unique();
         });
     }
