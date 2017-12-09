@@ -45,6 +45,7 @@ Route::get('transaction/user/active','\App\Http\Controllers\TransactionControlle
 Route::get('accountability/all','\App\Http\Controllers\AccountabilityController@index');
 Route::get('accountability/pending','\App\Http\Controllers\AccountabilityController@index_pending');
 Route::get('accountability/completed','\App\Http\Controllers\AccountabilityController@index_completed');
+Route::get('accountability/{id}/show', '\App\Http\Controllers\AccountabilityController@accountability_info');
 
 //user Routes
 Route::group(['middleware'=> 'web'],function(){
