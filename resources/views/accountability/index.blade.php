@@ -41,9 +41,16 @@
 					@if($accountability->date_returned != NULL)
 						<?php echo AccountabilityController::get_time_consumed($accountability->date_borrowed, $accountability->date_returned); ?></td>
 					@else
-						<?php echo AccountabilityController::get_elapsed_time($accountability->date_borrowed); ?></td>
+						<?php echo AccountabilityController::get_elapsed_time($accountability->date_borrowed); ?>
 					@endif
-				<td><?php echo AccountabilityController::get_amount_payable($accountability->date_borrowed, $accountability->item_id); ?></td>
+				</td>				
+				<td>
+					@if($accountability->date_returned != NULL)
+						{!!$accountability->total_fee!!}
+					@else
+						<?php echo AccountabilityController::get_amount_payable($accountability->date_borrowed, $accountability->item_id); ?>
+					@endif
+				</td>								
 				<td>					 
                     <a class = 'viewShow btn btn-primary btn-xs' href =  '/accountability/{!!$accountability->id!!}/show'><i class="fa fa-info" aria-hidden="true"></i>  Info</a>
 				</td>

@@ -1,11 +1,13 @@
 @extends('adminlte::page')
 @section('title','Show')
 @section('content')
+
+<?php use App\Http\Controllers\AccountabilityController; ?>
+
 <section class='content'>
 <div class="box box-primary no-print">
 <div class="box-header">
     <h1><div class="center">{!!$title!!}</div></h1>
-
     <br>
 </div>
 </div>
@@ -28,9 +30,9 @@
         <div class="col-sm-4 invoice-col">
           <address>
             <strong>Borrower Details</strong><br>
-            Name:   <b>{!!$user->name!!}</b><br>
-            Email:   <b>{!!$user->email!!}</b><br>
-            Student Number:   <b>{!!$user->id_no!!}</b><br>
+           <b>Name: </b>{!!$user->name!!} <br>
+            <b>Email: </b>{!!$user->email!!}</b><br>
+            <b>Student Number: </b>{!!$user->id_no!!}<br>
           </address>
         </div>
         <!-- /.col -->
@@ -41,15 +43,15 @@
           <address>
           @foreach($carts as $cart)
             @if($cart->status == "Completed")
-                Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
-                Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}<br>
-                Released: {!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
+                <b>Submitted: </b>{!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>                
+                <b>Released: </b>{!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
+				<b>Completed: </b>{!!date('F j, Y g:i A', strtotime($cart->completed_at))!!}<br>
             @else
                 Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
                 Status: <b>{!!$cart->status!!}</b>
-            @endif
-          @endforeach
+            @endif          			 
           </address>
+		  @endforeach          
         </div>
         <!-- /.col -->
 
@@ -72,15 +74,17 @@
               <th>Item</th>
               <th>Name</th>
               <th>Description</th>
+			  <th>Total fee</th>
             </tr>
             </thead>
             <tbody>
             @foreach($cart_items as $cart_item)
             <tr>
-              <td>{!!$cart_item->qty!!}</td>
+             <td><?php echo AccountabilityController::get_qty($cart_item->transaction_id); ?></td>
               <td>{!!$cart_item->item_id!!}</td>
-              <td>{!!$cart_item->name!!}</td>
-              <td>{!!$cart_item->description!!}</td>
+              <td><?php echo AccountabilityController::get_item_name($cart_item->item_id); ?></td>
+              <td><?php echo AccountabilityController::get_description($cart_item->item_id)?></td>
+			  <td><?php echo AccountabilityController::get_amount_payable($cart_item->date_borrowed, $cart_item->item_id)?></td>
             </tr>
             @endforeach
             </tbody>
@@ -97,7 +101,8 @@
       <!-- this row will not appear when printing -->
       <div class="row">
         <div class="col-xs-12">
-            <button onclick="javascript:window.print();" target="_blank" class="btn btn-primary pull-right no-print" style="margin-right: 5px;"><i class="fa fa-print"></i> Print</button>
+			<a href = '/transaction/{!!$transaction_id!!}/complete' class="btn btn-primary pull-right btn-success xs no-print" style="margin-right: 5px;"><i class="fa fa-check"></i> Confirm complete</a>
+            <button onclick="javascript:window.print();" target="_blank" class="btn btn-primary pull-right no-print" style="margin-right: 5px;"><i class="fa fa-print"></i> Print</button>			
             University of The Philippines Visayas - Tacloban College<br>
             Division of Natural Sciences and Mathematics
         </div>

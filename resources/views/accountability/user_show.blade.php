@@ -1,4 +1,4 @@
-@extends('adminlte::page_user')
+@extends('adminlte::page')
 @section('title','Show')
 @section('content')
 
@@ -30,9 +30,11 @@
         <div class="col-sm-4 invoice-col">
           <address>
             <strong>Borrower Details</strong><br>
-            <b>Name: </b>{!!$user->name!!} <br>
-            <b>Email: </b>{!!$user->email!!}</b><br>
-            <b>Student Number: </b>{!!$user->id_no!!}<br>
+			@foreach($user as $curr_user)
+            <b>Name: </b>{!!$curr_user->name!!} <br>
+            <b>Email: </b>{!!$curr_user->email!!}</b><br>
+            <b>Student Number: </b>{!!$curr_user->id_no!!}<br>
+			@endforeach
           </address>
         </div>
         <!-- /.col -->

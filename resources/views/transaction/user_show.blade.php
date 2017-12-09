@@ -26,11 +26,13 @@
       <div class="row invoice-info">
         
         <div class="col-sm-4 invoice-col">
-          <address>
+          <address>		  
             <strong>Borrower Details</strong><br>
-            Name:   <b>{!!$user->name!!}</b><br>
-            Email:   <b>{!!$user->email!!}</b><br>
-            Student Number:   <b>{!!$user->id_no!!}</b><br>
+			@foreach($user as $curr_user)
+				Name:   <b>{!!$curr_user->name!!}</b><br>
+				Email:   <b>{!!$curr_user->email!!}</b><br>
+				Student Number:   <b>{!!$curr_user->id_no!!}</b><br>
+			@endforeach
           </address>
         </div>
         <!-- /.col -->
