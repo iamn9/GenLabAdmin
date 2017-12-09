@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
@@ -12,6 +13,7 @@ use App\Accountability;
 use App\Cart;
 use App\Cart_item;
 use App\User;
+use App\Item;
 use URL;
 
 class TransactionController extends Controller
@@ -211,14 +213,16 @@ class TransactionController extends Controller
 		$borrower_id = Cart::where('id', '=', $cart_id)->value('borrower_id');
 		$borrower_name = User::where('id_no', '=', $borrower_id)->value('name');
 		$released_at = Transaction::where('id', '=', $id)->value('released_at');
-		
+		$completed_at = Transaction::where('id', '=', $id)->value('completed_at');
+		$item_id = Cart_item::where('cart_id', '=', $cart_id)->value('item_id');		
+						
 		$accountability = new Accountability();
 		$accountability->transaction_id = $id;
         $accountability->borrower_id = $borrower_id;
         $accountability->borrower_name = $borrower_name;
-        $accountability->date_borrowed = $released_at;
-        $accountability->due_date = null;
-		$accountability->elapsed_time = null;
+		$accountability->item_id = $item_id;				
+        $accountability->date_borrowed = $released_at;        
+		$accountability->date_returned = $completed_at;        
 		$accountability->total_fee = 0.0;
         $accountability->save();
         return redirect('accountability');
@@ -239,8 +243,7 @@ class TransactionController extends Controller
 	
 	public function undo_accountability($id){
 		
-		$transaction_id = Transaction::where('id', '=', $id)->value('id');
-		
+		$transaction_id = Transaction::where('id', '=', $id)->value('id');		
 		$accountability = Accountability::where('transaction_id', '=', $transaction_id);
      	$accountability->delete();
         //return URL::to('accountability');
@@ -253,18 +256,47 @@ class TransactionController extends Controller
  
         Cart::where('id', $cart_id)->update(['status' => 'Completed']); 
         Transaction::where('id',$id)->update(['completed_at' => $date]); 
+		
+		$item_id = Accountability::where('transaction_id', '=', $id)->value('item_id');
+		$accountability_id = Accountability::where('transaction_id', '=', $id)->value('id');
+		
+		$total_fee = self::compute_fee($item_id, $accountability_id, $date);
+		self::store_as_completed_accountability($id, $total_fee);
+								
         \Session::flash('success','Cart has been returned.');
         return redirect('transaction/released'); 
     } 
+	
+	public function compute_fee($item_id, $accountability_id, $date_returned){			
+		$date_borrowed = Accountability::where('id', '=', $accountability_id)->value('date_borrowed');
+		$elapsed_hours = Carbon::parse($date_borrowed)->diffInHours(Carbon::parse($date_returned));
+		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
+		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');		
+		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;		
+		return $total_fee;
+	}
+	
+	public function store_as_completed_accountability($id, $total_fee){
+		$returned_at = Transaction::where('id',$id)->value('completed_at');		
+		
+		Accountability::where('transaction_id', '=', $id)->update(['date_returned' => $returned_at, 'total_fee' => $total_fee]); 				
+	}
 
     public function undo_complete($id, Request $Request){
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
 
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
         Transaction::where('id',$id)->update(['completed_at' => null]); 
+		
+		self::undo_completed_accountability($id);
+		
         \Session::flash('info','Cart undone.');
         return redirect('transaction/released'); 
     }
+	
+	public function undo_completed_accountability($id){		
+		Accountability::where('transaction_id', '=', $id)->update(['date_returned' => null, 'total_fee' => 0.00]); 				
+	}
 
     public function user_show($id){
         $date = date('F j, Y');

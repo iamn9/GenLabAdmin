@@ -53,6 +53,7 @@ Route::get('transaction/{id}/undo_complete','\App\Http\Controllers\TransactionCo
 Route::get('accountability/all','\App\Http\Controllers\AccountabilityController@index');
 Route::get('accountability/pending','\App\Http\Controllers\AccountabilityController@index_pending');
 Route::get('accountability/completed','\App\Http\Controllers\AccountabilityController@index_completed');
+Route::get('accountability/{id}/show', '\App\Http\Controllers\AccountabilityController@accountability_info');
 
 //analytics
 Route::get('analytics/borroweditems','\App\Http\Controllers\AnalyticsController@most_borrowed');
