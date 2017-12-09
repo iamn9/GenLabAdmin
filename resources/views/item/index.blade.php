@@ -13,6 +13,15 @@
         <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New item</button>
     </form>
     <br>
+	 <form enctype="multipart/form-data" method="post" role="form">
+      <div class="form-group">
+          <label for="exampleInputFile">File Upload</label>
+          <input type="file" name="file" id="file" size="150">
+          <p class="help-block">Only Excel/CSV File Import.</p>
+      </div>
+      <button type="submit" class="btn btn-primary" name="Import" value="Import">Upload</button>
+  </form>
+	
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
           <th style="width: 60px">id</th>
