@@ -44,11 +44,22 @@ class AccountabilityController extends Controller
 	
 	public static function get_amount_payable($date_borrowed, $item_id){
 		
+		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
+		
+		if($firsthour == 0){
+			return $firsthour;
+		}
+		
 		$current = Carbon::now();
 		$elapsed_hours = Carbon::parse($date_borrowed)->diffInHours($current);
+		
+		if($elapsed_hours < 1){
+			return 0.0;
+		}
+		
 		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
-		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');		
-		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;		
+		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');
+		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;
 		return $total_fee;
 	}
 	
@@ -150,9 +161,9 @@ class AccountabilityController extends Controller
 	 public function accountability_info($id, Request $Request){		
         $date = date('F j, Y');
         $title = 'Accountability Info'; 
-        $userid = Auth::user()->id_no;
-        $user = User::where('id_no', '=', $userid)->first();
-		
+				
+		$userid = Accountability::where('id', '=', $id)->value('borrower_id');		
+        $user = User::where('id_no', '=' , $userid)->get();				
 		$accountability_trans_id = Accountability::where('id', '=', $id)->value('transaction_id');
 		
         $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){

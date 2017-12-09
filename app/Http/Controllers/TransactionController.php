@@ -53,6 +53,7 @@ class TransactionController extends Controller
         }
 
         $transaction = Transaction::findOrfail($id);
+		$transaction_id = Transaction::where('id','=', $id)->value('id');
         $userid = Cart::where('id', '=', $transaction->cart_id)->value('borrower_id');
         $user = User::where('id_no', '=', $userid)->first();
 
@@ -62,13 +63,11 @@ class TransactionController extends Controller
         ->where('transactions.id','=', $transaction->id)
         ->paginate(5)->appends(Input::except('page')); 
 
-        $cart_items = Cart_item::join('items', function($join){
-                $join->on('cart_items.item_id', '=', 'items.id');
-            })->where('cart_id','=',$transaction->cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+		$cart_items = Accountability::where('id', '=', $id)->get();
 
         $nameAdmin = Auth::user()->name;
 
-        return view('transaction.admin_show',compact('title','carts','cart_items', 'user', 'date','nameAdmin')); 
+        return view('transaction.show',compact('title','carts','cart_items', 'user', 'date','nameAdmin', 'transaction_id')); 
     }
 
     public function DeleteMsg($id,Request $request)
@@ -208,10 +207,11 @@ class TransactionController extends Controller
 	
 	public function check_if_payable($id){
 		
-		$firsthour = Transaction::where('id', $id)
-									->where('firsthour', '>', '0');
+		$cart_id = Transaction::where('id', $id)->value('cart_id');		
+		$item_id = Cart_item::where('id', '=', $cart_id)->value('item_id');
+		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
 		
-		if(count($firsthour) > 0){
+		if($firsthour > 0){
 			self::store_as_accountability($id);
 		}
 	}
@@ -270,19 +270,31 @@ class TransactionController extends Controller
 		$item_id = Accountability::where('transaction_id', '=', $id)->value('item_id');
 		$accountability_id = Accountability::where('transaction_id', '=', $id)->value('id');
 		
-		$total_fee = self::compute_fee($item_id, $accountability_id, $date);
+		$total_fee = self::compute_fee($item_id, $accountability_id, $date);		
 		self::store_as_completed_accountability($id, $total_fee);
 								
         \Session::flash('success','Cart has been returned.');
-        return redirect('transaction/released'); 
-    } 
+        return redirect('transaction/completed'); 
+    } 	
 	
 	public function compute_fee($item_id, $accountability_id, $date_returned){			
 		$date_borrowed = Accountability::where('id', '=', $accountability_id)->value('date_borrowed');
-		$elapsed_hours = Carbon::parse($date_borrowed)->diffInHours(Carbon::parse($date_returned));
 		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
-		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');		
-		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;		
+		
+		if($firsthour == 0){
+			return $firsthour;
+		}
+				
+		$elapsed_hours = Carbon::parse($date_borrowed)->diffInHours(Carbon::parse($date_returned));
+		
+		if($elapsed_hours < 1){
+			return 0.0;
+		}
+		
+		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
+		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');
+		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;
+		
 		return $total_fee;
 	}
 	
@@ -310,16 +322,34 @@ class TransactionController extends Controller
 
     public function user_show($id){
         $date = date('F j, Y');
-        $title = 'Show Transaction'; 
-        $userid = Auth::user()->id_no;
+        $title = 'Active Transaction'; 
+        $userid = Auth::user()->id_no; 
+        $cart_id = Cart::where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->value('id');
+        if (!$cart_id)
+        return redirect('/cart');
         $user = User::where('id_no', '=', $userid)->first();
-        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'prepared_at', 'borrower_id', 'status')->join('transactions', function($join){
+        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'remarks', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })
+        ->where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->paginate(5)->appends(Input::except('page')); 
+        $cart_items = Cart_item::join('items', function($join){
+                $join->on('cart_items.item_id', '=', 'items.id');
+            })->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+        return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
+    } 
+	
+    public function user_history_info($id, Request $Request){
+        $date = date('F j, Y');
+        $title = 'Transaction History'; 
+		$userid = Accountability::where('id', '=', $id)->value('borrower_id');		
+        $user = User::where('id_no', '=' , $userid)->get();		
+        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('cart_id', '=', $id)->paginate(5)->appends(Input::except('page')); 
         $cart_items = Cart_item::join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
-        return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
+        return view('transaction.show',compact('title','carts','cart_items', 'user', 'date', 'name')); 
     }
 
     public function user_index(Request $request){ 
