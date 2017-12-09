@@ -116,8 +116,18 @@ class TransactionController extends Controller
     {
      	$transaction = Transaction::findOrfail($id);
      	$transaction->delete();
+		
+		self::accountability_destroy($id);
+		
         return URL::to('transaction');
     }
+	
+	public function accountability_destroy($id){
+		$accountability_id = Accountability::where('transaction_id', '=', $id)->value('id');
+		
+		$accountability = Accountability::findOrfail($accountability_id);
+		$accountability->delete();		
+	}
 
     public function index_pending(){ 
         $title = 'Pending Transactions'; 
