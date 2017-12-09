@@ -15,7 +15,7 @@ class AddColumnsOnAccountabilities extends Migration
 		
 		 Schema::table('accountabilities', function (Blueprint $table) {
           $table->integer('item_id');
-		  $table->datetime('date_returned')->default(null);
+		  $table->datetime('date_returned')->nullable();
         });        
     }
 
