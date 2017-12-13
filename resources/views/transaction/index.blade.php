@@ -16,9 +16,9 @@
     <br>
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-			<th>Transaction ID</th>
-            <th>Cart ID</th>
+			<th>Transaction ID</th>            
 			<th>Borrower</th>
+			<th>Cart ID</th>
             <th>Date submitted</th>
             <th>Status</th>            
             <th></th>
@@ -26,16 +26,27 @@
         <tbody>
             @foreach($transactions as $transaction) 
             <tr id='{!!$transaction->id!!}'>
-				<td>{!!$transaction->id!!}</td>
-                <td>{!!$transaction->cart_id!!}</td>
+				<td>{!!$transaction->id!!}</td>                
 				<td><?php echo TransactionController::get_borrower_name($transaction->id); ?></td>
+				<td>{!!$transaction->cart_id!!}</td>
                 <td>
                     @if($transaction->submitted_at != NULL)
                         {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}
                     @endif                
                 </td>
                 <td>
-                    <?php echo TransactionController::get_cart_status($transaction->id); ?>
+					<?php $status = TransactionController::get_cart_status($transaction->id); ?>					
+                    <strong>
+						@if($status == "Completed")
+							<font color="green">{!!$status!!}</font>
+						@elseif($status == "Released")
+							<font color="blue">{!!$status!!}</font>
+						@elseif($status == "Prepared")
+							<font color="orange">{!!$status!!}</font>
+						@elseif($status == "Pending")
+							<font color="red">{!!$status!!}</font>
+						@endif
+					</strong>
                 </td>
                 <td>
                     <a data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>

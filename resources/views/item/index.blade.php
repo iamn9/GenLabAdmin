@@ -13,14 +13,14 @@
         <button class = 'btn btn-primary' type = 'submit'>Create New item</button>
     </form>
     <br>
-	 <form enctype="multipart/form-data" method="post" role="form">
+	 <!--form enctype="multipart/form-data" method="post" role="form"-->
       <div class="form-group">
           <label for="exampleInputFile">File Upload</label>
           <input type="file" name="file" id="file" size="150">
           <p class="help-block">Only Excel/CSV File Import.</p>
       </div>
-      <button type="submit" class="btn btn-primary" name="Import" value="Import">Upload</button>
-  </form>
+      <a data-toggle="modal" data-target="#myModal" class = 'upload btn btn-primary'  data-link = "/item/1/uploadMsg" ><i aria-hidden="true"></i>Import</a>
+  <!--/form-->
 	
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>

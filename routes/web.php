@@ -42,10 +42,12 @@ Route::get('transaction/{id}/undo_release','\App\Http\Controllers\TransactionCon
 Route::get('transaction/{id}/undo_prepare','\App\Http\Controllers\TransactionController@undo_prepare');
 Route::get('transaction/{id}/undo_complete','\App\Http\Controllers\TransactionController@undo_complete');
 Route::get('transaction/user/active','\App\Http\Controllers\TransactionController@user_active');
+Route::get('accountability/user/accountabilities','\App\Http\Controllers\AccountabilityController@user_accountabilities');
 Route::get('accountability/all','\App\Http\Controllers\AccountabilityController@index');
 Route::get('accountability/pending','\App\Http\Controllers\AccountabilityController@index_pending');
 Route::get('accountability/completed','\App\Http\Controllers\AccountabilityController@index_completed');
 Route::get('accountability/{id}/show', '\App\Http\Controllers\AccountabilityController@accountability_info');
+Route::get('accountability/{id}/user_show', '\App\Http\Controllers\AccountabilityController@user_accountability_info');
 
 //user Routes
 Route::group(['middleware'=> 'web'],function(){
@@ -63,6 +65,7 @@ Route::group(['middleware'=> 'web'],function(){
   Route::post('item/{id}/update','\App\Http\Controllers\ItemController@update');
   Route::get('item/{id}/delete','\App\Http\Controllers\ItemController@destroy');
   Route::get('item/{id}/deleteMsg','\App\Http\Controllers\ItemController@DeleteMsg');
+  Route::get('item/{id}/uploadMsg','\App\Http\Controllers\ItemController@UploadMsg');
   Route::get('item/{id}/showModal','\App\Http\Controllers\ItemController@showModal');
 });
 
@@ -104,3 +107,4 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('transaction/{id}/deleteMsg','\App\Http\Controllers\TransactionController@DeleteMsg');
   Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_history');
 });
+

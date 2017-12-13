@@ -28,7 +28,7 @@ class TransactionController extends Controller
         $title = 'Transaction Index';
         $searchWord = \Request::get('search');
         if($searchWord == "")            
-            $transactions = Transaction::orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+            $transactions = Transaction::orderBy('submitted_at', 'DESC')->paginate(5)->appends(Input::except('page'));
         else{
             $searchWord = (int) $searchWord;
             $transactions = Transaction::where('cart_id','=',$searchWord)->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
@@ -258,7 +258,7 @@ class TransactionController extends Controller
         $title = 'Pending Transactions'; 
         $searchWord = \Request::get('search'); 
         if($searchWord == "")           
-            $transactions = Transaction::whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+            $transactions = Transaction::whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at', 'DESC')->paginate(5)->appends(Input::except('page'));
         else{ 
             $searchWord = (int) $searchWord;
             $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
@@ -269,21 +269,21 @@ class TransactionController extends Controller
     public function index_prepared(){ 
         $title = 'Prepared Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('prepared_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('prepared_at', 'DESC')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_prepared',compact('transactions','title','searchWord')); 
     } 
 
     public function index_released(){ 
         $title = 'Released Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('released_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('released_at', 'DESC')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_released',compact('transactions','title','searchWord')); 
     } 
  
     public function index_completed(){ 
         $title = 'Completed Transactions'; 
         $searchWord = \Request::get('search'); 
-        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('completed_at')->paginate(5)->appends(Input::except('page')); 
+        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('completed_at', 'DESC')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index_completed',compact('transactions','title','searchWord')); 
     } 
  
@@ -462,7 +462,7 @@ class TransactionController extends Controller
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
         return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
-    } 
+    } 	
 	
     public function user_history_info($id, Request $Request){
         $date = date('F j, Y');

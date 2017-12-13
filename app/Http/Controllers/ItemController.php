@@ -141,6 +141,40 @@ class ItemController extends Controller
 
         return redirect('item');
     }
+	
+	public function UploadMsg(Request $request)
+    {        
+        $notif = 'toastr["info"]("was successfully deleted from the system")';
+        $msg = '<script>
+        bootbox.confirm({
+            title: "<b>Import</b> from the system",
+            message: "Warning! Are you sure you want to import this Item?",
+            buttons: {
+                confirm: {
+                    label: "Upload File",
+                    className: "btn-primary"
+                },
+                cancel: {
+                    label: "Cancel",
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $("#" + 1).remove();
+                    '.$notif.'
+                    $.ajax({
+                        type: "POST",
+                        url: "/item/1/show"
+                    });
+                }
+            }
+        });
+        </script>';
+        if($request->ajax())
+        {
+            return $msg;
+        }
+    }
 
     public function DeleteMsg($id,Request $request)
     {
