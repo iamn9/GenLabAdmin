@@ -35,6 +35,17 @@ class TransactionController extends Controller
         }
         return view('transaction.index',compact('transactions','title','searchWord'));
     }
+	
+	public static function get_date_released($trans_id){
+		return Transaction::where('id', '=', $trans_id)->value('released_at');
+	}
+	
+	public static function get_completed_fee($trans_id){
+		if(self::check_if_payable($trans_id) == false){			
+			return '0.00';
+		}		
+		return Accountability::where('transaction_id', '=', $trans_id)->value('total_fee');
+	}
 
 	public static function get_borrower_name($transaction_id){
 		$cart_id = Transaction::where('id', '=', $transaction_id)->value('cart_id');
@@ -42,7 +53,8 @@ class TransactionController extends Controller
 		return User::where('id_no', '=', $borrower_id)->value('name');				
 	}
 	
-	public static function get_item_name($item_id){		
+	public static function get_item_name($trans_id){		
+		$item_id = self::get_item_id($trans_id);
 		return Item::where('id', '=', $item_id)->value('name');				
 	}
 
@@ -139,13 +151,39 @@ class TransactionController extends Controller
         })->where('borrower_id','=', $userid)
         ->where('transactions.id','=', $transaction->id)
         ->paginate(5)->appends(Input::except('page')); 
-
-		echo $id;
+		
 		$cart_items = Transaction::where('id', '=', $id)->get();
 
         $nameAdmin = Auth::user()->name;
 
         return view('transaction.show',compact('title','carts','cart_items', 'user', 'date','nameAdmin', 'transaction_id')); 
+    }
+	
+	 public function show_confirm($id,Request $request)
+    {
+        $date = date('F j, Y g:i A');
+        $title = 'Show - transaction';
+        if($request->ajax())
+        {
+            return URL::to('transaction/'.$id);
+        }
+
+        $transaction = Transaction::findOrfail($id);
+		$transaction_id = Transaction::where('id','=', $id)->value('id');
+        $userid = Cart::where('id', '=', $transaction->cart_id)->value('borrower_id');
+        $user = User::where('id_no', '=', $userid)->first();
+
+        $carts = Cart::select('transactions.id', 'cart_id', 'carts.id', 'remarks', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->where('borrower_id','=', $userid)
+        ->where('transactions.id','=', $transaction->id)
+        ->paginate(5)->appends(Input::except('page')); 
+		
+		$cart_items = Transaction::where('id', '=', $id)->get();
+
+        $nameAdmin = Auth::user()->name;
+
+        return view('transaction.show_confirm',compact('title','carts','cart_items', 'user', 'date','nameAdmin', 'transaction_id')); 
     }
 
     /**
@@ -253,7 +291,6 @@ class TransactionController extends Controller
         return view('transaction.user_history',compact('transactions','title')); 
     }
 
-
     public function index_pending(){ 
         $title = 'Pending Transactions'; 
         $searchWord = \Request::get('search'); 
@@ -305,7 +342,7 @@ class TransactionController extends Controller
 								
         \Session::flash('success','Cart prepared');
 
-        return redirect('transaction/prepared'); 
+        return redirect('transaction/pending'); 
     }
 		
     public function undo_prepare($id, Request $Request){
@@ -315,7 +352,7 @@ class TransactionController extends Controller
 		Cart::where('id', $cart_id)->update(['status' => 'Pending']); 
 		
         \Session::flash('info','Cart undone.');
-        return redirect('transaction/pending'); 
+        return redirect('transaction/prepared'); 
     }
 
     public function release($id, Request $Request){ 
@@ -325,21 +362,25 @@ class TransactionController extends Controller
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
         Transaction::where('id',$id)->update(['released_at' => $date]); 
 		
-		self::check_if_payable($id);
+		if(self::check_if_payable($id)){
+			self::store_as_accountability($id);
+		}			
 		
         \Session::flash('success','Cart released to User.');      
-        return redirect('transaction/released'); 
+        return redirect('transaction/prepared'); 
     } 
 	
-	public function check_if_payable($id){
+	public static function check_if_payable($id){
 		
-		$cart_id = Transaction::where('id', $id)->value('cart_id');		
+		$cart_id = Transaction::where('id', '=', $id)->value('cart_id');		
 		$item_id = Cart_item::where('id', '=', $cart_id)->value('item_id');
 		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
 		
 		if($firsthour > 0){
-			self::store_as_accountability($id);
+			return true;
 		}
+		
+		return false;
 	}
 	
 	public function store_as_accountability($id){
@@ -400,7 +441,7 @@ class TransactionController extends Controller
 		self::store_as_completed_accountability($id, $total_fee);
 								
         \Session::flash('success','Cart has been returned.');
-        return redirect('transaction/completed'); 
+        return redirect('transaction/released'); 
     } 	
 	
 	public function compute_fee($item_id, $accountability_id, $date_returned){			
@@ -439,7 +480,7 @@ class TransactionController extends Controller
 		self::undo_completed_accountability($id);
 		
         \Session::flash('info','Cart undone.');
-        return redirect('transaction/released'); 
+        return redirect('transaction/completed'); 
     }
 	
 	public function undo_completed_accountability($id){		

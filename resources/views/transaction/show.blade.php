@@ -4,11 +4,9 @@
 
 <?php use App\Http\Controllers\TransactionController; ?>
 
-<section class='content'>
 <div class="box box-primary no-print">
 <div class="box-header">
-    <h1><div class="center">{!!$title!!}</div></h1>
-    <br>
+    <h1><div class="center">{!!$title!!}</div></h1><br>
 </div>
 </div>
 <section class="invoice">
@@ -47,16 +45,16 @@
                 <b>Released: </b>{!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
 				<b>Completed: </b>{!!date('F j, Y g:i A', strtotime($cart->completed_at))!!}<br>
             @else
-                Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
-                Status: <b>{!!$cart->status!!}</b>
+                <b>Submitted: </b>{!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
+                <b>Status: </b>{!!$cart->status!!}
             @endif          			 
           </address>
 		  @endforeach          
         </div>
         <!-- /.col -->
 
-        <div class="col-sm-4 invoice-col">
-          <b>Transaction #:</b> {!!$cart->trans_id!!} <br>
+        <div class="col-sm-4 invoice-col">		
+          <b>Transaction #: </b> {!!$transaction_id!!} <br>
           <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
           <b>Processed by:</b> {!!$nameAdmin!!}<br>
         </div>
@@ -84,7 +82,20 @@
               <td><?php echo TransactionController::get_item_id($cart_item->id); ?></td>
               <td><?php echo TransactionController::get_item_name($cart_item->id); ?></td>
               <td><?php echo TransactionController::get_description($cart_item->id)?></td>
-			  <td><?php echo TransactionController::get_amount_payable($cart_item->released_at, $cart_item->id)?></td>
+			 <td>
+				<?php $status = TransactionController::get_cart_status($cart_item->id);?>
+				@if($status == 'Completed')
+					<?php echo TransactionController::get_completed_fee($cart_item->id); ?></td>
+				@elseif($status == 'Pending' || $status == 'Prepared')
+					<?php echo '0.00';?>
+				@elseif($status == 'Released')
+					<?php 						
+						$date_borrowed = TransactionController::get_date_released($transaction_id);
+						$amount_payable = TransactionController::get_amount_payable($date_borrowed, TransactionController::get_item_id($cart_item->id));
+						echo $amount_payable;?>@if(is_float($amount_payable) == true).00
+					@endif
+				@endif
+			</td>						 			  
             </tr>
             @endforeach
             </tbody>
@@ -100,13 +111,11 @@
 
       <!-- this row will not appear when printing -->
       <div class="row">
-        <div class="col-xs-12">
-			<a href = '/transaction/{!!$transaction_id!!}/complete' class="btn btn-primary pull-right btn-success xs no-print" style="margin-right: 5px;"><i class="fa fa-check"></i> Confirm complete</a>
+        <div class="col-xs-12">			
             <button onclick="javascript:window.print();" target="_blank" class="btn btn-primary pull-right no-print" style="margin-right: 5px;"><i class="fa fa-print"></i> Print</button>			
             University of The Philippines Visayas - Tacloban College<br>
             Division of Natural Sciences and Mathematics
         </div>
       </div>
-    </section>
-</section>
+ </section>
 @endsection
