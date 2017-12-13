@@ -131,6 +131,8 @@ Route::group(['middleware'=> 'web'],function(){
 //transaction Routes
 Route::group(['middleware'=> 'web'],function(){
   Route::resource('transaction','\App\Http\Controllers\TransactionController');
+  Route::get('transaction/{id}/show', '\App\Http\Controllers\TransactionController@show');
+  Route::get('transaction/{id}/show_confirm', '\App\Http\Controllers\TransactionController@show_confirm');
   Route::post('transaction/{id}/update','\App\Http\Controllers\TransactionController@update');
   Route::get('transaction/{id}/show', '\App\Http\Controllers\TransactionController@user_show');
   Route::get('transaction/{id}/delete','\App\Http\Controllers\TransactionController@destroy');

@@ -19,6 +19,7 @@
             <th>Actions</th>
         </thead>
         <tbody>
+			@if(count($transactions) > 0)
             @foreach($transactions as $transaction) 
             <tr id='{!!$transaction->id!!}'>
                 <td>{!!$transaction->getOwner()!!}</td>
@@ -31,6 +32,11 @@
                 </td>
             </tr>
             @endforeach 
+			@else
+				<tr>										
+					<td align=center colspan=5>No record found!</td>										
+				</tr>
+			@endif
         </tbody>
     </table>
     <div class='text-center'>{!! $transactions->render() !!}</div>

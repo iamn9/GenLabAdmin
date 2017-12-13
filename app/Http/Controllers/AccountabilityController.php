@@ -166,7 +166,7 @@ class AccountabilityController extends Controller
     public function index_completed(){ 
         $title = 'Completed - accountabilities'; 
         $searchWord = \Request::get('search'); 
-        $accountabilities = Accountability::whereNotNull('id')->whereNotNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_returned')->paginate(5)->appends(Input::except('page'));
+        $accountabilities = Accountability::whereNotNull('id')->whereNotNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_returned', 'desc')->paginate(5)->appends(Input::except('page'));
         return view('accountability.index_completed',compact('accountabilities','title','searchWord')); 
 				
     } 
@@ -201,8 +201,9 @@ class AccountabilityController extends Controller
         })->where('transactions.id', '=', $accountability_trans_id)->paginate(5)->appends(Input::except('page')); 
 		        		
 		$cart_items = Accountability::where('id', '=', $id)->get();
+		$nameAdmin = Auth::user()->name;		
 		
-        return view('accountability.accountability_show',compact('title','carts','cart_items', 'user', 'date', 'total_fee')); 
+        return view('accountability.accountability_show',compact('title','carts','cart_items', 'user', 'date', 'nameAdmin', 'total_fee')); 
     }
 
 }
