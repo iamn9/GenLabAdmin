@@ -29,7 +29,7 @@ class AccountabilityController extends Controller
 		$searchWord = \Request::get('search');       
 	   
         if($searchWord == "")            
-            $accountabilities = Accountability::whereNotNull('id')->whereNotNull('borrower_id')->whereNotNull('transaction_id')->orderBy('id')->paginate(5)->appends(Input::except('page'));
+            $accountabilities = Accountability::whereNotNull('id')->whereNotNull('borrower_id')->whereNotNull('transaction_id')->orderBy('date_borrowed', 'DESC')->paginate(5)->appends(Input::except('page'));
         else{
             $searchWord = (int) $searchWord;
             $transactions = Transaction::where('cart_id','=',$searchWord)->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
@@ -37,6 +37,21 @@ class AccountabilityController extends Controller
         return view('accountability.index',compact('accountabilities','title','searchWord'));
     }
 	
+	public function user_accountabilities()
+    {
+        $title = 'Accountabilities';
+		$searchWord = \Request::get('search');       
+	   
+        if($searchWord == "")            
+            $accountabilities = Accountability::whereNotNull('date_borrowed')->whereNull('date_returned')->orderBy('date_borrowed', 'DESC')->paginate(5)->appends(Input::except('page'));
+			
+        else{
+            $searchWord = (int) $searchWord;
+            $transactions = Transaction::where('cart_id','=',$searchWord)->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+        }
+        return view('accountability.user_accountabilities',compact('accountabilities','title','searchWord'));
+		
+	}
 	
 	public static function get_elapsed_time($date_borrowed){								
 		return Carbon::parse($date_borrowed)->diffForHumans(null, true);
@@ -73,7 +88,7 @@ class AccountabilityController extends Controller
 		$qty = Cart_item::where('cart_id', '=', $cart_id)->value('qty');
 		return $qty;		
 	}
-	
+			
 	public static function get_description($id){			
 		return Item::where('id', '=', $id)->value('description');		
 	}
@@ -140,10 +155,10 @@ class AccountabilityController extends Controller
         $searchWord = \Request::get('search'); 
 		
         if($searchWord == "")           
-            $accountabilities = Accountability::whereNotNull('id')->whereNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_borrowed')->paginate(5)->appends(Input::except('page'));
+            $accountabilities = Accountability::whereNotNull('id')->whereNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_borrowed', 'DESC')->paginate(5)->appends(Input::except('page'));
         else{ 
             $searchWord = (int) $searchWord;
-            $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
+            $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at', 'DESC')->paginate(5)->appends(Input::except('page')); 
         }
         return view('accountability.index_pending',compact('accountabilities','title','searchWord')); 
     } 
@@ -155,6 +170,23 @@ class AccountabilityController extends Controller
         return view('accountability.index_completed',compact('accountabilities','title','searchWord')); 
 				
     } 
+	
+	public function user_accountability_info($id, Request $Request){		
+        $date = date('F j, Y');
+        $title = 'Accountability Info'; 
+				
+		$userid = Accountability::where('id', '=', $id)->value('borrower_id');		
+        $user = User::where('id_no', '=' , $userid)->get();				
+		$accountability_trans_id = Accountability::where('id', '=', $id)->value('transaction_id');
+		
+        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->where('transactions.id', '=', $accountability_trans_id)->paginate(5)->appends(Input::except('page')); 
+		        		
+		$cart_items = Accountability::where('id', '=', $id)->get();
+		
+        return view('accountability.user_accountability_show',compact('title','carts','cart_items', 'user', 'date', 'total_fee')); 
+    }
 	
 	 public function accountability_info($id, Request $Request){		
         $date = date('F j, Y');
@@ -170,7 +202,7 @@ class AccountabilityController extends Controller
 		        		
 		$cart_items = Accountability::where('id', '=', $id)->get();
 		
-        return view('accountability.user_show',compact('title','carts','cart_items', 'user', 'date', 'total_fee')); 
+        return view('accountability.accountability_show',compact('title','carts','cart_items', 'user', 'date', 'total_fee')); 
     }
 
 }
