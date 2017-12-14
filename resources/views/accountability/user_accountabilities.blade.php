@@ -6,8 +6,7 @@
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>{{$title}}</h1>
-    @include('search')
+    <h1>{{$title}}</h1>    
 </div>
 <div class="box-body">    
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>  
@@ -29,7 +28,11 @@
 					<td><?php echo AccountabilityController::get_item_name($accountability->item_id); ?></td>
 					<td> {!!date('F j, Y g:i A', strtotime($accountability->date_borrowed))!!}</td>  
 					<td><?php echo AccountabilityController::get_elapsed_time($accountability->date_borrowed); ?></td>
-					<td><?php echo AccountabilityController::get_amount_payable($accountability->date_borrowed, $accountability->item_id); ?></td>								
+					<td><?php 
+								$amount_payable = AccountabilityController::get_amount_payable($accountability->date_borrowed, $accountability->item_id);
+								echo $amount_payable;?>@if(is_float($amount_payable) == true).00
+							@endif
+					</td>								
 					<td>	<a class = 'viewShow btn btn-primary btn-danger btn-xs' href =  '/accountability/{!!$accountability->id!!}/user_show'><i class="fa fa-info" aria-hidden="true"></i>  Info</a></td>
 				</tr>
 				@endforeach 

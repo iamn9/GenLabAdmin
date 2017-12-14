@@ -31,8 +31,14 @@ class AccountabilityController extends Controller
         if($searchWord == "")            
             $accountabilities = Accountability::whereNotNull('id')->whereNotNull('borrower_id')->whereNotNull('transaction_id')->orderBy('date_borrowed', 'DESC')->paginate(5)->appends(Input::except('page'));
         else{
-            $searchWord = (int) $searchWord;
-            $transactions = Transaction::where('cart_id','=',$searchWord)->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
+			if(strcasecmp($searchWord,'Completed') == 0){
+				$accountabilities = Accountability::whereNotNull('date_borrowed')->whereNotNull('date_returned')->orderBy('date_borrowed', 'desc')->paginate(5)->appends(Input::except('page'));				
+			}elseif(strcasecmp($searchWord,'Released') == 0){
+				$accountabilities = Accountability::whereNotNull('date_borrowed')->whereNull('date_returned')->orderBy('date_borrowed', 'desc')->paginate(5)->appends(Input::except('page'));				
+			}else{
+				$searchWord = (int) $searchWord;			
+				$accountabilities = Accountability::where('transaction_id','=',$searchWord)->orWhere('borrower_id', '=', $searchWord)->orderBy('date_borrowed')->paginate(5)->appends(Input::except('page'));
+			}            
         }
         return view('accountability.index',compact('accountabilities','title','searchWord'));
     }
@@ -68,9 +74,9 @@ class AccountabilityController extends Controller
 		$current = Carbon::now();
 		$elapsed_hours = Carbon::parse($date_borrowed)->diffInHours($current);
 		
-		if($elapsed_hours < 1){
-			return 0.0;
-		}
+		//if($elapsed_hours < 1){
+		//	return 0.0;
+		//}
 		
 		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
 		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');
@@ -154,19 +160,24 @@ class AccountabilityController extends Controller
         $title = 'Pending - accountabilities'; 
         $searchWord = \Request::get('search'); 
 		
-        if($searchWord == "")           
-            $accountabilities = Accountability::whereNotNull('id')->whereNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_borrowed', 'DESC')->paginate(5)->appends(Input::except('page'));
-        else{ 
-            $searchWord = (int) $searchWord;
-            $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at', 'DESC')->paginate(5)->appends(Input::except('page')); 
-        }
+		if($searchWord == "")           
+			$accountabilities = Accountability::whereNotNull('id')->whereNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_borrowed', 'DESC')->paginate(5)->appends(Input::except('page'));
+		else{ 
+			$searchWord = (int) $searchWord;			
+			$accountabilities = Accountability::where('transaction_id','=',$searchWord)->orWhere('borrower_id', '=', $searchWord)->whereNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_borrowed')->paginate(5)->appends(Input::except('page'));
+		}
         return view('accountability.index_pending',compact('accountabilities','title','searchWord')); 
     } 
  
     public function index_completed(){ 
         $title = 'Completed - accountabilities'; 
-        $searchWord = \Request::get('search'); 
-        $accountabilities = Accountability::whereNotNull('id')->whereNotNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_returned', 'desc')->paginate(5)->appends(Input::except('page'));
+        $searchWord = \Request::get('search');         
+		if($searchWord == "")           
+			$accountabilities = Accountability::whereNotNull('id')->whereNotNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_returned', 'desc')->paginate(5)->appends(Input::except('page'));
+		else{ 
+			$searchWord = (int) $searchWord;			
+			$accountabilities = Accountability::where('transaction_id','=',$searchWord)->orWhere('borrower_id', '=', $searchWord)->whereNotNull('date_returned')->whereNotNull('date_borrowed')->orderBy('date_borrowed')->paginate(5)->appends(Input::except('page'));
+		}
         return view('accountability.index_completed',compact('accountabilities','title','searchWord')); 
 				
     } 
