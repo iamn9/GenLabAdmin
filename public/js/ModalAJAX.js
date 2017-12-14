@@ -7,9 +7,6 @@
 $(document).on('click', '.delete', function() {
     GET($(this).attr('data-link'));
 })
-$(document).on('click', '.upload', function() {
-    GET($(this).attr('data-link'));
-})
 $(document).on('click', '.edit', function() {
     GET($(this).attr('data-link'));
 })

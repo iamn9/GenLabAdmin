@@ -49,8 +49,8 @@
                 <b>Released: </b>{!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
 				<b>Completed: </b>{!!date('F j, Y g:i A', strtotime($cart->completed_at))!!}<br>
             @else
-                Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
-                Status: <b>{!!$cart->status!!}</b>
+                <b>Submitted: </b>{!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
+                <b>Status: </b>{!!$cart->status!!}<br>
             @endif          			 
           </address>
 		  @endforeach
@@ -61,7 +61,7 @@
 		@foreach($carts as $cart)
           <b>Transaction #:</b> {!!$cart->trans_id!!} <br>
           <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
-          <b>Processed by:</b> Name of Admin<br>
+          <b>Processed by:</b> ----<br>
 		 @endforeach
         </div>
         <!-- /.col -->
@@ -89,7 +89,12 @@
               <td>{!!$cart_item->item_id!!}</td>
               <td><?php echo AccountabilityController::get_item_name($cart_item->item_id); ?></td>
               <td><?php echo AccountabilityController::get_description($cart_item->item_id)?></td>
-			  <td><?php echo AccountabilityController::get_amount_payable($cart_item->date_borrowed, $cart_item->item_id)?></td>
+			  <td>				
+					<?php 
+						$amount_payable = AccountabilityController::get_amount_payable($cart_item->date_borrowed, $cart_item->item_id);
+						echo $amount_payable;?>@if(is_float($amount_payable) == true).00
+						@endif
+			  </td>
             </tr>
             @endforeach
             </tbody>

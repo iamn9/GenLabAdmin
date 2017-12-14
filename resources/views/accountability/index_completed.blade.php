@@ -12,7 +12,7 @@
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-         <th>No.</th>			
+         <th>Transaction ID</th>			
             <th>Borrower ID</th>
             <th>Name</th>
 			<th>Item</th>
@@ -25,7 +25,7 @@
 			@if(count($accountabilities) > 0)
 				 @foreach($accountabilities as $accountability) 
 				<tr id='{!!$accountability->id!!}'>
-					<td>{!!$accountability->id!!}</td>				
+					<td>{!!$accountability->transaction_id!!}</td>				
 					<td>{!!$accountability->borrower_id!!}</td>
 					<td>{!!$accountability->borrower_name!!}</td>
 					<td><?php echo AccountabilityController::get_item_name($accountability->item_id); ?></td>                								

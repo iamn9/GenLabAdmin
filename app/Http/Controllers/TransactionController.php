@@ -37,7 +37,8 @@ class TransactionController extends Controller
     }
 	
 	public static function get_date_released($trans_id){
-		return Transaction::where('id', '=', $trans_id)->value('released_at');
+		$date = Transaction::where('id', '=', $trans_id)->value('released_at');			
+		return $date;
 	}
 	
 	public static function get_completed_fee($trans_id){
@@ -47,8 +48,8 @@ class TransactionController extends Controller
 		return Accountability::where('transaction_id', '=', $trans_id)->value('total_fee');
 	}
 
-	public static function get_borrower_name($transaction_id){
-		$cart_id = Transaction::where('id', '=', $transaction_id)->value('cart_id');
+	public static function get_borrower_name($trans_id){
+		$cart_id = Transaction::where('id', '=', $trans_id)->value('cart_id');
 		$borrower_id = Cart::where('id', '=', $cart_id)->value('borrower_id');		
 		return User::where('id_no', '=', $borrower_id)->value('name');				
 	}
@@ -58,43 +59,48 @@ class TransactionController extends Controller
 		return Item::where('id', '=', $item_id)->value('name');				
 	}
 
-	public static function get_qty($transaction_id){
-		
-		$cart_id = Transaction::where('id', '=', $transaction_id)->value('cart_id');
+	public static function get_qty($trans_id){		
+		$cart_id = Transaction::where('id', '=', $trans_id)->value('cart_id');
 		$qty = Cart_item::where('cart_id', '=', $cart_id)->value('qty');
 		return $qty;		
 	}
 	
-	public static function get_description($id){
-		$item_id = self::get_item_id($id);		
+	public static function get_description($trans_id){
+		$item_id = self::get_item_id($trans_id);		
 		return Item::where('id', '=', $item_id)->value('description');		
 	}
 	
-	public static function get_item_id($transaction_id){		
-		$cart_id = Transaction::where('id', '=', $transaction_id)->value('cart_id');
+	public static function get_item_id($trans_id){		
+		$cart_id = Transaction::where('id', '=', $trans_id)->value('cart_id');
 		$item_id = Cart_item::where('cart_id', '=', $cart_id)->value('item_id');		
 		return $item_id;
 	}
 	
-	public static function get_amount_payable($date_borrowed, $transaction_id){
-		$item_id = self::get_item_id($transaction_id);		
+	public static function get_amount_payable($date_borrowed, $trans_id){
+		$item_id = self::get_item_id($trans_id);		
 		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');		
 		if($firsthour == 0){
 			return $firsthour;
 		}		
 		$current = Carbon::now();
 		$elapsed_hours = Carbon::parse($date_borrowed)->diffInHours($current);		
-		if($elapsed_hours < 1){
-			return 0.0;
-		}				
+		
+		//if($elapsed_hours < 1){
+		//	return 0.0;
+		//}						
+		
 		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');
 		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;
 		return $total_fee;
 	}
 	
-	public static function get_cart_status($transaction_id){
-		$cart_id = Transaction::where('id', '=', $transaction_id)->value('cart_id');
+	public static function get_cart_status($trans_id){
+		$cart_id = Transaction::where('id', '=', $trans_id)->value('cart_id');
 		return Cart::where('id', '=', $cart_id)->value('status');
+	}
+	
+	public static function get_transaction_id($cart_id){		
+		return Transaction::where('cart_id', '=', $cart_id)->value('id');
 	}
 	
     /**
@@ -408,9 +414,7 @@ class TransactionController extends Controller
         $date = date('F j, Y');
         $title = 'Active Transaction'; 
         $userid = Auth::user()->id_no; 
-        $cart_id = Cart::where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->value('id');
-        if (!$cart_id)
-        return redirect('/cart');
+        $cart_id = Cart::where('borrower_id','=', $userid)->where('status', '!=', 'Completed')->where('status', '!=', 'Draft')->value('id');        
         $user = User::where('id_no', '=', $userid)->first();
         $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'remarks', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
@@ -419,7 +423,33 @@ class TransactionController extends Controller
         $cart_items = Cart_item::join('items', function($join){
                 $join->on('cart_items.item_id', '=', 'items.id');
             })->where('cart_id','=',$cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
-        return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date')); 
+        return view('transaction.user_transaction',compact('title','carts','cart_items', 'user', 'date', 'searchWord')); 
+    } 	
+	
+	public function user_show($id,Request $request){ 		
+		$date = date('F j, Y g:i A');
+        $title = 'Show - transaction';
+        if($request->ajax())
+        {
+            return URL::to('transaction/'.$id);
+        }
+
+        $transaction = Transaction::findOrfail($id);
+		$transaction_id = Transaction::where('id','=', $id)->value('id');
+        $userid = Cart::where('id', '=', $transaction->cart_id)->value('borrower_id');
+        $user = User::where('id_no', '=', $userid)->first();
+
+        $carts = Cart::select('transactions.id', 'cart_id', 'carts.id', 'remarks', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->where('borrower_id','=', $userid)
+        ->where('transactions.id','=', $transaction->id)
+        ->paginate(5)->appends(Input::except('page')); 
+		
+		$cart_items = Transaction::where('id', '=', $id)->get();
+
+        $nameAdmin = Auth::user()->name;
+
+        return view('transaction.user_show',compact('title','carts','cart_items', 'user', 'date','nameAdmin', 'transaction_id')); 
     } 	
 	
     public function user_history_info($id, Request $Request){
