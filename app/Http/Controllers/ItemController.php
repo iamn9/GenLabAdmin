@@ -163,7 +163,7 @@ class ItemController extends Controller
                     $("#" + 1).remove();
                     '.$notif.'
                     $.ajax({
-                        type: "POST",
+                        type: "GET",
                         url: "/item/1/show"
                     });
                 }
