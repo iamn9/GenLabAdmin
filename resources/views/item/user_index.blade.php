@@ -14,7 +14,7 @@
                 <th style="width: 60px">id</th>
                 <th style="width: 210px">name</th>
                 <th style="width: 350px">description</th>
-                <th style="width: 160px">actions</th>
+                <th style="width: 200px">actions</th>
             </thead>
             <tbody>
                 @foreach($items as $item) 
