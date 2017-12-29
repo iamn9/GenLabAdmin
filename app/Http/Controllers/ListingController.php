@@ -26,7 +26,7 @@ class ListingController extends Controller
         $searchWord = \Request::get('search');
         if(Auth::user()->isAdmin){
             $title = 'Listing Index';
-            $listings = Listing::join('users', function($join){
+            $listings = listing::join('users', function($join){
                 $join->on('listing.owner_id', '=', 'users.id_no');
             })
             ->when($searchWord, function ($query) use ($searchWord) {
@@ -119,12 +119,32 @@ class ListingController extends Controller
         $listing = listing::findOrfail($id);
 
         $searchWord = \Request::get('search');
-        if ($searchWord == "")
-            $listing_items = DB::table('listing_items')->where('listing_id', $listing->id)->paginate(5)->appends(Input::except('page'));
-        else{
-            $searchWord = (int) $searchWord;
-            $listing_items = DB::table('listing_items')->where('listing_id', $listing->id)->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page'));
-        }
+
+     /*   if ($searchWord == "") 
+            //$listing_items = DB::table('listing_items')->where('listing_id', $listing->id)->paginate(5)->appends(Input::except('page'));
+            $listing_items = DB::select('select items.name,listing_items.* from items,listing_items where listing_items.item_id=items.id order by items.name')->paginate(5)->appends(Input::except('page'));   
+        else{ 
+            $searchWord = (int) $searchWord; 
+
+        $listing_items = DB::table('listing_items')->where('listing_id', $listing->id)->where('item_id','like','%'.$searchWord.'%')->paginate(5)->appends(Input::except('page')); 
+*/
+  //      } 
+        //$listing_items = Listing_item::join('items', function($join){
+          //      $join->on('listing_items.item_id', '=', 'items.id');
+            //})
+            //->when($searchWord, function ($query) {
+              // return $query->where('name','ilike','%'.$searchWord.'%')->orWhere('item_id','=',$searchInt);
+            //})
+            //->where('listing_id',$listing->id)
+            //->orderBy('items.name')
+            //->paginate(5)->appends(Input::except('page'));
+        
+        $listing_items = DB::table('listing_items')
+            ->join('items', 'listing_items.item_id', '=', 'items.id')
+            ->select('listing_items.*', 'items.name')
+            ->where('listing_id', $listing->id)
+            ->orderBy('items.name')
+            ->paginate(5)->appends(Input::except('page'));
 
         if(Auth::user()->isAdmin){
             return view('listing.show',compact('searchWord','title','listing','listing_items'));
@@ -314,21 +334,25 @@ class ListingController extends Controller
         //get items from $listing_id
         $listing_items = DB::table('listing_items')->where('listing_id','=',$listing_id)->get();
 
-        //insert each item from the list to cart_items
-        foreach($listing_items as $listing_item){
-            $countQtyItem = DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->count();
-            if($countQtyItem == 0){
-                    DB::table('cart_items')->insert([
-                    ['cart_id' => $cart_id, 'item_id' => $listing_item->item_id, 'qty' => $listing_item->qty]
-                    ]);
-            }
-            else{
-                DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->increment('qty',$listing_item->qty);
-            }
+        if($listing_items->count() == 0){
+            \Session::flash('error','<b>Error</b></br>Your listing is empty!'); //<--FLASH MESSAGE
         }
+        else{
+            //insert each item from the list to cart_items
+            foreach($listing_items as $listing_item){
+                $countQtyItem = DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->count();
+                if($countQtyItem == 0){
+                        DB::table('cart_items')->insert([
+                        ['cart_id' => $cart_id, 'item_id' => $listing_item->item_id, 'qty' => $listing_item->qty]
+                        ]);
+                }
+                else{
+                    DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->increment('qty',$listing_item->qty);
+                }
+            }
 
-        \Session::flash('success','<b>Success</b></br>Your items from have been added to cart!'); //<--FLASH MESSAGE
-
+            \Session::flash('success','<b>Success</b></br>Your items from have been added to cart!'); //<--FLASH MESSAGE
+        }
         return redirect('/listing');
     }
 }

@@ -20,4 +20,10 @@ class Listing extends Model
         ->where('users.id_no',$this->owner_id)
         ->value('name');
     }
+
+    public function getSize(){
+        return DB::table('listing_items')
+        ->where('listing_id', $this->id)
+        ->count();
+    }
 }
