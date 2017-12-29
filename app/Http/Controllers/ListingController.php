@@ -62,7 +62,7 @@ class ListingController extends Controller
     {
         $title = 'Create Listing';
         
-        return view('listing.create');
+        return view('listing.create',compact('title'));
     }
 
     /**
@@ -323,21 +323,25 @@ class ListingController extends Controller
         //get items from $listing_id
         $listing_items = DB::table('listing_items')->where('listing_id','=',$listing_id)->get();
 
-        //insert each item from the list to cart_items
-        foreach($listing_items as $listing_item){
-            $countQtyItem = DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->count();
-            if($countQtyItem == 0){
-                    DB::table('cart_items')->insert([
-                    ['cart_id' => $cart_id, 'item_id' => $listing_item->item_id, 'qty' => $listing_item->qty]
-                    ]);
-            }
-            else{
-                DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->increment('qty',$listing_item->qty);
-            }
+        if($listing_items->count() == 0){
+            \Session::flash('error','<b>Error</b></br>Your listing is empty!'); //<--FLASH MESSAGE
         }
+        else{
+            //insert each item from the list to cart_items
+            foreach($listing_items as $listing_item){
+                $countQtyItem = DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->count();
+                if($countQtyItem == 0){
+                        DB::table('cart_items')->insert([
+                        ['cart_id' => $cart_id, 'item_id' => $listing_item->item_id, 'qty' => $listing_item->qty]
+                        ]);
+                }
+                else{
+                    DB::table('cart_items')->where('cart_id',$cart_id)->where('item_id', $listing_item->item_id)->increment('qty',$listing_item->qty);
+                }
+            }
 
-        \Session::flash('success','<b>Success</b></br>Your items from have been added to cart!'); //<--FLASH MESSAGE
-
+            \Session::flash('success','<b>Success</b></br>Your items from have been added to cart!'); //<--FLASH MESSAGE
+        }
         return redirect('/listing');
     }
 }

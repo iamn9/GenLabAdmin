@@ -8,7 +8,9 @@
     @include('search')
     <br>
     <a class = 'btn btn-primary' href = '{!!url("listing")!!}'> listing Index</a>&nbsp&nbsp
-    <a class = 'update btn btn-success' href = '/listing/{!!$listing->id!!}/addToCart/process'><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
+    @if($listing_items->count())
+        <a class = 'update btn btn-success' href = '/listing/{!!$listing->id!!}/addToCart/process'><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to Cart</a>
+    @endif
     <br><br>
     <table class = 'table table-bordered'>
         <thead>
