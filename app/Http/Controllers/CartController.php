@@ -221,6 +221,7 @@ class CartController extends Controller
             ->when($searchWord, function ($query) {
                 return $query->where('name','ilike','%'.$searchWord.'%')->orWhere('item_id','=',$searchInt);
             })
+            ->select('items.name','cart_items.*')
             ->where('cart_id',$id)
             ->orderBy('items.name')
             ->paginate(10)->appends(Input::except('page'));
