@@ -51,12 +51,21 @@
             <tr>
                 <td>{!!$cart_item->item_id!!}</td>
                 <td>{!!$cart_item->name!!}</td>
-                <td>{!!$cart_item->qty!!}</td>
+                @if($cart->status != "Completed" && $cart->status != "Released")
                 <td>
-                    @if($cart->status != "Completed" && $cart->status != "Released")
+                        <form method="POST" action='{!! url("cart_item")!!}/{!!$cart_item->id!!}/update'>
+                            <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
+                            <input type = "number" id="qty" name="qty" min="1" value="{!!$cart_item->qty!!}" style="width: 80px;">
+                            <button data-toggle="tooltip" title="Update Item QTY." class = 'update btn btn-warning btn-xs' type ='submit' ><i class="fa fa-refresh" aria-hidden="true"></i>  Update</button>
+                        </form>
+                    </td>
+                <td>
+
                         <a data-toggle="tooltip" title="Remove item from cart." href = '{!!url("cart")."/".$cart_item->cart_id!!}' data-link='/cart_item/{!!$cart_item->id!!}/delete' class = 'delete btn btn-danger btn-xs'><i class = 'material-icons'>delete</i></a>
-                        <a data-toggle="tooltip" title="Edit item QTY." href = '#' class = 'viewEdit btn btn-warning btn-xs' data-link = '/cart_item/{!!$cart_item->id!!}/edit'><i class = 'material-icons'>edit</i></a>
-                    @endif
+                @else
+                    <td>{!!$cart_item->qty!!}</td>
+                    <td>
+                @endif
                     <a data-toggle="tooltip" title="View Item Information." href = '/item/{!!$cart_item->item_id!!}' class = 'delete btn btn-primary btn-xs' ><i class="fa fa-info" aria-hidden="true"></i>  Item Info</a>
                 </td>
             </tr>

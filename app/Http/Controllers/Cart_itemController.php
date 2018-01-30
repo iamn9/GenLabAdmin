@@ -45,7 +45,7 @@ class Cart_itemController extends Controller
 
         \Session::flash('info','<b>Info: </b>Qty of '.$item->name.' successfully Updated.'); //<--FLASH MESSAGE
 
-        return redirect('cart');
+        return redirect()->back();
     }
 
     public function DeleteMsg($id,Request $request)
