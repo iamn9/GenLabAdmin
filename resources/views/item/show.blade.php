@@ -22,61 +22,49 @@
                 <tbody>
                     <tr>
                         <td>
-                            <b><i>name : </i></b>
+                            <b><i>Name : </i></b>
                         </td>
                         <td>{!!$item->name!!}</td>
                     </tr>
                     <tr>
                         <td>
-                            <b><i>brand : </i></b>
+                            <b><i>Brand : </i></b>
                         </td>
                         <td>{!!$item->brand!!}</td>
                     </tr>
                     <tr>
                         <td>
-                            <b><i>quantity : </i></b>
+                            <b><i>Description : </i></b>
+                        </td>
+                        <td>{!!$item->description!!}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><i>Quantity : </i></b>
                         </td>
                         <td>{!!$item->quantity!!}</td>
                     </tr>
                     <tr>
                         <td>
-                            <b><i>first hour : </i></b>
+                            <b><i>Acquisition Cost : </i></b>
                         </td>
-                        <td>{!!$item->firsthour!!}</td>
+                        <td>PHP {!!$item->acquisitioncost!!}</td>
                     </tr>
                     <tr>
                         <td>
-                            <b><i>succeeding hour: </i></b>
+                            <b><i>Charge for the First hour of use : </i></b>
                         </td>
-                        <td>{!!$item->succeeding!!}</td>
+                        <td>PHP {!!$item->firsthour!!}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><i>Charge for the succeding hours of use: </i></b>
+                        </td>
+                        <td>PHP {!!$item->succeeding!!}</td>
                     </tr>
                 </tbody>
             </table>
+            <br/>
         </div>
     </div>
-    <div class="box-body">
-        <br>
-        <table class = 'table table-bordered'>
-            <thead>
-                <th>Key</th>
-                <th>Value</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <b><i>name : </i></b>
-                    </td>
-                    <td>{!!$item->name!!}</td>
-                </tr>
-                <tr>
-                    <td>
-                        <b><i>description : </i></b>
-                    </td>
-                    <td>{!!$item->description!!}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
 @endsection
