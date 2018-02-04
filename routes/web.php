@@ -138,6 +138,6 @@ Route::group(['middleware'=> 'web'],function(){
   Route::get('transaction/{id}/show', '\App\Http\Controllers\TransactionController@user_show');
   Route::get('transaction/{id}/delete','\App\Http\Controllers\TransactionController@destroy');
   Route::get('transaction/{id}/deleteMsg','\App\Http\Controllers\TransactionController@DeleteMsg');
-  Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_index'); //okay
+  Route::get('transaction/user/history','\App\Http\Controllers\TransactionController@user_history'); //okay
 });
 

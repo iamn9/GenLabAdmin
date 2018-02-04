@@ -205,16 +205,6 @@ class TransactionController extends Controller
 		$accountability->delete();		
 	}
 
-     public function user_history(Request $request){ 
-        $title = 'Transaction History'; 
-        $userid = Auth::user()->id_no; 
-        $user = User::where('id_no', '=', $userid)->first();
-        $transactions = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
-            $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('borrower_id', '=', $userid)->where('status', '=', 'Completed')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.user_history',compact('transactions','title')); 
-    }
-
     public function index_pending(){ 
         $title = 'Pending Transactions'; 
         $searchWord = \Request::get('search'); 
@@ -451,14 +441,14 @@ class TransactionController extends Controller
         return view('transaction.show',compact('title','carts','cart_items', 'user', 'date', 'name')); 
     }
 
-    public function user_index(Request $request){ 
+    public function user_history(Request $request){ 
         $title = 'Transaction History'; 
         $userid = Auth::user()->id_no; 
         $user = User::where('id_no', '=', $userid)->first();
         $transactions = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'prepared_at', 'released_at', 'completed_at', 'borrower_id', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('borrower_id', '=', $userid)->orderBy('cart_id','desc')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.user_index',compact('transactions','title')); 
+        })->where('borrower_id', '=', $userid)->where('completed_at','!=',NULL)->orderBy('cart_id','desc')->paginate(5)->appends(Input::except('page')); 
+        return view('transaction.user_history',compact('transactions','title')); 
     }
 
     public function user_active(Request $request){ 
@@ -466,9 +456,9 @@ class TransactionController extends Controller
         $date = date('F j, Y');
         $title = 'Active Transactions'; 
         $userid = Auth::user()->id_no; 
-        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'borrower_id', 'submitted_at', 'status')->join('transactions', function($join){
+        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'borrower_id', 'submitted_at', 'completed_at', 'status')->join('transactions', function($join){
             $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('borrower_id', '=', $userid)->paginate(5)->appends(Input::except('page')); 
+        })->where('borrower_id', '=', $userid)->where('completed_at','=',NULL)->paginate(5)->appends(Input::except('page')); 
         return view('transaction.user_active',compact('title', 'carts', 'searchWord')); 
     } 	
 }
