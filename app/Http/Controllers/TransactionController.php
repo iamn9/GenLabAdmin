@@ -27,31 +27,18 @@ class TransactionController extends Controller
     {
         $title = 'Transaction Index';
         $searchWord = \Request::get('search');
-        if($searchWord == "")            
-            $transactions = Transaction::orderBy('submitted_at', 'DESC')->paginate(5)->appends(Input::except('page'));
-        else{
-            $searchWord = (int) $searchWord;
-            $transactions = Transaction::where('cart_id','=',$searchWord)->orderBy('submitted_at')->paginate(5)->appends(Input::except('page'));
-        }
+        $transactions = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'prepared_at', 'released_at', 'completed_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->orderBy('cart_id','desc')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index',compact('transactions','title','searchWord'));
     }
 	
-	public static function get_date_released($trans_id){
-		$date = Transaction::where('id', '=', $trans_id)->value('released_at');			
-		return $date;
-	}
 	
 	public static function get_completed_fee($trans_id){
 		if(self::check_if_payable($trans_id) == false){			
 			return '0.00';
 		}		
 		return Accountability::where('transaction_id', '=', $trans_id)->value('total_fee');
-	}
-
-	public static function get_borrower_name($trans_id){
-		$cart_id = Transaction::where('id', '=', $trans_id)->value('cart_id');
-		$borrower_id = Cart::where('id', '=', $cart_id)->value('borrower_id');		
-		return User::where('id_no', '=', $borrower_id)->value('name');				
 	}
 	
 	public static function get_item_name($trans_id){		
