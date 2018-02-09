@@ -26,4 +26,15 @@ class Cart extends Model
         ->where('cart_id', $this->id)
         ->count();
     }
+
+    public function getTotalPayable(){
+        $cart_items = Cart_item::where('cart_id','=',$this->id)->get();
+
+        $totalPayable = 0;
+        foreach($cart_items as $cart_item){
+            $totalPayable += $cart_item->getPayable();
+        }
+
+        return $totalPayable;
+    }
 }
