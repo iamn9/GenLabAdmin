@@ -27,7 +27,7 @@
                     <td>
                         <a data-toggle="tooltip" title="Delete Transaction" data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                         <a data-toggle="tooltip" title="View Receipt" class = 'viewShow btn btn-primary xs' href = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>
-                        <a data-toggle="tooltip" title="All items were returned in this transaction." class = 'viewEdit btn btn-success xs' href= '/transaction/{!!$transaction->id!!}/complete'><i class="fa fa-check" aria-hidden="true"></i>  Complete</a>
+                        <a data-toggle="tooltip" title="All items were returned in this transaction." class = 'viewEdit btn btn-success xs' href= '/transaction/{!!$transaction->id!!}/confirm_complete'><i class="fa fa-check" aria-hidden="true"></i>  Complete</a>
                         <a data-toggle="tooltip" title="This was not yet released to the user." class = 'viewEdit btn btn-warning xs' href = '/transaction/{!!$transaction->id!!}/undo_release'><i class="fa fa-undo" aria-hidden="true"></i>  Undo</a>
                     </td>
                 </tr>

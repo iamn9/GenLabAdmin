@@ -12,7 +12,7 @@ class Cart_item extends Model
     public $timestamps = false;   
     protected $table = 'cart_items';
 
-    public function getPayable(){
+    public function getFee(){
         $item_id = $this->item_id;
 		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');		
 		if($firsthour == 0){
@@ -20,7 +20,7 @@ class Cart_item extends Model
 		}		
         $released_at = Transaction::where('cart_id','=',$this->cart_id)->value('released_at');
         if($released_at == NULL)
-            return 0;
+            return 0.00;
 
         $completed_at = Transaction::where('cart_id','=',$this->cart_id)->value('completed_at');
         if($completed_at == NULL)
@@ -31,6 +31,6 @@ class Cart_item extends Model
 		
 		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');
 		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;
-		return $total_fee;
+		return number_format($total_fee, 2);
     }
 }

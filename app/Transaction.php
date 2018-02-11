@@ -12,8 +12,13 @@ class Transaction extends Model
     protected $table = 'transactions';
 
     public function getOwner(){
-        $borrower = DB::table('carts')->where('id',$this->cart_id)->value('borrower_id');
-        $borrowerName = DB::table('users')->where('id_no',$borrower)->value('name');
+        $borrowerID = DB::table('carts')->where('id',$this->cart_id)->value('borrower_id');
+        $borrowerName = DB::table('users')->where('id_no',$borrowerID)->value('name');
         return $borrowerName;
+    }
+
+    public function getOwnerID(){
+        $borrowerID = DB::table('carts')->where('id',$this->cart_id)->value('borrower_id');
+        return $borrowerID;
     }
 }

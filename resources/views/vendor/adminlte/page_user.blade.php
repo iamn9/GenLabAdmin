@@ -158,7 +158,7 @@
                     <li class="treeview"><a href="{{url('/cart')}}"><i class="fa fa-shopping-cart"></i> <span>Cart</span></a></li>
 					<li class="header">TRANSACTIONS</li>
                     <li class="treeview"><a href="{{url('/transaction/user/active')}}"><i class="fa fa-shopping-cart"></i> <span>Active Transactions</span></a></li>
-					<li class="treeview"><a href="{{url('/accountability/user/accountabilities')}}"><i class="fa fa-money"></i> <span>Accountabilities</span></a></li>
+					<li class="treeview"><a href="{{url('/accountability')}}"><i class="fa fa-money"></i> <span>Accountabilities</span></a></li>
 					<li class="treeview"><a href="{{url('/transaction/user/history')}}"><i class="fa fa-history"></i> <span>History</span></a></li>
                     <li class="header">NEWS</li>
                     <li class="treeview"><a href="{{url('/news')}}"><i class="fa fa-info"></i> <span>News</span></a></li>

@@ -66,7 +66,7 @@
             <th>Item</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Payable</th>
+            <th>Fee</th>
           </tr>
         </thead>
         <tbody>
@@ -76,15 +76,15 @@
             <td>{!!$cart_item->item_id!!}</td>
             <td>{!!$cart_item->name!!}</td>
             <td>{!!$cart_item->description!!}</td>
-            <td>{!!$cart_item->getPayable()!!}</td>
+            <td>{!!$cart_item->getFee()!!}</td>
           </tr>
           @endforeach
           <tr>
             <td></td>
             <td></td>
             <td></td>
-            <td align="right"><b>TOTAL PAYABLE</b></td>
-            <td><b>{!!$cart->getTotalPayable()!!}</b></td>
+            <td align="right"><b>TOTAL FEE</b></td>
+            <td><b>{!!$cart->getTotalFee()!!}</b></td>
           </tr>
         </tbody>
       </table>

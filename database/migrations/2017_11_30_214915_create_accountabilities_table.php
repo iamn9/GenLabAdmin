@@ -15,7 +15,9 @@ class CreateAccountabilitiesTable extends Migration
     {
         Schema::create('accountabilities', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('transaction_id');
+            $table->unsignedInteger('trans_id');
+            $table->unsignedInteger('cart_id');
+            $table->unsignedInteger('item_id');
             $table->datetime('date_incurred');
             $table->datetime('date_paid')->nullable();
             $table->decimal('amount',10,2) ->default(0);

@@ -27,14 +27,14 @@ class Cart extends Model
         ->count();
     }
 
-    public function getTotalPayable(){
+    public function getTotalFee(){
         $cart_items = Cart_item::where('cart_id','=',$this->id)->get();
 
         $totalPayable = 0;
         foreach($cart_items as $cart_item){
-            $totalPayable += $cart_item->getPayable();
+            $totalPayable += $cart_item->getFee();
         }
 
-        return $totalPayable;
+        return number_format($totalPayable, 2);
     }
 }

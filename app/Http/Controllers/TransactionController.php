@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Transaction;
 use App\Accountability;
+use App\Transaction;
 use App\Cart;
 use App\Cart_item;
 use App\User;
@@ -32,14 +31,6 @@ class TransactionController extends Controller
         })->orderBy('cart_id','desc')->paginate(5)->appends(Input::except('page')); 
         return view('transaction.index',compact('transactions','title','searchWord'));
     }
-	
-	
-	public static function get_completed_fee($trans_id){
-		if(self::check_if_payable($trans_id) == false){			
-			return '0.00';
-		}		
-		return Accountability::where('transaction_id', '=', $trans_id)->value('total_fee');
-	}
 
     /**
      * Display the specified resource.
@@ -125,17 +116,8 @@ class TransactionController extends Controller
      	$transaction = Transaction::findOrfail($id);
      	$transaction->delete();
 		
-		self::accountability_destroy($id);
-		
         return URL::to('transaction');
     }
-	
-	public function accountability_destroy($id){
-		$accountability_id = Accountability::where('transaction_id', '=', $id)->value('id');
-		
-		$accountability = Accountability::findOrfail($accountability_id);
-		$accountability->delete();		
-	}
 
     public function index_pending(){ 
         $title = 'Pending Transactions'; 
@@ -208,49 +190,9 @@ class TransactionController extends Controller
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
         Transaction::where('id',$id)->update(['released_at' => $date]); 
 		
-		if(self::check_if_payable($id)){
-			self::store_as_accountability($id);
-		}			
-		
         \Session::flash('success','Cart released to User.');      
         return redirect('transaction/prepared'); 
     } 
-	
-	public static function check_if_payable($id){
-		
-		$cart_id = Transaction::where('id', '=', $id)->value('cart_id');		
-		$item_id = Cart_item::where('id', '=', $cart_id)->value('item_id');
-		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
-		
-		if($firsthour > 0){
-			return true;
-		}
-		
-		return false;
-	}
-	
-	public function store_as_accountability($id){
-				
-		$currentTransaction = Transaction::where('id', '=', $id);
-		$cart_id = Transaction::where('id', '=', $id)->value('cart_id');
-		$borrower_id = Cart::where('id', '=', $cart_id)->value('borrower_id');
-		$borrower_name = User::where('id_no', '=', $borrower_id)->value('name');
-		$released_at = Transaction::where('id', '=', $id)->value('released_at');
-		$completed_at = Transaction::where('id', '=', $id)->value('completed_at');
-		$item_id = Cart_item::where('cart_id', '=', $cart_id)->value('item_id');		
-						
-		$accountability = new Accountability();
-		$accountability->transaction_id = $id;
-        $accountability->borrower_id = $borrower_id;
-        $accountability->borrower_name = $borrower_name;
-		$accountability->item_id = $item_id;				
-        $accountability->date_borrowed = $released_at;        
-		$accountability->date_returned = $completed_at;        
-		$accountability->total_fee = 0.0;
-        $accountability->save();
-        return redirect('accountability');
-		
-	}
 
     public function undo_release($id, Request $Request){
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
@@ -258,81 +200,63 @@ class TransactionController extends Controller
         Transaction::where('id',$id)->update(['released_at' => null]); 
         Cart::where('id', $cart_id)->update(['status' => 'Prepared']); 
 		
-		self::undo_accountability($id);
-		
         \Session::flash('info','Cart undone.');
         return redirect('transaction/released');
     }
-	
-	public function undo_accountability($id){
-		
-		$transaction_id = Transaction::where('id', '=', $id)->value('id');		
-		$accountability = Accountability::where('transaction_id', '=', $transaction_id);
-     	$accountability->delete();
-        //return URL::to('accountability');
-		
-	}
  
-    public function complete($id, Request $Request){ 
-        $date = date("Y-m-d H:i:s"); 
-        $cart_id = Transaction::where('id',$id)->value('cart_id'); 
- 
+    public function confirm_complete($id, Request $request){
+        $transaction = Transaction::findOrfail($id);
+        $cart = Cart::findOrFail($transaction->cart_id);
+        if ($cart->getTotalFee() ==0){
+            return redirect('transaction/'.$id.'/complete'); 
+        }
+
+        $date = date('F j, Y g:i A');
+        $title = 'Show Transaction';
+        if($request->ajax())
+        {
+            return URL::to('transaction/'.$id);
+        }
+
+        $userid = Cart::where('id', '=', $transaction->cart_id)->value('borrower_id');
+        $user = User::where('id_no', '=', $userid)->first();
+
+        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'remarks', 'submitted_at', 'prepared_at','completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function($join){
+            $join->on('carts.id', '=', 'transactions.cart_id');
+        })->where('borrower_id','=', $userid)
+        ->where('transactions.id','=', $transaction->id)
+        ->paginate(5)->appends(Input::except('page')); 
+
+        $cart_items = Cart_item::join('items', function($join){
+                $join->on('cart_items.item_id', '=', 'items.id');
+            })->where('cart_id','=',$transaction->cart_id)->orderBy('cart_id')->paginate(5)->appends(Input::except('page'));
+
+        $nameAdmin = Auth::user()->name;
+
+        return view('transaction.confirm_complete',compact('title','carts','cart_items', 'user', 'date', 'nameAdmin')); 
+    }
+
+    public function complete($id, Request $request){
+        $date = date('F j, Y g:i A');
+        $cart_id = Transaction::findOrFail($id)->value('cart_id');
         Cart::where('id', $cart_id)->update(['status' => 'Completed']); 
         Transaction::where('id',$id)->update(['completed_at' => $date]); 
-		
-		$item_id = Accountability::where('transaction_id', '=', $id)->value('item_id');
-		$accountability_id = Accountability::where('transaction_id', '=', $id)->value('id');
-		
-		$total_fee = self::compute_fee($item_id, $accountability_id, $date);		
-		self::store_as_completed_accountability($id, $total_fee);
-								
+                                
         \Session::flash('success','Cart has been returned.');
         return redirect('transaction/released'); 
-    } 	
-	
-	public function compute_fee($item_id, $accountability_id, $date_returned){			
-		$date_borrowed = Accountability::where('id', '=', $accountability_id)->value('date_borrowed');
-		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
-		
-		if($firsthour == 0){
-			return $firsthour;
-		}
-				
-		$elapsed_hours = Carbon::parse($date_borrowed)->diffInHours(Carbon::parse($date_returned));
-		
-		if($elapsed_hours < 1){
-			return 0.0;
-		}
-		
-		$firsthour = Item::where('id', '=', $item_id)->value('firsthour');
-		$succeeding_hours = Item::where('id', '=', $item_id)->value('succeeding');
-		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;
-		
-		return $total_fee;
-	}
-	
-	public function store_as_completed_accountability($id, $total_fee){
-		$returned_at = Transaction::where('id',$id)->value('completed_at');		
-		
-		Accountability::where('transaction_id', '=', $id)->update(['date_returned' => $returned_at, 'total_fee' => $total_fee]); 				
-	}
+    }
 
     public function undo_complete($id, Request $Request){
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
 
         Cart::where('id', $cart_id)->update(['status' => 'Released']); 
         Transaction::where('id',$id)->update(['completed_at' => null]); 
-		
-		self::undo_completed_accountability($id);
+        Accountability::where('trans_id',$id)->delete();
 		
         \Session::flash('info','Cart undone.');
         return redirect('transaction/completed'); 
     }
-	
-	public function undo_completed_accountability($id){		
-		Accountability::where('transaction_id', '=', $id)->update(['date_returned' => null, 'total_fee' => 0.00]); 				
-	}
-	
+
     public function user_history_info($id, Request $Request){
         $date = date('F j, Y');
         $title = 'Transaction History'; 

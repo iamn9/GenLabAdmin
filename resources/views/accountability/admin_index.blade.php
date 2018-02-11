@@ -15,9 +15,9 @@
             <th>Name</th>
 			<th>Borrower ID</th>
 			<th>Item ID</th>
-            <th>Date Incurred</th>						        
+            <th>Date Incurred</th>						
+            <th>Date Paid</th>            
             <th>Amount</th>
-			<th>Actions</th>
         </thead>
         <tbody>
 			@if(count($accountabilities) > 0)
@@ -28,12 +28,9 @@
 					<td>{!!$accountability->getOwner()!!}</td>
 					<td>{!!$accountability->getOwnerID()!!}</td>
 					<td>{!!$accountability->item_id!!}</td>
-					<td>{!!$accountability->date_incurred!!}</td>							
+					<td>{!!$accountability->date_incurred!!}</td>				
+					<td>{!!$accountability->date_paid!!}</td>				
 					<td>{!!$accountability->amount!!}</td>				
-					<td>					 
-						<a data-toggle="tooltip" title="Remove Accountability" class = 'delete btn btn-danger xs' data-link = "/accountability/{!!$accountability->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-						<a data-toggle="tooltip" title="Item paid" class = 'update btn btn-success xs' href = '/accountability/{!!$accountability->id!!}/payItem'><i class="fa fa-check" aria-hidden="true"></i>  Paid</a>
-					</td>
 				</tr>
 				@endforeach
 			@else
