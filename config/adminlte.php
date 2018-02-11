@@ -226,7 +226,30 @@ return [
                     'url'         => 'transaction/completed',
                 ],
             ]
-        ],
+        ],			
+		[
+            'text'        => 'Accountabilites',
+            'url'         => 'accountability',
+            'icon'        => 'money',
+            'label_color' => 'success',
+            'submenu'   =>[
+                [
+                    'text'       => 'Show All',
+                    'icon_color' => 'acqua',
+                    'url'         => 'accountability/all',
+                ],                
+                [
+                    'text'       => 'Pending',
+                    'icon_color' => 'red',
+                    'url'         => 'accountability/pending',
+                ],                
+                [
+                    'text'       => 'Completed',
+                    'icon_color' => 'green',
+                    'url'         => 'accountability/completed',
+                ],
+			]
+		],
         "NEWS",
         [
             'text'        => 'Updates',

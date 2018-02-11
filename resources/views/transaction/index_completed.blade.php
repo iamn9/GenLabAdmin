@@ -10,24 +10,32 @@
 <div class="box-body">
     <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>Borrower</th>
-            <th>Cart ID</th>
-            <th>Completed at</th>
+            <th style="width: 60px">ID</th>
+            <th style="width: 80px">Cart ID</th>
+            <th style="width: 280px">Borrower Name</th>
+            <th>Date completed</th>
             <th>Actions</th>
         </thead>
         <tbody>
-            @foreach($transactions as $transaction) 
-            <tr id='{!!$transaction->id!!}'>
-                <td>{!!$transaction->getOwner()!!}</td>
-                <td>{!!$transaction->cart_id!!}</td>
-                <td>{!!date('F j, Y g:i A', strtotime($transaction->completed_at))!!}</td>
-                <td>
-                    <a data-toggle="tooltip" title="Delete Transaction" data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                    <a data-toggle="tooltip" title="View Receipt" class = 'viewShow btn btn-primary xs' href = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>
-                    <a data-toggle="tooltip" title="Not yet completely returned." class = 'viewEdit btn btn-warning xs' href = '/transaction/{!!$transaction->id!!}/undo_complete'><i class="fa fa-undo" aria-hidden="true"></i>  Undo</a>
-                </td>
-            </tr>
-            @endforeach 
+			@if(count($transactions) > 0)
+                @foreach($transactions as $transaction) 
+                <tr id='{!!$transaction->id!!}'>
+                    <td>{!!$transaction->id!!}</td>
+                    <td>{!!$transaction->cart_id!!}</td>      
+                    <td>{!!$transaction->getOwner()!!}</td>
+                    <td>{!!date('F j, Y g:i A', strtotime($transaction->completed_at))!!}</td>
+                    <td>
+                        <a data-toggle="tooltip" title="Delete Transaction" data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger xs' data-link = "/transaction/{!!$transaction->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        <a data-toggle="tooltip" title="View Receipt" class = 'viewShow btn btn-primary xs' href = '/transaction/{!!$transaction->id!!}'><i class="fa fa-info" aria-hidden="true"></i></a>
+                        <a data-toggle="tooltip" title="Not yet completely returned." class = 'viewEdit btn btn-warning xs' href = '/transaction/{!!$transaction->id!!}/undo_complete'><i class="fa fa-undo" aria-hidden="true"></i>  Undo</a>
+                    </td>
+                </tr>
+                @endforeach 
+			@else
+				<tr>										
+					<td align=center colspan=5>No record found!</td>										
+				</tr>
+			@endif
         </tbody>
     </table>
     <div class='text-center'>{!! $transactions->render() !!}</div>

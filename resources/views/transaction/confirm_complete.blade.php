@@ -1,4 +1,4 @@
-@extends('adminlte::page_user')
+@extends('adminlte::page')
 @section('title','GLS | '.$title)
 @section('content')
 
@@ -51,11 +51,9 @@
     </div>
 
     <div class="col-sm-4 invoice-col">
-      <address>
-      <b>Transaction #:</b> {!!$cart->trans_id!!}<br>
+      <b>Transaction #:</b> {!!$cart->trans_id!!} <br>
       <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
       <b>Status:</b> {!!$cart->status!!}<br>
-      </address>
     </div>
   </div>
 
@@ -99,9 +97,17 @@
 
   <div class="row">
     <div class="col-xs-12">
-        <button data-toggle="tooltip" title="Print Receipt"  onclick="javascript:window.print();" target="_blank" class="btn btn-primary pull-right no-print" style="margin-right: 5px;"><i class="fa fa-print"></i> Print</button>
-        University of The Philippines Visayas - Tacloban College<br>
-        Division of Natural Sciences and Mathematics
+      <form method="POST" action='/accountability/{!!$cart->trans_id!!}/paidCart'>
+          <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
+          <button data-toggle="tooltip" title="Payment received." class="btn btn-success pull-right no-print" style="margin-right: 5px;" type="submit"><i class="fa fa-check" aria-hidden="true"></i>  Fully Paid</button>
+      </form>
+      <form method="POST" action="/accountability/{!!$cart->trans_id!!}/recordBill">
+          <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
+          <button data-toggle="tooltip" title="Will be paid at a later time." class="btn btn-warning pull-right no-print" style="margin-right: 5px;" type="submit" ><i class="fa fa-book" aria-hidden="true"></i>  Record Bill</button>
+      </form>
+      <button data-toggle="tooltip" title="Print Receipt"  onclick="javascript:window.print();" target="_blank" class="btn btn-primary pull-right no-print" style="margin-right: 5px;"><i class="fa fa-print"></i> Print</button>
+      University of The Philippines Visayas - Tacloban College<br>
+      Division of Natural Sciences and Mathematics
     </div>
   </div>
 </section>
