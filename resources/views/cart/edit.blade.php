@@ -17,17 +17,7 @@
         <div class="form-group">
             <label for="borrower_id">borrower_id</label>
             <input id="borrower_id" name = "borrower_id" type="text" class="form-control" value="{!!$cart->
-            borrower_id!!}"> 
-        </div>
-        <div class="form-group">
-            <label for="status">status</label>
-            <select id="status" name="status" class="form-control">
-                <option>Draft</option>
-                <option>Pending</option>
-                <option>Ready</option>
-                <option>Released</option>
-                <option>Completed</option>
-            </select>
+            borrower_id!!}" disabled> 
         </div>
         <div class="form-group">
             <label for="status">remarks</label>

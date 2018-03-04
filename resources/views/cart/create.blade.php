@@ -18,16 +18,6 @@
             <input id="borrower_id" name = "borrower_id" type="text" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="status">status</label>
-
-            <select id="status" name="status" class="form-control">
-                <option>Draft</option>
-                <option>Pending</option>
-                <option>Released</option>
-                <option>Completed</option>
-            </select>
-        </div>
-        <div class="form-group">
             <label for="status">remarks</label>
             <textarea id="remarks" name="remarks" class="textarea" style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
         </div>
