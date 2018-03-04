@@ -54,9 +54,7 @@ class TransactionController extends Controller
         })->where('borrower_id', '=', $userid)
             ->where('transactions.id', '=', $transaction->id)->get();
 
-        $cart_items = Cart_item::join('items', function ($join) {
-            $join->on('cart_items.item_id', '=', 'items.id');
-        })->where('cart_id', '=', $transaction->cart_id)->orderBy('cart_id')->get();
+        $cart_items = Cart_item::where('cart_id', '=', $transaction->cart_id)->orderBy('cart_id')->get();
 
         $nameAdmin = Auth::user()->name;
 

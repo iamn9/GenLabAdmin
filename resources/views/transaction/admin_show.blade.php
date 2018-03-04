@@ -63,8 +63,8 @@
         <thead>
           <tr>
             <th>Qty</th>
-            <th>Item</th>
             <th>Name</th>
+            <th>Brand</th>
             <th>Description</th>
             <th>Fee</th>
           </tr>
@@ -73,9 +73,9 @@
           @foreach($cart_items as $cart_item)
           <tr>
             <td>{!!$cart_item->qty!!}</td>
-            <td>{!!$cart_item->item_id!!}</td>
-            <td>{!!$cart_item->name!!}</td>
-            <td>{!!$cart_item->description!!}</td>
+            <td>{!!$cart_item->getItemName()!!}</td>
+            <td>{!!$cart_item->getItemBrand()!!}</td>
+            <td>{!!$cart_item->getItemDescription()!!}</td>
             <td>{!!$cart_item->getFee()!!}</td>
           </tr>
           @endforeach

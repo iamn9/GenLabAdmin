@@ -9,8 +9,8 @@
 <div class="box-body">
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width: 280px">Borrower</th>
-            <th>Transaction ID</th>
+            <th>Borrower</th>
+            <th>Trans ID</th>
             <th style="width: 80px">Cart ID</th>
             <th>Manage Cart</th>
             <th>Status</th>
