@@ -152,44 +152,6 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Carts',
-            'url'         => 'cart',
-            'icon'        => 'shopping-cart',
-            'label_color' => 'success',
-            'submenu'   =>[
-                [
-                    'text'       => 'Show All',
-                    'icon_color' => 'white',
-                    'url'         => 'cart/all',
-                ],
-                [
-                    'text'       => 'Draft',
-                    'icon_color' => 'aqua',
-                    'url'         => 'cart/draft',
-                ],
-                [
-                    'text'       => 'Pending',
-                    'icon_color' => 'red',
-                    'url'         => 'cart/pending',
-                ],
-                [
-                    'text'       => 'Prepared',
-                    'icon_color' => 'orange',
-                    'url'         => 'cart/prepared',
-                ],
-                [
-                    'text'       => 'Released',
-                    'icon_color' => 'blue',
-                    'url'         => 'cart/released',
-                ],
-                [
-                    'text'       => 'Completed',
-                    'icon_color' => 'green',
-                    'url'         => 'cart/completed',
-                ],
-            ]
-        ],
-        [
             'text'        => 'Listing',
             'url'         => 'listing',
             'icon'        => 'book',
@@ -197,35 +159,36 @@ return [
         ],
         'TRANSACTIONS',
         [
-            'text'       => 'Records',
-            'icon' => 'folder-o',
-            'submenu'   =>[
-                [
-                    'text'       => 'Show All',
-                    'icon_color' => 'white',
-                    'url'         => 'transaction/all',
-                ],
-                [
-                    'text'       => 'Pending',
-                    'icon_color' => 'red',
-                    'url'         => 'transaction/pending',
-                ],
-                [
-                    'text'       => 'Prepared',
-                    'icon_color' => 'orange',
-                    'url'         => 'transaction/prepared',
-                ],
-                [
-                    'text'       => 'Released',
-                    'icon_color' => 'blue',
-                    'url'         => 'transaction/released',
-                ],
-                [
-                    'text'       => 'Completed',
-                    'icon_color' => 'green',
-                    'url'         => 'transaction/completed',
-                ],
-            ]
+            'text'        => 'Carts',
+            'icon'        => 'shopping-cart',
+            'url'         => 'transaction',
+            // 'submenu'   =>[
+            //     [
+            //         'text'       => 'Show All',
+            //         'icon_color' => 'white',
+            //         'url'         => 'transaction/all',
+            //     ],
+            //     [
+            //         'text'       => 'Pending',
+            //         'icon_color' => 'red',
+            //         'url'         => 'transaction/pending',
+            //     ],
+            //     [
+            //         'text'       => 'Prepared',
+            //         'icon_color' => 'orange',
+            //         'url'         => 'transaction/prepared',
+            //     ],
+            //     [
+            //         'text'       => 'Released',
+            //         'icon_color' => 'blue',
+            //         'url'         => 'transaction/released',
+            //     ],
+            //     [
+            //         'text'       => 'Completed',
+            //         'icon_color' => 'green',
+            //         'url'         => 'transaction/completed',
+            //     ],
+            // ]
         ],			
 		[
             'text'        => 'Accountabilites',

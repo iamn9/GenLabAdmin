@@ -5,8 +5,8 @@
 <div class="box box-primary">
 <div class="box-header">
     <h1>{{$title}}</h1>
-    <form method = 'get' action = '{!!url("cart")!!}'>
-        <button class = 'btn btn-danger'>cart Index</button>
+    <form method = 'get' action = 'javascript:window.history.back()'>
+        <button class = 'btn btn-danger'>back</button>
     </form>
 </div>
 <div class="box-body">

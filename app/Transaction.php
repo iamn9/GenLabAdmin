@@ -21,4 +21,9 @@ class Transaction extends Model
         $borrowerID = DB::table('carts')->where('id',$this->cart_id)->value('borrower_id');
         return $borrowerID;
     }
+
+    public function getCartStatus(){
+        $cartStatus = DB::table('carts')->where('id',$this->cart_id)->value('status');
+        return $cartStatus;
+    }
 }

@@ -2,7 +2,11 @@
 
 <div class="box box-primary">
     <div class="box-header">
-        <h1>{{$title}}</h1>
+        <h1>{{$title}} &nbsp
+            <a data-toggle="tooltip" title="Edit Cart Information." class='viewEdit btn btn-primary btn-xs'
+                href='/cart/{!!$cart->id!!}/edit'>
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+        </h1>
         @include('search')
         <br>
         <table class='table table-bordered'>
@@ -33,11 +37,7 @@
                             <i>remarks : </i>
                         </b>
                     </td>
-                    <td>{!!$cart->remarks!!}
-                        <a data-toggle="tooltip" title="Edit Cart Information." class='viewEdit btn btn-primary btn-xs'
-                            href='/cart/{!!$cart->id!!}/edit'>
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
-                    </td>
+                    <td>{!!$cart->remarks!!}</td>
                 </tr>
             </tbody>
         </table>
