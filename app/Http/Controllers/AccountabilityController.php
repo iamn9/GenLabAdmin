@@ -24,12 +24,12 @@ class AccountabilityController extends Controller
 	         
         if (Auth::user()->isAdmin){
             $title = 'Accountability Index';
-            $accountabilities = Accountability::paginate(5);
+            $accountabilities = Accountability::all();
             return view('accountability.admin_index',compact('accountabilities','title','searchWord'));
         }
         else{
             $title = 'My Accountabilities';
-            $accountabilities = Accountability::where('date_paid', NULL)->paginate(5);
+            $accountabilities = Accountability::where('date_paid', NULL)->get();
             return view('accountability.user_index',compact('accountabilities','title','searchWord'));
         }
     }
@@ -52,7 +52,7 @@ class AccountabilityController extends Controller
         $title = 'Unpaid Accountabilities';
 		$searchWord = \Request::get('search');       
 	         
-        $accountabilities = Accountability::where('date_paid',NULL)->paginate(5);
+        $accountabilities = Accountability::where('date_paid',NULL)->get();
         return view('accountability.index_pending',compact('accountabilities','title','searchWord'));
     } 
  
@@ -60,7 +60,7 @@ class AccountabilityController extends Controller
         $title = 'Paid Accountabilities';
 		$searchWord = \Request::get('search');       
 	         
-        $accountabilities = Accountability::where('date_paid','!=',NULL)->paginate(5);
+        $accountabilities = Accountability::where('date_paid','!=',NULL)->get();
         return view('accountability.index_completed',compact('accountabilities','title','searchWord'));
     } 
 

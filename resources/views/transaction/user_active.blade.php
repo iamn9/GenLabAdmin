@@ -47,7 +47,6 @@
 			@endforeach
         </tbody>
     </table>
-    <div class='text-center'>{!! $carts->render() !!}</div>
 </div>
 </div>
 @endsection

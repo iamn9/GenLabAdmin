@@ -35,7 +35,7 @@
                 @endforeach 
             </tbody>
         </table>
-        <div class='text-center'>{!! $cart_items->render() !!}</div><br>
+        <br>
         @if(count($cart_items))
             <form method = 'POST' action = '/cart/{{$cart_id}}/checkout'>
                 <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>

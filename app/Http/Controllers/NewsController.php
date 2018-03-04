@@ -22,22 +22,21 @@ class NewsController extends Controller
     {
         $title = 'News Index';
         $searchWord = \Request::get('search');
-        $news = News::join('users', function($join){
+        $news = News::join('users', function ($join) {
             $join->on('news.reporter_id', '=', 'users.id_no');
         })
-        ->when($searchWord, function ($query) use ($searchWord) {
-            return $query
-            ->where('users.name', 'ilike','%'.$searchWord.'%')
-            ->orWhere('news.content', 'ilike','%'.$searchWord.'%');
-        })
-        ->select('news.id','news.date_posted','news.content','users.name', 'news.type', 'news.title')
-        ->orderBy('news.date_posted','desc')
-        ->paginate(5)->appends(Input::except('page'));
+            ->when($searchWord, function ($query) use ($searchWord) {
+                return $query
+                    ->where('users.name', 'ilike', '%' . $searchWord . '%')
+                    ->orWhere('news.content', 'ilike', '%' . $searchWord . '%');
+            })
+            ->select('news.id', 'news.date_posted', 'news.content', 'users.name', 'news.type', 'news.title')
+            ->orderBy('news.date_posted', 'desc')->get();
 
-        if(Auth::check() && Auth::user()->isAdmin)
-            return view('news.index',compact('news','searchWord', 'title')); 
+        if (Auth::check() && Auth::user()->isAdmin)
+            return view('news.index', compact('news', 'searchWord', 'title'));
         else
-            return view('news.user_index',compact('news','searchWord','title')); 
+            return view('news.user_index', compact('news', 'searchWord', 'title'));
     }
 
     /**
@@ -48,7 +47,7 @@ class NewsController extends Controller
     public function create()
     {
         $title = 'Create News Post';
-        return view('news.create',compact('title'));
+        return view('news.create', compact('title'));
     }
 
     /**
@@ -65,15 +64,15 @@ class NewsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            \Session::flash('error','<b>Error: </b><br>Make sure to fill in all the fields.');
+            \Session::flash('error', '<b>Error: </b><br>Make sure to fill in all the fields.');
             return redirect('news/create');
         }
 
         $news = new News();
         $news->content = $request->content;
         $news->reporter_id = Auth::user()->id_no;
-        $news->date_posted =  date('Y-m-d H:i:s');
-        $news->title =  $request->title;
+        $news->date_posted = date('Y-m-d H:i:s');
+        $news->title = $request->title;
         $news->save();
 
         return redirect('news');
@@ -86,14 +85,14 @@ class NewsController extends Controller
      * @param    int  $id
      * @return  \Illuminate\Http\Response
      */
-    public function show($id,Request $request)
+    public function show($id, Request $request)
     {
         $title = 'Show News';
-        $news = News::join('users', function($join){
+        $news = News::join('users', function ($join) {
             $join->on('news.reporter_id', '=', 'users.id_no');
-        })->select('news.id','news.date_posted','news.content','users.name','news.title')->findOrfail($id);
+        })->select('news.id', 'news.date_posted', 'news.content', 'users.name', 'news.title')->findOrfail($id);
 
-        return view('news.show',compact('title','news'));
+        return view('news.show', compact('title', 'news'));
     }
 
     /**
@@ -102,16 +101,15 @@ class NewsController extends Controller
      * @param    int  $id
      * @return  \Illuminate\Http\Response
      */
-    public function edit($id,Request $request)
+    public function edit($id, Request $request)
     {
         $title = 'Edit News';
-        if($request->ajax())
-        {
-            return URL::to('news/'. $id . '/edit');
+        if ($request->ajax()) {
+            return URL::to('news/' . $id . '/edit');
         }
 
         $news = News::findOrfail($id);
-        return view('news.edit',compact('title','news'  ));
+        return view('news.edit', compact('title', 'news'));
     }
 
     /**
@@ -121,23 +119,23 @@ class NewsController extends Controller
      * @param    int  $id
      * @return  \Illuminate\Http\Response
      */
-    public function update($id,Request $request)
+    public function update($id, Request $request)
     {
         $news = News::findOrfail($id);
         $news->content = $request->content;
-        $news->title =  $request->title;
+        $news->title = $request->title;
         $news->save();
 
         return redirect('news');
     }
 
-    public function DeleteMsg($id,Request $request)
+    public function DeleteMsg($id, Request $request)
     {
         $news = News::findOrFail($id);
-        $notif = 'toastr["info"](" News #'.$news->id.' was successfully deleted from the system")';
+        $notif = 'toastr["info"](" News #' . $news->id . ' was successfully deleted from the system")';
         $msg = '<script>
         bootbox.confirm({
-            title: "<b>Delete News #'.$news->id.'</b> from system",
+            title: "<b>Delete News #' . $news->id . '</b> from system",
             message: "Warning! Are you sure you want to delete this news?",
             buttons: {
                 confirm: {
@@ -150,18 +148,17 @@ class NewsController extends Controller
             },
             callback: function (result) {
                 if (result){
-                    $("#" + '.$id.').remove();
-                    '.$notif.'
+                    $("#" + ' . $id . ').remove();
+                    ' . $notif . '
                     $.ajax({
                         type: "GET",
-                        url: "/news/'.$id.'/delete"
+                        url: "/news/' . $id . '/delete"
                     });      
                 }
             }
         });
         </script>';
-        if($request->ajax())
-        {
+        if ($request->ajax()) {
             return $msg;
         }
     }
@@ -174,8 +171,8 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-     	$news = News::findOrfail($id);
-     	$news->delete();
+        $news = News::findOrfail($id);
+        $news->delete();
         return URL::to('news');
     }
 }

@@ -29,7 +29,7 @@
 <body class="hold-transition @yield('body_class')">
 
     @yield('body') 
-
+    <script src="{{ asset('vendor/adminlte/plugins/jQuery/jquery-2.2.3.min.js') }}"></script> 
     <script src = "{{ asset('vendor/adminlte/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src = "{{ asset('js/bootbox.min.js') }}"></script> 
     <script src = "{{ asset('js/ModalAJAX.js') }}"></script>

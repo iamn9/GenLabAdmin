@@ -45,7 +45,6 @@
             @endforeach 
         </tbody>
     </table>
-    <div class='text-center'>{!! $listings->render() !!}</div>
 </div>
 </div>
 @endsection

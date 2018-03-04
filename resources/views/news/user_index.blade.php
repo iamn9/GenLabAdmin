@@ -28,7 +28,6 @@
                     </div>
                 </li>
             @endforeach
-            <div class='text-center'>{!! $news->render() !!}</div>
             <li class="time-label"><i class="fa fa-asterisk bg-gray"></i></li>
         </ul>
     </div>

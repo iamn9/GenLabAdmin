@@ -11,7 +11,7 @@ use Hash;
 
 
 class UserController extends Controller
-{    
+{
     /**
      * Display a listing of the resource.
      *
@@ -20,13 +20,15 @@ class UserController extends Controller
     public function index()
     {
         $title = "Users Index";
-        if(Auth::user()->isAdmin){
+        if (Auth::user()->isAdmin) {
             $searchWord = \Request::get('search');
-            $users = \App\User::where('name','like','%'.$searchWord.'%')->orWhere('email','like','%'.$searchWord.'%')->orWhere('id_no','like','%'.$searchWord.'%')->orderBy('name')->paginate(5)->appends(Input::except('page'));
-            return view('users.index', compact('title','users','searchWord'));
-        }
-        else{
-            return redirect ('home');
+            $users = \App\User::where('name', 'like', '%' . $searchWord . '%')
+            ->orWhere('email', 'like', '%' . $searchWord . '%')
+            ->orWhere('id_no', 'like', '%' . $searchWord . '%')
+            ->orderBy('name')->get();
+            return view('users.index', compact('title', 'users', 'searchWord'));
+        } else {
+            return redirect('home');
         }
     }
 
@@ -57,7 +59,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            \Session::flash('error','<b>Error: </b><br>Make sure to fill in the required fields.');
+            \Session::flash('error', '<b>Error: </b><br>Make sure to fill in the required fields.');
             return redirect('user/create');
         }
 
@@ -66,7 +68,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->id_no = $request->id_no;
         $user->password = Hash::make($request->password);
-        if($request->isAdmin == 'on')
+        if ($request->isAdmin == 'on')
             $user->isAdmin = 1;
         else
             $user->isAdmin = 0;
@@ -109,7 +111,7 @@ class UserController extends Controller
         $user->id_no = $request->id_no;
         if ($request->password != "")
             $user->password = Hash::make($request->password);
-        if($request->isAdmin == 'on')
+        if ($request->isAdmin == 'on')
             $user->isAdmin = 1;
         else
             $user->isAdmin = 0;
@@ -122,13 +124,13 @@ class UserController extends Controller
         return redirect('users');
     }
 
-    public function DeleteMsg($id,Request $request)
+    public function DeleteMsg($id, Request $request)
     {
         $user = \App\User::findOrfail($id);
-        $notif = 'toastr["info"]("User <b>'.$user->name.'</b> was successfully deleted from the system")';
+        $notif = 'toastr["info"]("User <b>' . $user->name . '</b> was successfully deleted from the system")';
         $msg = '<script>
         bootbox.confirm({
-            title: "Delete User <b>'.$user->name.'</b> from the system",
+            title: "Delete User <b>' . $user->name . '</b> from the system",
             message: "Warning! Are you sure you want to remove this User?",
             buttons: {
                 confirm: {
@@ -141,18 +143,17 @@ class UserController extends Controller
             },
             callback: function (result) {
                 if (result){
-                    $("#" + '.$id.').remove();
-                    '.$notif.'
+                    $("#" + ' . $id . ').remove();
+                    ' . $notif . '
                     $.ajax({
                         type: "GET",
-                        url: "/users/delete/'.$id.'"
+                        url: "/users/delete/' . $id . '"
                     });          
                 }
             }
         });
         </script>';
-        if($request->ajax())
-        {
+        if ($request->ajax()) {
             return $msg;
         }
     }
@@ -173,59 +174,59 @@ class UserController extends Controller
         return redirect('users');
     }
 
-    public function showUnactivated(){
+    public function showUnactivated()
+    {
         $title = 'Unactivated Users';
 
-        if(Auth::user()->isAdmin){
+        if (Auth::user()->isAdmin) {
             $searchWord = \Request::get('search');
-            $users = \App\User::where(function($query){
-                $query->where('isActivated',0);
-            })->where(function($query) use ($searchWord){
-                $query->where('name','like','%'.$searchWord.'%')
-                ->orWhere('email','like','%'.$searchWord.'%')
-                ->orWhere('id_no','like','%'.$searchWord.'%');
-            })->paginate(5);
+            $users = \App\User::where(function ($query) {
+                $query->where('isActivated', 0);
+            })->where(function ($query) use ($searchWord) {
+                $query->where('name', 'like', '%' . $searchWord . '%')
+                    ->orWhere('email', 'like', '%' . $searchWord . '%')
+                    ->orWhere('id_no', 'like', '%' . $searchWord . '%');
+            })->get();
 
-            return view('users.index', compact('title','users','searchWord'));
-        }
-        else{
-            return redirect ('home');
+            return view('users.index', compact('title', 'users', 'searchWord'));
+        } else {
+            return redirect('home');
         }
     }
 
-    public function showAdmins(){
+    public function showAdmins()
+    {
         $title = 'Admin Accounts';
-        if(Auth::user()->isAdmin){
+        if (Auth::user()->isAdmin) {
             $searchWord = \Request::get('search');
-            $users = \App\User::where(function($query){
-                $query->where('isAdmin',1);
-            })->where(function($query) use ($searchWord){
-                $query->where('name','like','%'.$searchWord.'%')
-                ->orWhere('email','like','%'.$searchWord.'%')
-                ->orWhere('id_no','like','%'.$searchWord.'%');
-            })->paginate(5);
-            return view('users.index', compact('title', 'users','searchWord'));
+            $users = \App\User::where(function ($query) {
+                $query->where('isAdmin', 1);
+            })->where(function ($query) use ($searchWord) {
+                $query->where('name', 'like', '%' . $searchWord . '%')
+                    ->orWhere('email', 'like', '%' . $searchWord . '%')
+                    ->orWhere('id_no', 'like', '%' . $searchWord . '%');
+            })->get();
+            return view('users.index', compact('title', 'users', 'searchWord'));
+        } else {
+            return redirect('home');
         }
-        else{
-            return redirect ('home');
-        }
-    }    
+    }
 
-    public function showUsers(){
+    public function showUsers()
+    {
         $title = 'User Accounts';
-        if(Auth::user()->isAdmin){
+        if (Auth::user()->isAdmin) {
             $searchWord = \Request::get('search');
-            $users = \App\User::where(function($query){
-                $query->where('isAdmin',0);
-            })->where(function($query) use ($searchWord){
-                $query->where('name','like','%'.$searchWord.'%')
-                ->orWhere('email','like','%'.$searchWord.'%')
-                ->orWhere('id_no','like','%'.$searchWord.'%');
-            })->paginate(5);
-            return view('users.index', compact('title', 'users','searchWord'));
-        }
-        else{
-            return redirect ('home');
+            $users = \App\User::where(function ($query) {
+                $query->where('isAdmin', 0);
+            })->where(function ($query) use ($searchWord) {
+                $query->where('name', 'like', '%' . $searchWord . '%')
+                    ->orWhere('email', 'like', '%' . $searchWord . '%')
+                    ->orWhere('id_no', 'like', '%' . $searchWord . '%');
+            })->get();
+            return view('users.index', compact('title', 'users', 'searchWord'));
+        } else {
+            return redirect('home');
         }
     }
 }

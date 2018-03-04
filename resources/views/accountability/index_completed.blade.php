@@ -38,7 +38,6 @@
 			@endforeach
         </tbody>
     </table>
-    <div class='text-center'>{!! $accountabilities->render() !!}</div>
 </div>
 </div>
 @endsection
