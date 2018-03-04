@@ -5,14 +5,12 @@
 <div class="box box-primary">
 <div class="box-header">
     <h1>{{$title}}</h1>
-    @include('search')
-    <br>
     <form class = 'col s3' method = 'get' action = '{!!url("cart")!!}/create'>
         <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New cart</button>
     </form>
 </div>
 <div class="box-body">
-    <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+    <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th style="width: 120px">status</th>
             <th style="width:160px">borrower_id</th>

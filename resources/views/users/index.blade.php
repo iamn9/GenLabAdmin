@@ -5,12 +5,10 @@
 <div class="box box-primary">
 <div class="box-header">
 	<h1>{{$title}}</h1>
-	@include('search')
-	<br/>
 	<a data-toggle="tooltip" title="Add new User." href="{{url('users/create')}}" class = "btn btn-primary"><i class="fa fa-plus fa-md" aria-hidden="true"></i> New User</a>
 </div>
 	<div class="box-body">
-		<table class = "table table-hover table-striped table-bordered" style = 'background:#fff'>
+		<table class = "dataTable table table-hover table-bordered" style = 'background:#fff'>
 			<thead>
 				<th>ID Number</th>
 				<th>Name</th>

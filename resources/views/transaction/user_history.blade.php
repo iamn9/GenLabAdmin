@@ -7,7 +7,7 @@
     <h1>{!!$title!!}</h1>
 </div>
 <div class="box-body">
-    <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+    <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>Cart ID</th>
             <th>Submitted at</th>

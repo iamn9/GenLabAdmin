@@ -4,11 +4,10 @@
 
 <div class="box box-primary">
 <div class="box-header">
-    <h1>{!!$title!!}</h1>
-    @include('search')
+    <h1>{{$title}}</h1>
 </div>
 <div class="box-body">
-    <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+    <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th style="width: 280px">Borrower</th>
             <th>Transaction ID</th>

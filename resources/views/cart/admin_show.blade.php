@@ -7,8 +7,6 @@
                 href='/cart/{!!$cart->id!!}/edit'>
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
         </h1>
-        @include('search')
-        <br>
         <table class='table table-bordered'>
             <thead>
                 <th>Key</th>
@@ -43,7 +41,7 @@
         </table>
     </div>
     <div class="box-body">
-        <table class="table table-striped table-bordered table-hover" style='background:#fff'>
+        <table class="dataTable table table-striped table-bordered table-hover" style='background:#fff'>
             <thead>
                 <th>item_id</th>
                 <th>name</th>

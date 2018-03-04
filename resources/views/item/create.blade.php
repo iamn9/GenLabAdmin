@@ -10,7 +10,7 @@
     </form>
 </div>
 <div class="box-body">
-<br>
+
 <form method = 'POST' action = '/item'>
     <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
     <div class="form-group">
