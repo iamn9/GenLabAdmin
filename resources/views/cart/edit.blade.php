@@ -10,7 +10,6 @@
     </form>
 </div>
 <div class="box-body">
-    <br>
     <form method = 'POST' action = '{!! url("cart")!!}/{!!$cart->
         id!!}/update'> 
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>

@@ -10,7 +10,7 @@
     </form>
 </div>
 <div class="box-body">
-    <br>
+    
     <form method = 'POST' action = '{!! url("listing")!!}/{!!$listing->
         id!!}/update'> 
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>

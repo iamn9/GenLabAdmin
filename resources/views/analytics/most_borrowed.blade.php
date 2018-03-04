@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="box-body">
-  	 <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+  	 <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
         <th style="width: 170px">Name</th>
         <th style="width: 230px">Count</th>

@@ -5,7 +5,7 @@
 <div class="box box-primary">
 <div class="box-header">
     <h1>{{$title}}</h1>
-    <!-- @include('search') -->
+    <!--  -->
     <form class = 'col s3' method = 'get' action = '{!!url("item")!!}/create'>
       <button class = 'btn btn-primary addBtn' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Add New Item</button>
 	  <a data-toggle="tooltip" title="Feature not yet available." class = 'upload btn btn-primary' href='#' disabled> Import from file</a>
