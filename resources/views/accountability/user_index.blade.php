@@ -16,20 +16,14 @@
             <th>Amount</th>
         </thead>
         <tbody>
-			@if(count($accountabilities) > 0)
-				 @foreach($accountabilities as $accountability) 
+			@foreach($accountabilities as $accountability) 
 				<tr id='{!!$accountability->id!!}'>		
 					<td>{!!$accountability->trans_id!!}</td>				
 					<td>{!!$accountability->getItemName()!!}</td>		
 					<td>{!!$accountability->date_incurred!!}</td>							
 					<td>{!!$accountability->amount!!}</td>				
 				</tr>
-				@endforeach
-			@else
-				<tr>										
-					<td align=center colspan=8>No record found!</td>										
-				</tr>
-			@endif
+			@endforeach
         </tbody>
     </table>
     <div class='text-center'>{!! $accountabilities->render() !!}</div>

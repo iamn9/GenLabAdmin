@@ -21,8 +21,7 @@
 			<th>Actions</th>
         </thead>
         <tbody>
-			@if(count($accountabilities) > 0)
-				 @foreach($accountabilities as $accountability) 
+			@foreach($accountabilities as $accountability) 
 				<tr id='{!!$accountability->id!!}'>
 					<td>{!!$accountability->id!!}</td>
 					<td>{!!$accountability->trans_id!!}</td>								
@@ -36,12 +35,7 @@
 						<a data-toggle="tooltip" title="Undo payment." class = 'viewEdit btn btn-warning btn-xs' href = '/accountability/{!!$accountability->id!!}/undo_payment'><i class="fa fa-undo" aria-hidden="true"></i>  Undo</a>
 					</td>
 				</tr>
-				@endforeach
-			@else
-				<tr>										
-					<td align=center colspan=8>No record found!</td>										
-				</tr>
-			@endif
+			@endforeach
         </tbody>
     </table>
     <div class='text-center'>{!! $accountabilities->render() !!}</div>

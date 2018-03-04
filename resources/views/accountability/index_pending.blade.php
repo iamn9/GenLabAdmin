@@ -20,8 +20,7 @@
 			<th>Actions</th>
         </thead>
         <tbody>
-			@if(count($accountabilities) > 0)
-				 @foreach($accountabilities as $accountability) 
+			@foreach($accountabilities as $accountability) 
 				<tr id='{!!$accountability->id!!}'>
 					<td>{!!$accountability->id!!}</td>
 					<td>{!!$accountability->trans_id!!}</td>								
@@ -35,12 +34,7 @@
 						<a data-toggle="tooltip" title="Item paid" class = 'update btn btn-success xs' href = '/accountability/{!!$accountability->id!!}/payItem'><i class="fa fa-check" aria-hidden="true"></i>  Paid</a>
 					</td>
 				</tr>
-				@endforeach
-			@else
-				<tr>										
-					<td align=center colspan=8>No record found!</td>										
-				</tr>
-			@endif
+			@endforeach
         </tbody>
     </table>
     <div class='text-center'>{!! $accountabilities->render() !!}</div>

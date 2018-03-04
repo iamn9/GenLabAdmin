@@ -17,8 +17,7 @@
             <th>Actions</th>
         </thead>
         <tbody>
-            @if(count($transactions) > 0)
-                @foreach($transactions as $transaction) 
+            @foreach($transactions as $transaction) 
                 <tr id='{!!$transaction->id!!}'>
                     <td>{!!$transaction->cart_id!!}</td>
                     <td>
@@ -43,10 +42,7 @@
                         <a data-toggle="tooltip" title="View Receipt" class = 'btn btn-success btn-sm' href = '/transaction/{{$transaction->trans_id}}/show'>INFO</a>
                     </td>
                 </tr>
-                @endforeach 
-            @else
-                <tr><td align=center colspan=6>No record found!</td></tr>
-            @endif
+            @endforeach 
         </tbody>
     </table>
     <div class='text-center'>{!! $transactions->render() !!}</div>
