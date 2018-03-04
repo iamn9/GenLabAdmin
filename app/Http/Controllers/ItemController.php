@@ -22,12 +22,12 @@ class ItemController extends Controller
     {
         $title = 'Item Index';
 
-        $searchWord = \Request::get('search');
+        
         $items = Item::all();
         if (Auth::check() && Auth::user()->isAdmin)
-            return view('item.index', compact('items', 'title', 'searchWord'));
+            return view('item.index', compact('items', 'title'));
         else
-            return view('item.user_index', compact('items', 'title', 'searchWord'));
+            return view('item.user_index', compact('items', 'title'));
     }
 
     /**

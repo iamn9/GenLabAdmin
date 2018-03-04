@@ -23,31 +23,22 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $searchWord = \Request::get('search');
+        
         if (Auth::user()->isAdmin) {
             $title = 'Listing Index';
             $listings = listing::join('users', function ($join) {
                 $join->on('listing.owner_id', '=', 'users.id_no');
-            })
-                ->when($searchWord, function ($query) use ($searchWord) {
-                    return $query->where('listing.owner_id', 'like', '%' . $searchWord . '%')
-                        ->orWhere('users.name', 'ilike', '%' . $searchWord . '%');
-                })
-                ->select('listing.id', 'listing.owner_id', 'listing.name', 'listing.description', 'listing.isShared', 'users.name as owner_name');
-            return view('listing.index', compact('listings', 'title', 'searchWord'));
+            })->select('listing.id', 'listing.owner_id', 'listing.name', 'listing.description', 'listing.isShared', 'users.name as owner_name')->get();
+            return view('listing.index', compact('listings', 'title'));
         } else {
             $title = 'My Listings';
             $userid = Auth::user()->id_no;
             $listings = Listing::join('users', function ($join) {
                 $join->on('listing.owner_id', '=', 'users.id_no');
             })
-                ->when($searchWord, function ($query) use ($searchWord) {
-                    return $query->where('listing.owner_id', 'like', '%' . $searchWord . '%')
-                        ->orWhere('users.name', 'ilike', '%' . $searchWord . '%');
-                })
                 ->select('listing.id', 'listing.owner_id', 'listing.name', 'listing.description', 'listing.isShared', 'users.name as owner_name')
-                ->where('listing.owner_id', $userid);
-            return view('listing.user_index', compact('listings', 'title', 'searchWord'));
+                ->where('listing.owner_id', $userid)->get();
+            return view('listing.user_index', compact('listings', 'title'));
         }
     }
 
@@ -114,7 +105,7 @@ class ListingController extends Controller
 
         $listing = listing::findOrfail($id);
 
-        $searchWord = \Request::get('search');
+        
 
         $listing_items = DB::table('listing_items')
             ->join('items', 'listing_items.item_id', '=', 'items.id')

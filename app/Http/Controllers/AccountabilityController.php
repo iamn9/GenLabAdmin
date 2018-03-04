@@ -20,17 +20,16 @@ class AccountabilityController extends Controller
     public function index(Request $request)
     {
         $title = 'Accountability Index';
-		$searchWord = \Request::get('search');       
-	         
+		       
         if (Auth::user()->isAdmin){
             $title = 'Accountability Index';
             $accountabilities = Accountability::all();
-            return view('accountability.admin_index',compact('accountabilities','title','searchWord'));
+            return view('accountability.admin_index',compact('accountabilities','title'));
         }
         else{
             $title = 'My Accountabilities';
             $accountabilities = Accountability::where('date_paid', NULL)->get();
-            return view('accountability.user_index',compact('accountabilities','title','searchWord'));
+            return view('accountability.user_index',compact('accountabilities','title'));
         }
     }
 
@@ -50,18 +49,18 @@ class AccountabilityController extends Controller
 
     public function index_pending(){ 
         $title = 'Unpaid Accountabilities';
-		$searchWord = \Request::get('search');       
+		       
 	         
         $accountabilities = Accountability::where('date_paid',NULL)->get();
-        return view('accountability.index_pending',compact('accountabilities','title','searchWord'));
+        return view('accountability.index_pending',compact('accountabilities','title'));
     } 
  
     public function index_completed(){ 
         $title = 'Paid Accountabilities';
-		$searchWord = \Request::get('search');       
+		       
 	         
         $accountabilities = Accountability::where('date_paid','!=',NULL)->get();
-        return view('accountability.index_completed',compact('accountabilities','title','searchWord'));
+        return view('accountability.index_completed',compact('accountabilities','title'));
     } 
 
     public function DeleteMsg($id,Request $request)

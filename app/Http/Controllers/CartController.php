@@ -23,52 +23,38 @@ class CartController extends Controller
      * @return  \Illuminate\Http\Response
      */
     public function index()
-{
+    {
         $title = 'Cart Index';
-        $searchWord = \Request::get('search');
+
         if (Auth::user()->isAdmin) {
             $carts = Cart::join('users', function ($join) {
                 $join->on('carts.borrower_id', '=', 'users.id_no');
-            })
-                ->when($searchWord, function ($query) use ($searchWord) {
-                    return $query->where('carts.borrower_id', 'like', '%' . $searchWord . '%')
-                        ->orWhere('users.name', 'ilike', '%' . $searchWord . '%');
-                })
-                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name');
-            return view('cart.index', compact('carts', 'title', 'searchWord'));
+            })->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name')->get();
+            return view('cart.index', compact('carts', 'title'));
         } else {
-            $searchInt = (int)$searchWord;
             $userid = Auth::user()->id_no;
             $cart_id = Cart::where('borrower_id', '=', $userid)->where('status', 'Draft')->value('id');
             $cart_items = Cart_item::join('items', function ($join) {
                 $join->on('cart_items.item_id', '=', 'items.id');
             })
                 ->where('cart_id', '=', $cart_id)
-                ->when($searchWord, function ($query) {
-                    return $query->where('name', 'ilike', '%' . $searchWord . '%')->orWhere('item_id', '=', $searchInt);
-                })
                 ->select('cart_items.*', 'items.name')
                 ->orderBy('items.name')->get();
             $remarks = Cart::where('id', $cart_id)->value('remarks');
-            return view('cart.user_active', compact('title', 'searchWord', 'cart_id', 'cart_items', 'students', 'remarks'));
+            return view('cart.user_active', compact('title', 'cart_id', 'cart_items', 'students', 'remarks'));
         }
     }
 
     public function index_draft()
     {
         $title = 'Carts on Draft';
-        $searchWord = \Request::get('search');
+
         if (Auth::user()->isAdmin) {
             $carts = Cart::join('users', function ($join) {
                 $join->on('carts.borrower_id', '=', 'users.id_no');
-            })
-                ->when($searchWord, function ($query) use ($searchWord) {
-                    return $query->where('carts.borrower_id', 'like', '%' . $searchWord . '%')
-                        ->orWhere('users.name', 'ilike', '%' . $searchWord . '%');
-                })
-                ->where('status', '=', 'Draft')
-                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name');
-            return view('cart.index', compact('carts', 'title', 'searchWord'));
+            })->where('status', '=', 'Draft')
+                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name')->get();
+            return view('cart.index', compact('carts', 'title'));
         } else
             return redirect('home');
     }
@@ -76,18 +62,14 @@ class CartController extends Controller
     public function index_pending()
     {
         $title = 'Pending Carts';
-        $searchWord = \Request::get('search');
+
         if (Auth::user()->isAdmin) {
             $carts = Cart::join('users', function ($join) {
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
-                ->when($searchWord, function ($query) use ($searchWord) {
-                    return $query->where('carts.borrower_id', 'like', '%' . $searchWord . '%')
-                        ->orWhere('users.name', 'ilike', '%' . $searchWord . '%');
-                })
                 ->where('status', '=', 'Pending')
-                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name');
-            return view('cart.index', compact('carts', 'title', 'searchWord'));
+                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name')->get();
+            return view('cart.index', compact('carts', 'title'));
         } else
             return redirect('home');
     }
@@ -95,18 +77,14 @@ class CartController extends Controller
     public function index_prepared()
     {
         $title = 'Prepared Carts';
-        $searchWord = \Request::get('search');
+
         if (Auth::user()->isAdmin) {
             $carts = Cart::join('users', function ($join) {
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
-                ->when($searchWord, function ($query) use ($searchWord) {
-                    return $query->where('carts.borrower_id', 'like', '%' . $searchWord . '%')
-                        ->orWhere('users.name', 'ilike', '%' . $searchWord . '%');
-                })
                 ->where('status', '=', 'Prepared')
-                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name');
-            return view('cart.index', compact('carts', 'title', 'searchWord'));
+                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name')->get();
+            return view('cart.index', compact('carts', 'title'));
         } else
             return redirect('home');
     }
@@ -114,18 +92,14 @@ class CartController extends Controller
     public function index_released()
     {
         $title = 'Released Carts';
-        $searchWord = \Request::get('search');
+
         if (Auth::user()->isAdmin) {
             $carts = Cart::join('users', function ($join) {
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
-                ->when($searchWord, function ($query) use ($searchWord) {
-                    return $query->where('carts.borrower_id', 'like', '%' . $searchWord . '%')
-                        ->orWhere('users.name', 'ilike', '%' . $searchWord . '%');
-                })
                 ->where('status', '=', 'Released')
-                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name');
-            return view('cart.index', compact('carts', 'title', 'searchWord'));
+                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name')->get();
+            return view('cart.index', compact('carts', 'title'));
         } else
             return redirect('home');
     }
@@ -133,18 +107,14 @@ class CartController extends Controller
     public function index_completed()
     {
         $title = 'Completed Carts';
-        $searchWord = \Request::get('search');
+
         if (Auth::user()->isAdmin) {
             $carts = Cart::join('users', function ($join) {
                 $join->on('carts.borrower_id', '=', 'users.id_no');
             })
-                ->when($searchWord, function ($query) use ($searchWord) {
-                    return $query->where('carts.borrower_id', 'like', '%' . $searchWord . '%')
-                        ->orWhere('users.name', 'ilike', '%' . $searchWord . '%');
-                })
                 ->where('status', '=', 'Completed')
-                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name');
-            return view('cart.index', compact('carts', 'title', 'searchWord'));
+                ->select('carts.id', 'carts.borrower_id', 'carts.status', 'carts.remarks', 'users.name')->get();
+            return view('cart.index', compact('carts', 'title'));
         } else
             return redirect('home');
     }
@@ -204,15 +174,11 @@ class CartController extends Controller
             return URL::to('cart/' . $id);
         }
 
-        $searchWord = \Request::get('search');
+
 
         $cart_items = Cart_item::join('items', function ($join) {
             $join->on('cart_items.item_id', '=', 'items.id');
-        })
-            ->when($searchWord, function ($query) {
-                return $query->where('name', 'ilike', '%' . $searchWord . '%')->orWhere('item_id', '=', $searchInt);
-            })
-            ->select('items.name', 'cart_items.*')
+        })->select('items.name', 'cart_items.*')
             ->where('cart_id', $id)
             ->orderBy('items.name')->get();
 

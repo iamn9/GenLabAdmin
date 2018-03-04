@@ -25,9 +25,9 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         $title = 'All Transactions';
-        $searchWord = \Request::get('search');
+        
         $transactions = Transaction::paginate(7);
-        return view('transaction.index', compact('transactions', 'title', 'searchWord'));
+        return view('transaction.index', compact('transactions', 'title'));
     }
 
     /**
@@ -251,13 +251,12 @@ class TransactionController extends Controller
 
     public function user_active(Request $request)
     {
-        $searchWord = "";
         $date = date('F j, Y');
         $title = 'Active Transactions';
         $userid = Auth::user()->id_no;
         $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'borrower_id', 'submitted_at', 'completed_at', 'status')->join('transactions', function ($join) {
             $join->on('carts.id', '=', 'transactions.cart_id');
         })->where('borrower_id', '=', $userid)->where('completed_at', '=', null)->get();
-        return view('transaction.user_active', compact('title', 'carts', 'searchWord'));
+        return view('transaction.user_active', compact('title', 'carts'));
     }
 }

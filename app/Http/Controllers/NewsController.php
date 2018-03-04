@@ -21,22 +21,17 @@ class NewsController extends Controller
     public function index()
     {
         $title = 'News Index';
-        $searchWord = \Request::get('search');
+        
         $news = News::join('users', function ($join) {
             $join->on('news.reporter_id', '=', 'users.id_no');
         })
-            ->when($searchWord, function ($query) use ($searchWord) {
-                return $query
-                    ->where('users.name', 'ilike', '%' . $searchWord . '%')
-                    ->orWhere('news.content', 'ilike', '%' . $searchWord . '%');
-            })
             ->select('news.id', 'news.date_posted', 'news.content', 'users.name', 'news.type', 'news.title')
             ->orderBy('news.date_posted', 'desc')->get();
 
         if (Auth::check() && Auth::user()->isAdmin)
-            return view('news.index', compact('news', 'searchWord', 'title'));
+            return view('news.index', compact('news', 'title'));
         else
-            return view('news.user_index', compact('news', 'searchWord', 'title'));
+            return view('news.user_index', compact('news', 'title'));
     }
 
     /**
