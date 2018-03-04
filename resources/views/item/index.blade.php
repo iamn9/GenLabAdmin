@@ -5,24 +5,22 @@
 <div class="box box-primary">
 <div class="box-header">
     <h1>{{$title}}</h1>
-    @include('search')
+    <!-- @include('search') -->
+    <form class = 'col s3' method = 'get' action = '{!!url("item")!!}/create'>
+      <button class = 'btn btn-primary addBtn' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Add New Item</button>
+	  <a data-toggle="tooltip" title="Feature not yet available." class = 'upload btn btn-primary' href='#' disabled> Import from file</a>
+    </form>		
 </div>
 
 <div class="box-body">
-    <form class = 'col s3' method = 'get' action = '{!!url("item")!!}/create'>
-      <button class = 'btn btn-primary addBtn' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Add New Item</button>
-			<a data-toggle="tooltip" title="Feature not yet available." class = 'upload btn btn-primary' href='#' disabled> Import from file</a>
-    </form>		
-
-		<br/>
-    <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+    <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-					<th style="width: 60px">id</th>
-					<th style="width: 200px">name</th>
-					<th style="width: 150px">brand</th>
-					<th>description</th>
-					<th style="width: 60px">qty</th>
-					<th style="width: 180px">actions</th>
+            <th style="width: 60px">id</th>
+            <th style="width: 200px">name</th>
+            <th style="width: 150px">brand</th>
+            <th>description</th>
+            <th style="width: 60px">qty</th>
+            <th style="width: 180px">actions</th>
         </thead>
         <tbody>
             @foreach($items as $item)
@@ -30,7 +28,7 @@
                 <td>{!!$item->id!!}</td>
                 <td>{!!$item->name!!}</td>
                 <td>{!!$item->brand!!}</td>
-								<td>{!!$item->description!!}</td>
+			    <td>{!!$item->description!!}</td>
                 <td>{!!$item->quantity!!}</td>
                 <td>
                     <a data-toggle="tooltip" title="Remove the Item" href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/item/{!!$item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
@@ -41,7 +39,6 @@
             @endforeach
         </tbody>
     </table>
-    <div class='text-center'>{!! $items->render() !!}</div>
 </div>
 </div>
 @endsection
