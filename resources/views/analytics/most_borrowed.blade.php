@@ -2,11 +2,6 @@
 @section('title','Index')
 @section('content')
 
-<div class="box box-primary">
-<div class="box-header">
-    <h1>Borrowed Items</h1>
-</div>
-</div>
 <div class="box box-info">
   <div class="box-header with-border">
     <h3 class="box-title">Top 5 Most Borrowed Items</h3>

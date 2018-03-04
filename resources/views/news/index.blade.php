@@ -4,10 +4,9 @@
 
 <div class="box box-primary" style="background-color: rgba(250,250,250,0.2);">
     <div class="box-header" style="background-color: white;">
-        <h1>{!!$title!!}</h1>
-        
-        
-        <a data-toggle="tooltip" title="Post an Announcement" class="btn btn-primary" href = '{!!url("news")!!}/create'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create Post</a>
+        <h1>{!!$title!!} &nbsp&nbsp
+            <a data-toggle="tooltip" title="Post an Announcement" class="btn btn-primary btn-xs" href = '{!!url("news")!!}/create'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create Post</a>
+        </h1> 
     </div>
     <div class="box-body">
         <ul class="timeline">

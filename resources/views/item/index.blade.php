@@ -15,12 +15,11 @@
 <div class="box-body">
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width: 60px">id</th>
-            <th style="width: 200px">name</th>
-            <th style="width: 150px">brand</th>
-            <th>description</th>
-            <th style="width: 60px">qty</th>
-            <th style="width: 180px">actions</th>
+            <th style="width: 30px">id</th>
+            <th>name</th>
+            <th>brand</th>
+            <th style="width: 30px">qty</th>
+            <th>actions</th>
         </thead>
         <tbody>
             @foreach($items as $item)
@@ -28,7 +27,6 @@
                 <td>{!!$item->id!!}</td>
                 <td>{!!$item->name!!}</td>
                 <td>{!!$item->brand!!}</td>
-			    <td>{!!$item->description!!}</td>
                 <td>{!!$item->quantity!!}</td>
                 <td>
                     <a data-toggle="tooltip" title="Remove the Item" href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/item/{!!$item->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>

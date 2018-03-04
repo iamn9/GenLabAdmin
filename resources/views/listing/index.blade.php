@@ -14,12 +14,11 @@
 <div class="box-body">
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width:80px">Shared</th>
-            <th style="width:130px">owner_id</th>
-            <th style="width:200px">Borrower</th>
-            <th style="width:200px">Name of List</th>
+            <th style="width:60px">Shared</th>
+            <th>Owner</th>
+            <th>Name of List</th>
             <th>Description</th>
-            <th style="width: 250px">actions</th>
+            <th>actions</th>
         </thead>
         <tbody>
             @foreach($listings as $listing) 
@@ -29,7 +28,6 @@
                 @else
                     <td><i class='glyphicon glyphicon-remove'></i>  false</td>
                 @endif
-                <td>{!!$listing->owner_id!!}</td>
                 <td>{!!$listing->getOwner()!!}</td>
                 <td>{!!$listing->name!!}</td>
                 <td>{!!$listing->description!!}</td>
