@@ -135,7 +135,7 @@ class AccountabilityController extends Controller
         \App\Transaction::where('id',$id)->update(['completed_at' => $date]); 
                                 
         \Session::flash('success','Accountability was paid.');
-        return redirect('transaction/released'); 
+        return redirect('transaction');
     }
 
     public function recordBill($id, Request $request){
@@ -158,6 +158,6 @@ class AccountabilityController extends Controller
         \App\Transaction::where('id',$id)->update(['completed_at' => $date]); 
                                 
         \Session::flash('success','Bill set as accountability.');
-        return redirect('transaction/released'); 
+        return redirect('transaction'); 
     }
 }

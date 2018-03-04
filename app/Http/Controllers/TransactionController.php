@@ -22,14 +22,12 @@ class TransactionController extends Controller
      *
      * @return  \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $title = 'Transaction Index';
-        $searchWord = \Request::get('search');
-        $transactions = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'submitted_at', 'prepared_at', 'released_at', 'completed_at', 'borrower_id', 'status')->join('transactions', function($join){
-            $join->on('carts.id', '=', 'transactions.cart_id');
-        })->orderBy('cart_id','desc')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.index',compact('transactions','title','searchWord'));
+        $title = 'All Transactions'; 
+        $searchWord = \Request::get('search'); 
+        $transactions = Transaction::paginate(7);
+        return view('transaction.index',compact('transactions','title','searchWord')); 
     }
 
     /**
@@ -118,39 +116,6 @@ class TransactionController extends Controller
 		
         return URL::to('transaction');
     }
-
-    public function index_pending(){ 
-        $title = 'Pending Transactions'; 
-        $searchWord = \Request::get('search'); 
-        if($searchWord == "")           
-            $transactions = Transaction::whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at', 'DESC')->paginate(5)->appends(Input::except('page'));
-        else{ 
-            $searchWord = (int) $searchWord;
-            $transactions = Transaction::where('cart_id','like','%'.$searchWord.'%')->whereNotNull('submitted_at')->whereNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('submitted_at')->paginate(5)->appends(Input::except('page')); 
-        }
-        return view('transaction.index_pending',compact('transactions','title','searchWord')); 
-    } 
- 
-    public function index_prepared(){ 
-        $title = 'Prepared Transactions'; 
-        $searchWord = \Request::get('search'); 
-        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNull('released_at')->whereNull('completed_at')->orderBy('prepared_at', 'DESC')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.index_prepared',compact('transactions','title','searchWord')); 
-    } 
-
-    public function index_released(){ 
-        $title = 'Released Transactions'; 
-        $searchWord = \Request::get('search'); 
-        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNull('completed_at')->orderBy('released_at', 'DESC')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.index_released',compact('transactions','title','searchWord')); 
-    } 
- 
-    public function index_completed(){ 
-        $title = 'Completed Transactions'; 
-        $searchWord = \Request::get('search'); 
-        $transactions = Transaction::whereNotNull('submitted_at')->whereNotNull('prepared_at')->whereNotNull('released_at')->whereNotNull('completed_at')->orderBy('completed_at', 'DESC')->paginate(5)->appends(Input::except('page')); 
-        return view('transaction.index_completed',compact('transactions','title','searchWord')); 
-    } 
  
     public function undo_submission($id, Request $Request){
         $cart_id = Transaction::where('id',$id)->value('cart_id'); 
@@ -158,7 +123,7 @@ class TransactionController extends Controller
         Cart::where('id', $cart_id)->update(['status' => 'Draft']); 
         Transaction::where('id',$id)->update(['submitted_at' => null]);
 
-        return redirect('transaction/pending'); 
+        return redirect()->back();
     }
 
     public function prepare($id, Request $Request){ 
@@ -170,7 +135,7 @@ class TransactionController extends Controller
 								
         \Session::flash('success','Cart prepared');
 
-        return redirect('transaction/pending'); 
+        return redirect()->back();
     }
 		
     public function undo_prepare($id, Request $Request){
@@ -180,7 +145,7 @@ class TransactionController extends Controller
 		Cart::where('id', $cart_id)->update(['status' => 'Pending']); 
 		
         \Session::flash('info','Cart undone.');
-        return redirect('transaction/prepared'); 
+        return redirect()->back();
     }
 
     public function release($id, Request $Request){ 
@@ -191,7 +156,7 @@ class TransactionController extends Controller
         Transaction::where('id',$id)->update(['released_at' => $date]); 
 		
         \Session::flash('success','Cart released to User.');      
-        return redirect('transaction/prepared'); 
+        return redirect()->back();
     } 
 
     public function undo_release($id, Request $Request){
@@ -201,7 +166,28 @@ class TransactionController extends Controller
         Cart::where('id', $cart_id)->update(['status' => 'Prepared']); 
 		
         \Session::flash('info','Cart undone.');
-        return redirect('transaction/released');
+        return redirect()->back();
+    }
+
+    public function complete($id, Request $request){
+        $date = date('F j, Y g:i A');
+        $cart_id = Transaction::findOrFail($id)->value('cart_id');
+        Cart::where('id', $cart_id)->update(['status' => 'Completed']); 
+        Transaction::where('id',$id)->update(['completed_at' => $date]); 
+                                
+        \Session::flash('success','Cart has been returned.');
+        return redirect()->back();
+    }
+
+    public function undo_complete($id, Request $Request){
+        $cart_id = Transaction::where('id',$id)->value('cart_id'); 
+
+        Cart::where('id', $cart_id)->update(['status' => 'Released']); 
+        Transaction::where('id',$id)->update(['completed_at' => null]); 
+        Accountability::where('trans_id',$id)->delete();
+		
+        \Session::flash('info','Cart undone.');
+        return redirect()->back();
     }
  
     public function confirm_complete($id, Request $request){
@@ -234,27 +220,6 @@ class TransactionController extends Controller
         $nameAdmin = Auth::user()->name;
 
         return view('transaction.confirm_complete',compact('title','carts','cart_items', 'user', 'date', 'nameAdmin')); 
-    }
-
-    public function complete($id, Request $request){
-        $date = date('F j, Y g:i A');
-        $cart_id = Transaction::findOrFail($id)->value('cart_id');
-        Cart::where('id', $cart_id)->update(['status' => 'Completed']); 
-        Transaction::where('id',$id)->update(['completed_at' => $date]); 
-                                
-        \Session::flash('success','Cart has been returned.');
-        return redirect('transaction/released'); 
-    }
-
-    public function undo_complete($id, Request $Request){
-        $cart_id = Transaction::where('id',$id)->value('cart_id'); 
-
-        Cart::where('id', $cart_id)->update(['status' => 'Released']); 
-        Transaction::where('id',$id)->update(['completed_at' => null]); 
-        Accountability::where('trans_id',$id)->delete();
-		
-        \Session::flash('info','Cart undone.');
-        return redirect('transaction/completed'); 
     }
 
     public function user_history_info($id, Request $Request){
