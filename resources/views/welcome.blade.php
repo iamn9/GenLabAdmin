@@ -11,12 +11,11 @@
             @font-face {
             font-family: 'Raleway';
             font-style: thin;
-            src: url("/fonts/raleway/Raleway-Thin.woff2") format('woff2');
+            src: url("../fonts/raleway/Raleway-Thin.woff2") format('woff2');
             }
         
             html, body {
                 background-color: #fff;
-                background-image: url("/img/bghome.jpg");
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;

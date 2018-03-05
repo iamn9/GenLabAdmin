@@ -1,6 +1,11 @@
 <head> 
     @import url("/css/SourceSansPro.css");
 <style> 
+  @font-face {
+  font-family: 'Raleway';
+  font-style: thin;
+  src: url("../fonts/raleway/Raleway-Thin.woff2") format('woff2');
+  }
   html, body { 
         background-color: #F5F5F5; 
         background-image: url("/img/bghome.jpg"); 
