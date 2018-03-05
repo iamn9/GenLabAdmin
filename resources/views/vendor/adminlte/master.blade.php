@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- skin-blue -->
+    <meta name="theme-color" content="#3c8dbc"/>
+    <link rel="manifest" href="manifest.json">
     <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
     @yield('title', config('adminlte.title', 'AdminLTE 2'))
     @yield('title_postfix', config('adminlte.title_postfix', ''))</title>
@@ -25,6 +28,7 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
 </head>
 <body class="hold-transition @yield('body_class')">
 
@@ -83,4 +87,15 @@
 
     @yield('adminlte_js')
 </body>
+<script>
+    if ('serviceWorker' in navigator) {
+        console.log("Will the service worker register?");
+        navigator.serviceWorker.register('service-worker.js')
+            .then(function(reg){
+            console.log("Yes, it did.");
+            }).catch(function(err) {
+            console.log("No it didn't. This happened: ", err)
+            });
+        }
+</script>
 </html>

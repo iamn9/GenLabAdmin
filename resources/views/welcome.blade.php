@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="theme-color" content="#3c8dbc"/>
         <title>GenLab System</title>
         <!-- Styles -->
         <style>
@@ -54,6 +53,7 @@
                 text-transform: uppercase;
             }
         </style>
+        <link rel="manifest" href="manifest.json">
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -82,4 +82,15 @@
             </div>
         </div>
     </body>
+    <script>
+        if ('serviceWorker' in navigator) {
+            console.log("Will the service worker register?");
+            navigator.serviceWorker.register('service-worker.js')
+            .then(function(reg){
+                console.log("Yes, it did.");
+            }).catch(function(err) {
+                console.log("No it didn't. This happened: ", err)
+            });
+        }
+    </script>
 </html>
