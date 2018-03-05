@@ -1,7 +1,5 @@
 <head> 
-  
- <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"> 
- <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet"> 
+    @import url("/css/SourceSansPro.css");
 <style> 
   html, body { 
         background-color: #F5F5F5; 
