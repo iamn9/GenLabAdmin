@@ -17,7 +17,6 @@
             <th>Shared</th>
             <th>Owner</th>
             <th>List</th>
-            <th>Description</th>
             <th>Actions</th>
         </thead>
         <tbody>
@@ -30,7 +29,6 @@
                 @endif
                 <td>{!!$listing->getOwner()!!}</td>
                 <td>{!!$listing->name!!}</td>
-                <td>{!!$listing->description!!}</td>
                 <td>
                     <a data-toggle="tooltip" title="Delete this listing." href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing/{!!$listing->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
                     <a data-toggle="tooltip" title="Edit listing name and description of this listing." class = 'viewEdit btn btn-primary btn-xs' href = '/listing/{!!$listing->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>

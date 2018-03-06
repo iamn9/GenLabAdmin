@@ -13,8 +13,6 @@
         <thead>
 			<th style="width: 30px">CartID</th>
 			<th style="width: 30px">TransID</th>			
-			<th>Item Count</th>
-			<th>Date Submitted</th>
 			<th>Status</th>
             <th>Actions</th>
         </thead>
@@ -23,8 +21,6 @@
 				<tr id='{!!$cart->trans_id!!}'>
 					<td>{!!$cart->cart_id!!}</td>
 					<td>{!!$cart->trans_id!!}</td>
-					<td>{!!$cart->getSize()!!}</td>
-					<td>{!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}</td>
 					<td>
 						<strong>
 							@if($cart->status == "Completed")

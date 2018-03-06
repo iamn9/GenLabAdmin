@@ -12,7 +12,6 @@
 			<thead>
 				<th>ID Number</th>
 				<th>Name</th>
-				<th>Email</th>
 				<th>Status</th>
 				<th>Actions</th>
 			</thead>
@@ -21,7 +20,6 @@
 				<tr id='{{$user->id}}'>
 					<td>{{$user->id_no}}</td>
 					<td>{{$user->name}}</td>
-					<td>{{$user->email}}</td>
 					<td>
 						@if($user->isAdmin)
 							<span class="label label-success">Admin</span>

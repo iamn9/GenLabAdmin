@@ -15,10 +15,8 @@
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>Shared</th>
-            <th style="width:90px">Owner ID</th>
             <th>Name</th>
             <th>List</th>
-            <th>Description</th>
             <th>actions</th>
         </thead>
         <tbody>
@@ -29,10 +27,8 @@
             @else
                 <td><i class='glyphicon glyphicon-remove'></i>  false</td>
             @endif
-            <td>{!!$listing->owner_id!!}</td>
                 <td>{!!$listing->getOwner()!!}</td>
                 <td>{!!$listing->name!!}</td>
-                <td>{!!$listing->description!!}</td>
                 <td>
                     <a href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/listing/{!!$listing->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
                     <a class = 'viewEdit btn btn-primary btn-xs' href = '/listing/{!!$listing->id!!}/edit'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</a>

@@ -8,9 +8,8 @@
     </div>
 
     <div class="box-body">
-        <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
+        <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff;'>
             <thead>
-                <th style="width: 30px">ID</th>
                 <th>Name</th>
                 <th>Brand</th>
                 <th style="width: 30px">Qty</th>
@@ -19,7 +18,6 @@
             <tbody>
                 @foreach($items as $item)
                 <tr id='{!!$item->id!!}'>
-                    <td>{!!$item->id!!}</td>
                     <td>{!!$item->name!!}</td>
                     <td>{!!$item->brand!!}</td>
                     <td>{!!$item->quantity!!}</td>

@@ -23,7 +23,7 @@
                     <td>
                         <form method="POST" action='{!! url("cart_item")!!}/{!!$cart_item->id!!}/update'>
                             <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
-                            <input type = "number" id="qty" name="qty" min="1" value="{!!$cart_item->qty!!}" style="width: 80px;">
+                            <input type = "number" id="qty" name="qty" min="1" value="{!!$cart_item->qty!!}" style="width: 60px;">
                             <button data-toggle="tooltip" title="Update Item QTY." class = 'update btn btn-warning btn-xs' type ='submit' ><i class="fa fa-refresh" aria-hidden="true"></i>  Update</button>
                         </form>
                     </td>

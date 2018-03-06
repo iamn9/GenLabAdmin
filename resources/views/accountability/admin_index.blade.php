@@ -12,7 +12,6 @@
 			<th style="width: 30px">ID</th>				
 			<th style="width: 30px">TransID</th>
             <th>Name</th>
-			<th style="width: 90px">UserID</th>
 			<th style="width: 30px">ItemID</th>
             <th>Date Incurred</th>						
             <th>Date Paid</th>            
@@ -24,7 +23,6 @@
 					<td>{!!$accountability->id!!}</td>
 					<td>{!!$accountability->trans_id!!}</td>								
 					<td>{!!$accountability->getOwner()!!}</td>
-					<td>{!!$accountability->getOwnerID()!!}</td>
 					<td>{!!$accountability->item_id!!}</td>
 					<td>{!!$accountability->date_incurred!!}</td>				
 					<td>{!!$accountability->date_paid!!}</td>				

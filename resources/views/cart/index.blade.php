@@ -13,10 +13,8 @@
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>status</th>
-            <th>borrower_id</th>
             <th>Borrower Name</th>
             <th># of Items</th>
-            <th>Remarks</th>
             <th >actions</th>
         </thead>
         <tbody>
@@ -37,10 +35,8 @@
                         <span class="label label-info">
                     @endif
                 {!!$cart->status!!}</span></td>
-                <td>{!!$cart->borrower_id!!}</td>
                 <td>{!!$cart->getOwner()!!}</td>
                 <td>{!!$cart->getSize()!!}</td>
-                <td>{!!$cart->remarks!!}</td>
                 <td>
                     @if($cart->status != "Completed" && $cart->status != "Released")
                         <a data-toggle="tooltip" title="Delete user request." href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart/{!!$cart->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
