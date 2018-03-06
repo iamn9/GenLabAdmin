@@ -15,11 +15,11 @@
 <div class="box-body">
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width: 30px">id</th>
-            <th>name</th>
-            <th>brand</th>
-            <th style="width: 30px">qty</th>
-            <th>actions</th>
+            <th style="width: 30px">ID</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th style="width: 30px">Qty</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             @foreach($items as $item)

@@ -53,7 +53,7 @@
     <div class="col-sm-4 invoice-col">
       <address>
       <b>Transaction #:</b> {!!$cart->trans_id!!}<br>
-      <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
+      <b>CartID:</b> {!!$cart->cart_id!!}<br>
       <b>Status:</b> {!!$cart->status!!}<br>
       </address>
     </div>
@@ -64,7 +64,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Qty</th>
+            <th style="width: 30px">Qty</th>
             <th>Name</th>
             <th>Brand</th>
             <th>Description</th>

@@ -13,11 +13,11 @@
     <form method = 'POST' action = '{!!url("cart")!!}'>
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
         <div class="form-group">
-            <label for="borrower_id">borrower_id</label>
+            <label for="borrower_id">User ID</label>
             <input id="borrower_id" name = "borrower_id" type="text" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="status">remarks</label>
+            <label for="status">Remarks</label>
             <textarea id="remarks" name="remarks" class="textarea" style="width: 100%; height: 120px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
         </div>
         <button class = 'btn btn-primary' type ='submit'>Create</button>

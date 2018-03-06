@@ -14,7 +14,7 @@
             <br>
             <table class = 'table table-bordered'>
                 <thead>
-                    <th style="width: 210px">Reporter's Name</th>
+                    <th>Reporter's Name</th>
                     <th>News Content</th>
                 </thead>
                 <tbody>

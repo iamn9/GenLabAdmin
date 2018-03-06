@@ -71,8 +71,8 @@
       <table class="table no-margin">
         <thead>
             <tr>
-              <th style="width: 170px">Author</th>
-              <th style="width: 230px">Date Posted</th>
+              <th>Author</th>
+              <th>Date Posted</th>
               <th>Details</th>
             </tr>
         </thead>
@@ -108,7 +108,7 @@
         <thead>
           <tr>
            <th>Timestamp</th>
-           <th>Order ID</th>
+           <th style="width: 30px">OrderID</th>
            <th>Status</th>
          </tr>
        </thead>

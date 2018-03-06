@@ -9,7 +9,7 @@
 <div class="box-body">
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>Cart ID</th>
+            <th style="width: 30px">CartID</th>
             <th>Submitted at</th>
             <th>Prepared at</th>
             <th>Released at</th>

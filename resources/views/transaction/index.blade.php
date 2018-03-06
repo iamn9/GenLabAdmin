@@ -10,8 +10,8 @@
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
             <th>Borrower</th>
-            <th>Trans ID</th>
-            <th style="width: 80px">Cart ID</th>
+            <th style="width: 30px">TransID</th>
+            <th style="width: 30px">CartID</th>
             <th>Manage Cart</th>
             <th>Status</th>
             <th>Actions</th>

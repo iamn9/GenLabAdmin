@@ -14,11 +14,11 @@
 <div class="box-body">
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width:60px">Shared</th>
+            <th>Shared</th>
             <th>Owner</th>
-            <th>Name of List</th>
+            <th>List</th>
             <th>Description</th>
-            <th>actions</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             @foreach($listings as $listing) 

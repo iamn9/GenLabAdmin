@@ -58,10 +58,10 @@
 <div class="box-body">
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>item_id</th>
-            <th>name</th>
-            <th>qty</th>
-            <th>actions</th>
+            <th style="width: 30px">ItemID</th>
+            <th>Name</th>
+            <th style="width: 30px">Qty</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             @foreach($listing_items as $listing_item) 

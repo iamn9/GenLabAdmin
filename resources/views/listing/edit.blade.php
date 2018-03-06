@@ -15,7 +15,7 @@
         id!!}/update'> 
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
         <div class="form-group">
-            <label for="owner_id">owner_id</label>
+            <label for="owner_id">User ID</label>
             @if(Auth::user()->isAdmin)
                 <input data-toggle="tooltip" title="Enter User ID Number." id="owner_id" name = "owner_id" type="text" class="form-control" value="{!!$listing->
                 owner_id!!}"> 
@@ -25,7 +25,7 @@
             @endif
         </div>
         <div class="form-group">
-            <label for="name">name</label>
+            <label for="name">Name</label>
             <input id="name" name = "name" type="text" class="form-control" value="{!!$listing->name!!}">
         </div>
         <div class="form-group">

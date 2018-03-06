@@ -11,8 +11,8 @@
 <div class="box-body">        
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-			<th>Cart ID</th>
-			<th>Transaction ID</th>			
+			<th style="width: 30px">CartID</th>
+			<th style="width: 30px">TransID</th>			
 			<th>Item Count</th>
 			<th>Date Submitted</th>
 			<th>Status</th>

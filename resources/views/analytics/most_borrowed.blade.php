@@ -14,8 +14,8 @@
   <div class="box-body">
   	 <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-        <th style="width: 170px">Name</th>
-        <th style="width: 230px">Count</th>
+        <th>Name</th>
+        <th>Count</th>
         </thead>
         <tbody>
             @foreach($mostBorrowed as $entry) 

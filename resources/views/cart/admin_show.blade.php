@@ -16,7 +16,7 @@
                 <tr>
                     <td>
                         <b>
-                            <i>borrower_id : </i>
+                            <i>Borrower ID : </i>
                         </b>
                     </td>
                     <td>{!!$cart->borrower_id!!}</td>
@@ -24,7 +24,7 @@
                 <tr>
                     <td>
                         <b>
-                            <i>status : </i>
+                            <i>Status : </i>
                         </b>
                     </td>
                     <td>{!!$cart->status!!}</td>
@@ -32,7 +32,7 @@
                 <tr>
                     <td>
                         <b>
-                            <i>remarks : </i>
+                            <i>Remarks : </i>
                         </b>
                     </td>
                     <td>{!!$cart->remarks!!}</td>
@@ -43,10 +43,10 @@
     <div class="box-body">
         <table class="dataTable table table-striped table-bordered table-hover" style='background:#fff'>
             <thead>
-                <th>item_id</th>
-                <th>name</th>
-                <th>qty</th>
-                <th>actions</th>
+                <th style="width: 30px">ItemID</th>
+                <th>Name</th>
+                <th style="width: 30px">Qty</th>
+                <th>Actions</th>
             </thead>
             <tbody>
                 @foreach($cart_items as $cart_item)

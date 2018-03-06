@@ -12,12 +12,12 @@
 <div class="box-body">
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width: 120px">status</th>
-            <th style="width:160px">borrower_id</th>
-            <th style="width:170px">Borrower Name</th>
-            <th style="width:90px"># of Items</th>
+            <th>status</th>
+            <th>borrower_id</th>
+            <th>Borrower Name</th>
+            <th># of Items</th>
             <th>Remarks</th>
-            <th style="width: 200px">actions</th>
+            <th >actions</th>
         </thead>
         <tbody>
             @foreach($carts as $cart) 

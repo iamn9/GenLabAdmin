@@ -80,7 +80,7 @@
             $(document).ready(function() {
                 dt = $('.dataTable').DataTable();
                 // $('.dataTables_filter').hide();
-                $('.dataTables_filter input[type="search"]').css({'width':'400px','display':'inline-block '});
+                $('.dataTables_filter input[type="search"]').css({'width':'250px','display':'inline-block '});
             });
         </script>
     @endif

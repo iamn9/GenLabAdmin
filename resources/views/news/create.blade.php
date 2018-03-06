@@ -14,7 +14,7 @@
     <form method = 'POST' action = '{!!url("news")!!}'>
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
         <div class="form-group">
-            <label for="title">title</label>
+            <label for="title">Title</label>
             <input id="title" name = "title" type="text" class="form-control" required>
         </div>
          <div class="form-group">

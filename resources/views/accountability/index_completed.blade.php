@@ -10,11 +10,11 @@
 <div class="box-body">    
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-			<th style="width: 50px">ID</th>				
-			<th style="width: 100px">Trans ID</th>
+			<th style="width: 30px">ID</th>				
+			<th style="width: 30px">TransID</th>
             <th>Name</th>
-			<th>Borrower ID</th>
-			<th>Item ID</th>
+			<th style="width: 90px">UserID</th>
+			<th style="width: 30px">ItemID</th>
             <th>Date Incurred</th>						
             <th>Date Paid</th>            
             <th>Amount</th>
