@@ -34,7 +34,7 @@ class AddColumnsToItemsTable extends Migration
         Schema::table('items', function (Blueprint $table) {
           $table->dropColumn('brand');
           $table->dropColumn('quantity');
-          $table->dropColumn('acquisition');
+          $table->dropColumn('acquisitioncost');
           $table->dropColumn('wattage');
           $table->dropColumn('firsthour');
           $table->dropColumn('succeeding');
