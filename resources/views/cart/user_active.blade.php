@@ -18,7 +18,7 @@
             <tbody>
                 @foreach($cart_items as $cart_item) 
                 <tr id='{!!$cart_item->id!!}'>
-                    <td>{!!$cart_item->item_id!!}</td>
+                    <td><a href="item/{!!$cart_item->item_id!!}">{!!$cart_item->item_id!!}</a></td>
                     <td>{!!$cart_item->name!!}</td>
                     <td>
                         <form method="POST" action='{!! url("cart_item")!!}/{!!$cart_item->id!!}/update'>

@@ -20,7 +20,7 @@
 			@foreach($carts as $cart) 
 				<tr id='{!!$cart->trans_id!!}'>
 					<td>{!!$cart->cart_id!!}</td>
-					<td>{!!$cart->trans_id!!}</td>
+					<td><a href="transaction/{!!$cart->trans_id!!}">{!!$cart->trans_id!!}</a></td>								
 					<td>
 						<strong>
 							@if($cart->status == "Completed")

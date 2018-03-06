@@ -17,7 +17,7 @@
             @foreach($transactions as $transaction) 
                 <tr id='{!!$transaction->id!!}'>
                     <td>{!!$transaction->trans_id!!}</td>
-                    <td>{!!$transaction->cart_id!!}</td>
+                    <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>
                     <td>
                         <a data-toggle="tooltip" title="View Receipt" class = 'btn btn-success btn-sm' href = '/transaction/{{$transaction->trans_id}}/show'>INFO</a>
                     </td>

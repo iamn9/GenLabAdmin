@@ -18,7 +18,7 @@
         <tbody>
 			@foreach($accountabilities as $accountability) 
 				<tr id='{!!$accountability->id!!}'>		
-					<td>{!!$accountability->trans_id!!}</td>				
+					<td><a href="transaction/{!!$accountability->trans_id!!}">{!!$accountability->trans_id!!}</a></td>				
 					<td>{!!$accountability->getItemName()!!}</td>		
 					<td>{!!$accountability->date_incurred!!}</td>							
 					<td>{!!$accountability->amount!!}</td>				

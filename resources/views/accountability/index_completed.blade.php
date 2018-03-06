@@ -24,10 +24,10 @@
 			@foreach($accountabilities as $accountability) 
 				<tr id='{!!$accountability->id!!}'>
 					<td>{!!$accountability->id!!}</td>
-					<td>{!!$accountability->trans_id!!}</td>								
+					<td><a href="transaction/{!!$accountability->trans_id!!}">{!!$accountability->trans_id!!}</a></td>								
 					<td>{!!$accountability->getOwner()!!}</td>
 					<td>{!!$accountability->getOwnerID()!!}</td>
-					<td>{!!$accountability->item_id!!}</td>
+					<td><a href="item/{!!$accountability->item_id!!}">{!!$accountability->item_id!!}</a></td>
 					<td>{!!$accountability->date_incurred!!}</td>				
 					<td>{!!$accountability->date_paid!!}</td>				
 					<td>{!!$accountability->amount!!}</td>				

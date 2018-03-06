@@ -66,7 +66,7 @@
         <tbody>
             @foreach($listing_items as $listing_item) 
             <tr id={!!$listing_item->id!!}>
-                <td>{!!$listing_item->item_id!!}</td>
+                <td><a href="item/{!!$listing_item->item_id!!}">{!!$listing_item->item_id!!}</a></td>
                 <td>{!!$listing_item->name!!}</td>
                 <td>
                     @if($listing->owner_id == Auth::user()->id_no)
