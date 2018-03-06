@@ -10,11 +10,11 @@
     </form>
 </div>
 <div class="box-body">
-    <br>
+    
     <form method = 'POST' action = '{!! url("news")!!}/{!!$news->id!!}/update'> 
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
         <div class="form-group">
-            <label for="title">title</label>
+            <label for="title">Title</label>
             <input id="title" name = "title" type="text" class="form-control" value="{!!$news->title!!}">
         </div>
          <div class="form-group">

@@ -110,7 +110,6 @@ class AnalyticsController extends Controller
                     ->select(DB::raw('items.name, SUM(cart_items.qty) as total'))
                     ->orderBy('total', 'DESC')
                     ->groupBy('items.name')
-                    ->limit(5)
                     ->get();
             $borrowedArr = json_encode($mostBorrowed);
           return view('analytics.most_borrowed', compact('mostBorrowed','borrowedArr'));        

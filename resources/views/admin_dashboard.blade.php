@@ -13,9 +13,9 @@
     <h3 class="box-title">General Summary</h3>
 
     <div class="box-tools pull-right">
-      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="collapse" ><i class="fa fa-minus"></i>
       </button>
-      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="close"><i class="fa fa-times"></i></button>
     </div>
   </div>
   
@@ -71,9 +71,9 @@
     <h3 class="box-title">Latest Transactions</h3>
 
     <div class="box-tools pull-right">
-      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="collapse" ><i class="fa fa-minus"></i>
       </button>
-      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="close"><i class="fa fa-times"></i></button>
     </div>
   </div>
   <div class="box-body">
@@ -82,7 +82,7 @@
         <thead>
           <tr>
            <th>Timestamp</th>
-           <th>Order ID</th>
+           <th style="width: 30px">OrderID</th>
            <th>Borrower Name</th>
            <th>Status</th>
          </tr>
@@ -121,9 +121,9 @@
     <h3 class="box-title">Fresh Announcements</h3>
 
     <div class="box-tools pull-right">
-      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="collapse" ><i class="fa fa-minus"></i>
       </button>
-      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="close"><i class="fa fa-times"></i></button>
     </div>
   </div>
  <div class="box-body">
@@ -131,8 +131,8 @@
       <table class="table no-margin">
         <thead>
             <tr>
-              <th style="width: 170px">Author</th>
-              <th style="width: 230px">Date Posted</th>
+              <th>Author</th>
+              <th>Date Posted</th>
               <th>Details</th>
             </tr>
         </thead>

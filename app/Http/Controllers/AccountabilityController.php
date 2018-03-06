@@ -20,17 +20,16 @@ class AccountabilityController extends Controller
     public function index(Request $request)
     {
         $title = 'Accountability Index';
-		$searchWord = \Request::get('search');       
-	         
+		       
         if (Auth::user()->isAdmin){
             $title = 'Accountability Index';
-            $accountabilities = Accountability::paginate(5);
-            return view('accountability.admin_index',compact('accountabilities','title','searchWord'));
+            $accountabilities = Accountability::all();
+            return view('accountability.admin_index',compact('accountabilities','title'));
         }
         else{
             $title = 'My Accountabilities';
-            $accountabilities = Accountability::where('date_paid', NULL)->paginate(5);
-            return view('accountability.user_index',compact('accountabilities','title','searchWord'));
+            $accountabilities = Accountability::where('date_paid', NULL)->get();
+            return view('accountability.user_index',compact('accountabilities','title'));
         }
     }
 
@@ -50,18 +49,18 @@ class AccountabilityController extends Controller
 
     public function index_pending(){ 
         $title = 'Unpaid Accountabilities';
-		$searchWord = \Request::get('search');       
+		       
 	         
-        $accountabilities = Accountability::where('date_paid',NULL)->paginate(5);
-        return view('accountability.index_pending',compact('accountabilities','title','searchWord'));
+        $accountabilities = Accountability::where('date_paid',NULL)->get();
+        return view('accountability.index_pending',compact('accountabilities','title'));
     } 
  
     public function index_completed(){ 
         $title = 'Paid Accountabilities';
-		$searchWord = \Request::get('search');       
+		       
 	         
-        $accountabilities = Accountability::where('date_paid','!=',NULL)->paginate(5);
-        return view('accountability.index_completed',compact('accountabilities','title','searchWord'));
+        $accountabilities = Accountability::where('date_paid','!=',NULL)->get();
+        return view('accountability.index_completed',compact('accountabilities','title'));
     } 
 
     public function DeleteMsg($id,Request $request)
@@ -135,7 +134,7 @@ class AccountabilityController extends Controller
         \App\Transaction::where('id',$id)->update(['completed_at' => $date]); 
                                 
         \Session::flash('success','Accountability was paid.');
-        return redirect('transaction/released'); 
+        return redirect('transaction');
     }
 
     public function recordBill($id, Request $request){
@@ -158,6 +157,6 @@ class AccountabilityController extends Controller
         \App\Transaction::where('id',$id)->update(['completed_at' => $date]); 
                                 
         \Session::flash('success','Bill set as accountability.');
-        return redirect('transaction/released'); 
+        return redirect('transaction'); 
     }
 }

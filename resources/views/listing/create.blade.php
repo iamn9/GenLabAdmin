@@ -10,11 +10,11 @@
     </form>
 </div>
 <div class="box-body">
-    <br>
+    
     <form method = 'POST' action = '{!!url("listing")!!}'>
         <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
         <div class="form-group">
-            <label for="owner_id">owner_id</label>
+            <label for="owner_id">User ID</label>
             @if(Auth::user()->isAdmin)
                 <input id="owner_id" name = "owner_id" type="text" class="form-control">
             @else
@@ -22,7 +22,7 @@
             @endif
         </div>
         <div class="form-group">
-            <label for="name">name</label>
+            <label for="name">Name</label>
             <input id="name" name = "name" type="text" class="form-control" required>
         </div>
         <div class="form-group">

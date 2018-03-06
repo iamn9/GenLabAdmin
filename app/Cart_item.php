@@ -33,4 +33,19 @@ class Cart_item extends Model
 		$total_fee = $succeeding_hours*$elapsed_hours + $firsthour;
 		return number_format($total_fee, 2);
     }
+
+    public function getItemName(){
+        $itemName = Item::findOrFail($this->item_id)->value('name');
+        return $itemName;
+    }
+
+    public function getItemBrand(){
+        $itemBrand = Item::findOrFail($this->item_id)->value('brand');
+        return $itemBrand;
+    }
+
+    public function getItemDescription(){
+        $itemDescription = Item::findOrFail($this->item_id)->value('description');
+        return $itemDescription;
+    }
 }

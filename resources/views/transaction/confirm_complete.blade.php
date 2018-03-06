@@ -52,7 +52,7 @@
 
     <div class="col-sm-4 invoice-col">
       <b>Transaction #:</b> {!!$cart->trans_id!!} <br>
-      <b>Cart ID:</b> {!!$cart->cart_id!!}<br>
+      <b>CartID:</b> {!!$cart->cart_id!!}<br>
       <b>Status:</b> {!!$cart->status!!}<br>
     </div>
   </div>
@@ -62,9 +62,9 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Qty</th>
-            <th>Item</th>
+            <th style="width: 30px">Qty</th>
             <th>Name</th>
+            <th>Brand</th>
             <th>Description</th>
             <th>Fee</th>
           </tr>
@@ -73,9 +73,9 @@
           @foreach($cart_items as $cart_item)
           <tr>
             <td>{!!$cart_item->qty!!}</td>
-            <td>{!!$cart_item->item_id!!}</td>
-            <td>{!!$cart_item->name!!}</td>
-            <td>{!!$cart_item->description!!}</td>
+            <td>{!!$cart_item->getItemName()!!}</td>
+            <td>{!!$cart_item->getItemBrand()!!}</td>
+            <td>{!!$cart_item->getItemDescription()!!}</td>
             <td>{!!$cart_item->getFee()!!}</td>
           </tr>
           @endforeach

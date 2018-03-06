@@ -5,25 +5,25 @@
 <div class="box box-primary">
     <div class="box-header">
         <h1>{{$title}}</h1>
-        @include('search')
+        
     </div>
     <div class="box-body">
-        <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+        <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
             <thead>
-                <th style="width: 60px">item_id</th>
-                <th>name</th>
-                <th style="width: 170px">qty</th>
+                <th style="width: 60px">ItemID</th>
+                <th>Name</th>
+                <th>Qty</th>
                 <th style="width: 220px">actions</th>
             </thead>
             <tbody>
                 @foreach($cart_items as $cart_item) 
                 <tr id='{!!$cart_item->id!!}'>
-                    <td>{!!$cart_item->item_id!!}</td>
+                    <td><a href="item/{!!$cart_item->item_id!!}">{!!$cart_item->item_id!!}</a></td>
                     <td>{!!$cart_item->name!!}</td>
                     <td>
                         <form method="POST" action='{!! url("cart_item")!!}/{!!$cart_item->id!!}/update'>
                             <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>
-                            <input type = "number" id="qty" name="qty" min="1" value="{!!$cart_item->qty!!}" style="width: 80px;">
+                            <input type = "number" id="qty" name="qty" min="1" value="{!!$cart_item->qty!!}" style="width: 60px;">
                             <button data-toggle="tooltip" title="Update Item QTY." class = 'update btn btn-warning btn-xs' type ='submit' ><i class="fa fa-refresh" aria-hidden="true"></i>  Update</button>
                         </form>
                     </td>
@@ -35,7 +35,7 @@
                 @endforeach 
             </tbody>
         </table>
-        <div class='text-center'>{!! $cart_items->render() !!}</div><br>
+        <br>
         @if(count($cart_items))
             <form method = 'POST' action = '/cart/{{$cart_id}}/checkout'>
                 <input type = 'hidden' name = '_token' value = '{{Session::token()}}'>

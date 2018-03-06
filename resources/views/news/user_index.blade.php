@@ -5,10 +5,8 @@
 <div class="box box-primary" style="background-color: rgba(250,250,250,0.2);">
     <div class="box-header" style="background-color: white;">
         <h1>{!!$title!!}</h1>
-        @include('search')
-        <br>
     </div>
-    <div class="box-body"><br>
+    <div class="box-body">
         <ul class="timeline">
             @foreach($news as $entry) 
                 <li id="{!!$entry->id!!}">
@@ -30,7 +28,6 @@
                     </div>
                 </li>
             @endforeach
-            <div class='text-center'>{!! $news->render() !!}</div>
             <li class="time-label"><i class="fa fa-asterisk bg-gray"></i></li>
         </ul>
     </div>

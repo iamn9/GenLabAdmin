@@ -5,7 +5,7 @@
 <div class="box box-primary">
 <div class="box-header">
     <h1>{{$title}}</h1>
-    @include('search')
+    
     <br>
     <a class = 'btn btn-primary' href = '{!!url("listing")!!}'> listing Index</a>&nbsp&nbsp
     @if($listing_items->count())
@@ -56,17 +56,17 @@
     </table>
 </div>
 <div class="box-body">
-    <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+    <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>item_id</th>
-            <th>name</th>
-            <th>qty</th>
-            <th>actions</th>
+            <th style="width: 30px">ItemID</th>
+            <th>Name</th>
+            <th style="width: 30px">Qty</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             @foreach($listing_items as $listing_item) 
             <tr id={!!$listing_item->id!!}>
-                <td>{!!$listing_item->item_id!!}</td>
+                <td><a href="item/{!!$listing_item->item_id!!}">{!!$listing_item->item_id!!}</a></td>
                 <td>{!!$listing_item->name!!}</td>
                 <td>
                     @if($listing->owner_id == Auth::user()->id_no)
@@ -87,7 +87,6 @@
             @endforeach 
         </tbody>
     </table>
-    <div class='text-center'>{!! $listing_items->render() !!}</div>
 </div>
 </div>
 @endsection
