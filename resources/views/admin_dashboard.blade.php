@@ -30,9 +30,9 @@
         <div class="icon">
           <i class="fa fa-user-plus"></i>
         </div>
-        <a href="users/unactivated" class="small-box-footer">
+        <!-- <a href="users/unactivated" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
-        </a>
+        </a> -->
       </div>
 
       <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-aqua">
@@ -44,9 +44,6 @@
         <div class="icon">
           <i class="fa fa-shopping-cart"></i>
         </div>
-        <a href="#" class="small-box-footer">
-          More info <i class="fa fa-arrow-circle-right"></i>
-        </a>
       </div>
 
       <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-green">
@@ -58,9 +55,6 @@
         <div class="icon">
           <i class="fa fa-bars"></i>
         </div>
-        <a href="#" class="small-box-footer">
-          More info <i class="fa fa-arrow-circle-right"></i>
-        </a>
       </div>
   </div>
 </div>
