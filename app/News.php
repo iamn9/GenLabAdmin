@@ -17,6 +17,8 @@ class News extends Model
     public function getreporter_id(){
         return $this->reporter_id;
     }
-
+    public function getReporterName(){
+        return \App\User::where('id_no', $this->reporter_id)->value('name');
+    }
    
 }

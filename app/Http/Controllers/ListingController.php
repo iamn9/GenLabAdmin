@@ -111,7 +111,7 @@ class ListingController extends Controller
             ->join('items', 'listing_items.item_id', '=', 'items.id')
             ->select('listing_items.*', 'items.name')
             ->where('listing_id', $listing->id)
-            ->orderBy('items.name')-get();
+            ->orderBy('items.name')->get();
 
         if (Auth::user()->isAdmin) {
             return view('listing.show', compact('searchWord', 'title', 'listing', 'listing_items'));

@@ -76,8 +76,8 @@
         <thead>
           <tr>
            <th>Timestamp</th>
-           <th style="width: 30px">OrderID</th>
            <th>Borrower Name</th>
+           <th>OrderID</th>
            <th>Status</th>
          </tr>
        </thead>
@@ -85,8 +85,8 @@
         @foreach($transactions as $transaction)
         <tr>
          <td> {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}</td>
-         <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>
          <td>{!!$transaction->name!!}</td>
+         <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>
          <td>
             @if($transaction->status == "Draft")
                 <span class="label label-info">
@@ -127,14 +127,16 @@
             <tr>
               <th>Author</th>
               <th>Date Posted</th>
+              <th>Title</th>
               <th>Details</th>
             </tr>
         </thead>
         <tbody>
            @foreach($news as $entry) 
             <tr>
-                <td>{!!$entry->name!!}</td>
+                <td>{!!$entry->getReporterName()!!}</td>
                 <td>{!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</td>
+                <td>{!!$entry->title!!}</td>
                 <td>{!!$entry->content!!}</td>
             </tr>
             @endforeach 

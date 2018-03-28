@@ -82,7 +82,7 @@
       <h2 class="page-header">
         <i class="fa fa-flask"></i> GenLab System
         <small class="pull-right">
-          {!!date('F d, Y', strtotime($date))!!}
+          {!!date('F d, Y g:i A', strtotime($date))!!}
         </small>
       </h2>
     </div>
@@ -106,24 +106,28 @@
       <strong>Transaction Details</strong>
       <br>
       <address>
-        @foreach($carts as $cart) @if($cart->status == "Completed") Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}
-        <br> Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}
-        <br> Released: {!!date('F j, Y g:i A', strtotime($cart->released_at))!!}
-        <br> Completed: {!!date('F j, Y g:i A', strtotime($cart->completed_at))!!}
-        <br> @endif @if($cart->status == "Released") Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}
-        <br> Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}
-        <br> Released: {!!date('F j, Y g:i A', strtotime($cart->released_at))!!}
-        <br> @endif @if($cart->status == "Prepared") Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}
-        <br> Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}
-        <br> @endif @if($cart->status == "Pending") Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}
-        <br> @endif @endforeach
+        @if($cart->status == "Completed")
+          Submitted: {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!} <br>
+          Prepared: {!!date('F j, Y g:i A', strtotime($transaction->prepared_at))!!} <br>
+          Released: {!!date('F j, Y g:i A', strtotime($transaction->released_at))!!} <br>
+          Completed: {!!date('F j, Y g:i A', strtotime($transaction->completed_at))!!} <br>
+        @endif @if($cart->status == "Released")
+          Submitted: {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!} <br>
+          Prepared: {!!date('F j, Y g:i A', strtotime($transaction->prepared_at))!!} <br>
+          Released: {!!date('F j, Y g:i A', strtotime($transaction->released_at))!!} <br>
+        @endif @if($cart->status == "Prepared")
+          Submitted: {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!} <br>
+          Prepared: {!!date('F j, Y g:i A', strtotime($transaction->prepared_at))!!} <br>
+        @endif @if($cart->status == "Pending")
+          Submitted: {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!} <br>
+        @endif
       </address>
     </div>
 
     <div class="col-sm-4 invoice-col">
-      <b>Transaction #:</b> {!!$cart->trans_id!!}
+      <b>Transaction #:</b> {!!$transaction->id!!}
       <br>
-      <b>CartID:</b> {!!$cart->cart_id!!}
+      <b>CartID:</b> {!!$cart->id!!}
       <br>
       <b>Status:</b> {!!$cart->status!!}
       <br>
@@ -137,12 +141,12 @@
           <tr>
             <th>Name</th>
             <th>Brand</th>
-            <th>Fee</th>
+            <th>Fees</th>
             <th>Qty</th>
-            <th>Returned</th>
+            <th class="no-print">Returned QTY</th>
           </tr>
         </thead>
-        <form method="POST" action="/accountability/{!!$cart->trans_id!!}/recordBill">
+        <form method="POST" action="/accountability/{!!$transaction->id!!}/recordBill">
         <tbody>
           @foreach($cart_items as $cart_item)
           <tr id="{!!$cart_item->id!!}">
@@ -156,7 +160,7 @@
             </td>
             <td>{!!$cart_item->qty!!}</td>
             <td>
-              <div class="input-group">
+              <div class="input-group no-print">
                 <input onChange="findTotalReturned()" type="number" name="returned{!!$cart_item->id!!}" id="returned{!!$cart_item->id!!}" name="qty" min="0" max="{!!$cart_item->qty!!}" value="0" class="returned form-control">
                 <span class="input-group-btn">
                 <button type="button" onclick="setZero('returned{!!$cart_item->id!!}')" class="btn btn-danger">
@@ -170,22 +174,43 @@
             </td>
           </tr>
           @endforeach
-          <tr>
-            <td><b>TOTAL</b></td>
-            <td></td>
-            <td><b>PHP <div id="totFee" style="display: inline">{!!$cart->getTotalFee()!!}</div></b></td>
-            <td><b><div id="totBorrowed">{!!$cart->getTotalQty()!!}</div></b></td>
-            <td><b><div id="totReturned">0</div></b></td>
-          </tr>
         </tbody>
       </table>
-      <hr> @if ($cart->remarks != "")
-      <b>Note: </b> {!!$cart->remarks!!}
-      <br>
-      <br> @endif
     </div>
-
   </div>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <p class="lead">Notes:</p>
+      <p class="text-muted well well-xs no-shadow" style="margin-top: 10px;">
+        @if ($cart->remarks != "")
+          {!!$cart->remarks!!}
+        @endif
+      </p>
+    </div>
+    <div class="col-xs-6">
+      <p class="lead">Summary</p>
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th style="width:50%"># of Borrowed Items:</th>
+              <td><b><div id="totBorrowed">{!!$cart->getTotalQty()!!}</div></b></td>
+            </tr>
+            <tr>
+              <th style="width:50%"># of Returned Items:</th>
+              <td><b><div id="totReturned">0</div></b></td>
+            </tr>
+            <tr>
+              <th>Total Fees:</th>
+              <td><b>PHP <div id="totFee" style="display: inline">{!!$cart->getTotalFee()!!}</div></b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <hr>
   <div class="row">
     <div class="col-xs-12">
         <input type='hidden' name='_token' value='{{Session::token()}}'>
