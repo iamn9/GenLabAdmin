@@ -13,8 +13,8 @@
 			<th style="width: 30px">ID</th>				
 			<th style="width: 30px">TransID</th>
             <th>Name</th>
-			<th style="width: 90px">UserID</th>
 			<th style="width: 30px">ItemID</th>
+			<th style="width: 30px">QTY</th>
             <th>Date Incurred</th>						
             <th>Date Paid</th>            
             <th>Amount</th>
@@ -26,8 +26,8 @@
 					<td>{!!$accountability->id!!}</td>
 					<td><a href="transaction/{!!$accountability->trans_id!!}">{!!$accountability->trans_id!!}</a></td>								
 					<td>{!!$accountability->getOwner()!!}</td>
-					<td>{!!$accountability->getOwnerID()!!}</td>
 					<td><a href="item/{!!$accountability->item_id!!}">{!!$accountability->item_id!!}</a></td>
+					<td>{!!$accountability->qty!!}</td>
 					<td>{!!$accountability->date_incurred!!}</td>				
 					<td>{!!$accountability->date_paid!!}</td>				
 					<td>{!!$accountability->amount!!}</td>				

@@ -46,22 +46,18 @@ class TransactionController extends Controller
         }
 
         $transaction = Transaction::findOrfail($id);
-        $userid = Cart::where('id', '=', $transaction->cart_id)->value('borrower_id');
+        $cart = Cart::findOrfail($transaction->cart_id);
+        $userid = Cart::findOrfail($transaction->cart_id)->value('borrower_id');
         $user = User::where('id_no', '=', $userid)->first();
 
-        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'remarks', 'submitted_at', 'prepared_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function ($join) {
-            $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('borrower_id', '=', $userid)
-            ->where('transactions.id', '=', $transaction->id)->get();
-
-        $cart_items = Cart_item::where('cart_id', '=', $transaction->cart_id)->orderBy('cart_id')->get();
+        $cart_items = Cart_item::where('cart_id', '=', $cart->id)->get();
 
         $nameAdmin = Auth::user()->name;
 
         if (!Auth::user()->isAdmin)
-            return view('transaction.user_show', compact('title', 'carts', 'cart_items', 'user', 'date', 'nameAdmin'));
+            return view('transaction.user_show', compact('title', 'transaction','cart','cart_items','name_admin', 'user', 'date'));
         else
-            return view('transaction.admin_show', compact('title', 'carts', 'cart_items', 'user', 'date', 'nameAdmin'));
+            return view('transaction.admin_show', compact('title', 'transaction','cart','cart_items','name_admin', 'user', 'date'));
     }
 
     public function DeleteMsg($id, Request $request)
@@ -196,9 +192,9 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::findOrfail($id);
         $cart = Cart::findOrFail($transaction->cart_id);
-        if ($cart->getTotalFee() == 0) {
-            return redirect('transaction/' . $id . '/complete');
-        }
+        // if ($cart->getTotalFee() == 0) {
+        //     return redirect('transaction/' . $id . '/complete');
+        // }
 
         $date = date('F j, Y g:i A');
         $title = 'Show Transaction';
@@ -214,9 +210,7 @@ class TransactionController extends Controller
         })->where('borrower_id', '=', $userid)
             ->where('transactions.id', '=', $transaction->id)->get();
 
-        $cart_items = Cart_item::join('items', function ($join) {
-            $join->on('cart_items.item_id', '=', 'items.id');
-        })->where('cart_id', '=', $transaction->cart_id)->orderBy('cart_id')->get();
+        $cart_items = \App\Cart_item::where('cart_id',$transaction->cart_id)->get();
 
         $nameAdmin = Auth::user()->name;
 

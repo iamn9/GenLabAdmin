@@ -37,4 +37,14 @@ class Cart extends Model
 
         return number_format($totalPayable, 2);
     }
+
+    public function getTotalQty(){
+        $cart_items = Cart_item::where('cart_id','=',$this->id)->get();
+        $totalQty = 0;
+        foreach($cart_items as $cart_item){
+            $totalQty += $cart_item->qty;
+        }
+
+        return $totalQty;
+    }
 }

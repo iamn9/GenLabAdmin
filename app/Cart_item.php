@@ -2,10 +2,9 @@
 
 namespace App;
 
-use App\Cart;
-use App\Item;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Cart_item extends Model
 {
@@ -34,18 +33,22 @@ class Cart_item extends Model
 		return number_format($total_fee, 2);
     }
 
+    public function getTotalFee(){
+        return number_format($this->getFee()*$this->qty);
+    }
+
     public function getItemName(){
-        $itemName = Item::findOrFail($this->item_id)->value('name');
+        $itemName = DB::table('items')->where('id',$this->item_id)->value('name');
         return $itemName;
     }
 
     public function getItemBrand(){
-        $itemBrand = Item::findOrFail($this->item_id)->value('brand');
+        $itemBrand = DB::table('items')->where('id',$this->item_id)->value('brand');
         return $itemBrand;
     }
 
     public function getItemDescription(){
-        $itemDescription = Item::findOrFail($this->item_id)->value('description');
+        $itemDescription = DB::table('items')->where('id',$this->item_id)->value('description');
         return $itemDescription;
     }
 }

@@ -145,11 +145,13 @@ class AccountabilityController extends Controller
         foreach($cart_items as $cart_item){
             $accountability = new Accountability();
             $accountability->trans_id = $id;
-            $accountability->cart_id = $cart_id;
+            $accountability->cart_id = $cart_item->cart_id;
             $accountability->item_id = $cart_item->item_id;
             $accountability->date_incurred = date('F j, Y g:i A');
-            $accountability->amount = $cart_item->getFee();
-            if($cart_item->getFee() != 0)
+            $accountability->amount = $request->input('fee'.$cart_item->id);
+            $unreturned = $cart_item->qty - intval($request->input('returned'.$cart_item->id));
+            $accountability->qty = $unreturned;
+            if($accountability->amount != 0 or $accountability->qty != 0)
                 $accountability->save();
         }
 
