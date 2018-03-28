@@ -27,35 +27,31 @@
     <div class="col-sm-4 invoice-col">
       <strong>Transaction Details</strong><br>
       <address>
-        @foreach($carts as $cart)
           @if($cart->status == "Completed")
-              Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
-              Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}<br>
-              Released: {!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
-              Completed: {!!date('F j, Y g:i A', strtotime($cart->completed_at))!!}<br>
+              Submitted: {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}<br>
+              Prepared: {!!date('F j, Y g:i A', strtotime($transaction->prepared_at))!!}<br>
+              Released: {!!date('F j, Y g:i A', strtotime($transaction->released_at))!!}<br>
+              Completed: {!!date('F j, Y g:i A', strtotime($transaction->completed_at))!!}<br>
           @endif
           @if($cart->status == "Released")
-              Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
-              Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}<br>
-              Released: {!!date('F j, Y g:i A', strtotime($cart->released_at))!!}<br>
+              Submitted: {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}<br>
+              Prepared: {!!date('F j, Y g:i A', strtotime($transaction->prepared_at))!!}<br>
+              Released: {!!date('F j, Y g:i A', strtotime($transaction->released_at))!!}<br>
           @endif
           @if($cart->status == "Prepared")
-              Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
-              Prepared: {!!date('F j, Y g:i A', strtotime($cart->prepared_at))!!}<br>
+              Submitted: {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}<br>
+              Prepared: {!!date('F j, Y g:i A', strtotime($transaction->prepared_at))!!}<br>
           @endif
           @if($cart->status == "Pending")
-              Submitted: {!!date('F j, Y g:i A', strtotime($cart->submitted_at))!!}<br>
+              Submitted: {!!date('F j, Y g:i A', strtotime($transaction->submitted_at))!!}<br>
           @endif
-        @endforeach
       </address>
     </div>
 
     <div class="col-sm-4 invoice-col">
-      <address>
-      <b>Transaction #:</b> {!!$cart->trans_id!!}<br>
-      <b>CartID:</b> {!!$cart->cart_id!!}<br>
+      <b>Transaction #:</b> {!!$transaction->id!!} <br>
+      <b>CartID:</b> {!!$cart->id!!}<br>
       <b>Status:</b> {!!$cart->status!!}<br>
-      </address>
     </div>
   </div>
 
@@ -72,7 +68,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($cart_items as $cart_item)
+        @foreach($cart_items as $cart_item)
           <tr>
             <td>{!!$cart_item->qty!!}</td>
             <td>{!!$cart_item->getItemName()!!}</td>

@@ -20,8 +20,8 @@
             @foreach($transactions as $transaction) 
                 <tr id='{!!$transaction->id!!}'>
                     <td>{!!$transaction->getOwner()!!}</td>
-                    <td>{!!$transaction->id!!}</td>  
-                    <td><a href="cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>         
+                    <td><a href="/transaction/{!!$transaction->id!!}">{!!$transaction->id!!}</a></td>  
+                    <td><a href="/cart/{!!$transaction->cart_id!!}">{!!$transaction->cart_id!!}</a></td>         
                     <td>
                         <a data-toggle="tooltip" title="View Receipt" class = 'viewShow btn btn-primary btn-sm' href = '/transaction/{!!$transaction->id!!}'><i class="fa fa-book" aria-hidden="true"></i>  Show Receipt</a>
                         <a data-toggle="tooltip" title="Show cart information and its items" class = 'viewShow btn btn-info btn-sm' href = '/cart/{!!$transaction->cart_id!!}'><i class="fa fa-info" aria-hidden="true"></i>  Manage Cart</a>

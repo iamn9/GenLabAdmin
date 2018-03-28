@@ -5,10 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Transaction;
-use App\Cart;
-use App\User;
-use App\News;
 
 class HomeController extends Controller
 {
@@ -29,8 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $news = News::join('users', function ($join) {
-            $join->on('news.reporter_id', '=', 'users.id_no');})->select('news.content', 'users.name','news.date_posted')->orderBy('news.date_posted','desc')->get();
+        $news = \App\News::orderBy('news.date_posted','desc')->limit(5)->get();
         if (Auth::user()->isAdmin){
             $count_unactivatedUsers = DB::table('users')->where('isActivated','0')->count();
             $count_newOrders = DB::table('carts')->where('status','Pending')->count();
@@ -44,7 +39,7 @@ class HomeController extends Controller
             $count_pendingCarts = DB::table('carts')->where('borrower_id',$cur_user)->where('status','Pending')->count();
             $count_unreturnedCarts = DB::table('carts')->where('borrower_id',$cur_user)->where('status','Released')->count();
             $count_readyCarts = DB::table('carts')->where('borrower_id',$cur_user)->where('status','Prepared')->count();
-            $transactions = DB::table('transactions')->join('carts','transactions.cart_id' ,'=', 'carts.id')->join('users','carts.borrower_id','=','users.id_no')->where('users.id_no','=', $cur_user)->limit(5)->get();
+            $transactions = DB::table('transactions')->join('carts','transactions.cart_id' ,'=', 'carts.id')->join('users','carts.borrower_id','=','users.id_no')->where('users.id_no','=', $cur_user)->orderBy('transactions.submitted_at', 'desc')->limit(5)->get();
             return view('user_dashboard', compact('transactions','news','count_pendingCarts','count_unreturnedCarts','count_readyCarts'));
         }
     }

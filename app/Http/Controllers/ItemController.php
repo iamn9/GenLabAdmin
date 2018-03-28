@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Validator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Item;
@@ -22,7 +21,6 @@ class ItemController extends Controller
     {
         $title = 'Item Index';
 
-        
         $items = Item::all();
         if (Auth::check() && Auth::user()->isAdmin)
             return view('item.index', compact('items', 'title'));
@@ -107,12 +105,7 @@ class ItemController extends Controller
     public function showModal($id, Request $request)
     {
         $item = Item::findOrfail($id);
-        // $msg = Ajaxis::BtDisplay("Item Info",
-        // [
-        //     ['key' => 'ID', 'value' => $item->id],
-        //     ['key' => 'Name', 'value' => $item->name],
-        //     ['key' => 'Description', 'value' => $item->description],
-        // ]);
+
         if ($request->ajax()) {
             return $msg;
         }

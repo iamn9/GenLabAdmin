@@ -65,6 +65,7 @@
       <table class="table no-margin">
         <thead>
             <tr>
+              <th>ID</th>
               <th>Author</th>
               <th>Date Posted</th>
               <th>Details</th>
@@ -73,7 +74,8 @@
         <tbody>
            @foreach($news as $entry) 
             <tr>
-                <td>{!!$entry->name!!}</td>
+                <td><a href="/news/{!!$entry->id!!}">{!!$entry->id!!}</a></td>
+                <td>{!!$entry->getReporterName()!!}</td>
                 <td>{!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</td>
                 <td>{!!$entry->content!!}</td>
             </tr>

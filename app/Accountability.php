@@ -22,10 +22,10 @@ class Accountability extends Model
     }
 
     public function getOwnerID(){
-        return Cart::findOrFail($this->cart_id)->value('borrower_id');
+        return DB::table('carts')->where('id',$this->cart_id)->value('borrower_id');
     }
 
     public function getItemName(){
-        return Item::findOrFail($this->item_id)->value('name');
+        return DB::table('items')->where('id',$this->item_id)->value('name');
     }
 }

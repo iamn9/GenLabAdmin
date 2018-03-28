@@ -9,8 +9,7 @@
 </div>
 <div class="box-body">    
     <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
-        <thead>
-			<th style="width: 30px">ID</th>				
+        <thead>	
 			<th style="width: 30px">TransID</th>
             <th>Name</th>
 			<th style="width: 30px">ItemID</th>
@@ -22,7 +21,6 @@
         <tbody>
 			@foreach($accountabilities as $accountability) 
 				<tr id='{!!$accountability->id!!}'>
-					<td>{!!$accountability->id!!}</td>
 					<td><a href="/transaction/{!!$accountability->trans_id!!}">{!!$accountability->trans_id!!}</a></td>								
 					<td>{!!$accountability->getOwner()!!}</td>
 					<td><a href="/item/{!!$accountability->item_id!!}">{!!$accountability->item_id!!}</a></td>
@@ -31,7 +29,7 @@
 					<td>{!!$accountability->amount!!}</td>				
 					<td>					 
 						<a data-toggle="tooltip" title="Remove Accountability" class = 'delete btn btn-danger xs' data-link = "/accountability/{!!$accountability->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-						<a data-toggle="tooltip" title="Item paid" class = 'update btn btn-success xs' href = '/accountability/{!!$accountability->id!!}/payItem'><i class="fa fa-check" aria-hidden="true"></i>  Paid</a>
+						<a data-toggle="tooltip" title="Paid Fees, Replaced, or Returned" class = 'update btn btn-success xs' href = '/accountability/{!!$accountability->id!!}/payItem'><i class="fa fa-check" aria-hidden="true"></i> Paid</a>
 					</td>
 				</tr>
 			@endforeach
