@@ -15,7 +15,7 @@
 			<th>QTY</th>
             <th>Date Incurred</th>						
             <th>Date Paid</th>            
-            <th>Rental Fee</th>
+            <th>Fees</th>
 
         </thead>
         <tbody>

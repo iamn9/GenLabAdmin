@@ -205,16 +205,12 @@ class TransactionController extends Controller
         $userid = Cart::where('id', '=', $transaction->cart_id)->value('borrower_id');
         $user = User::where('id_no', '=', $userid)->first();
 
-        $carts = Cart::select('transactions.id as trans_id', 'cart_id', 'carts.id', 'remarks', 'submitted_at', 'prepared_at', 'completed_at', 'released_at', 'borrower_id', 'status')->join('transactions', function ($join) {
-            $join->on('carts.id', '=', 'transactions.cart_id');
-        })->where('borrower_id', '=', $userid)
-            ->where('transactions.id', '=', $transaction->id)->get();
-
+        $cart = Cart::findOrFail($transaction->cart_id);
         $cart_items = \App\Cart_item::where('cart_id',$transaction->cart_id)->get();
 
         $nameAdmin = Auth::user()->name;
 
-        return view('transaction.confirm_complete', compact('title', 'carts', 'cart_items', 'user', 'date', 'nameAdmin'));
+        return view('transaction.confirm_complete', compact('title', 'transaction', 'cart', 'cart_items', 'user', 'date', 'nameAdmin'));
     }
 
     public function user_history_info($id, Request $Request)

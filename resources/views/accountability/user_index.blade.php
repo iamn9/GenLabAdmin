@@ -15,7 +15,7 @@
 			<th>Unreturned QTY</th>
             <th>Date Incurred</th>						
 			<th>Date Paid</th>
-            <th>Renta; Fee</th>
+            <th>Fees</th>
         </thead>
         <tbody>
 			@foreach($accountabilities as $accountability) 
