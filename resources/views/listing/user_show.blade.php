@@ -72,12 +72,12 @@
                     </td>
                     @if ($listing->isShared)
                     <td>
-                        <i class='glyphicon glyphicon-ok'></i> true &nbsp&nbsp
+                        <i class='glyphicon glyphicon-ok'></i> yes &nbsp&nbsp
                         <button onclick="copyToClipboard(this)" data-toggle="tooltip" title="Share Link for Listing {!!$listing->name!!}" class='viewEdit btn btn-success btn-xs' value="{{env('APP_URL')}}/listing/{!!$listing->id!!}"><i class='fa fa-copy'></i>  Copy Link</button>
                     </td>
                     @else
                     <td>
-                        <i class='glyphicon glyphicon-remove'></i> false</td>
+                        <i class='glyphicon glyphicon-remove'></i> no</td>
                     @endif
                 </tr>
             </tbody>
