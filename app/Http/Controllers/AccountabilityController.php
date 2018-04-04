@@ -47,20 +47,20 @@ class AccountabilityController extends Controller
         return URL::to('accountability/pending');
     }
 
-    public function index_pending(){ 
+    public function index_unpaid(){ 
         $title = 'Unpaid Accountabilities';
 		       
 	         
         $accountabilities = Accountability::where('date_paid',NULL)->get();
-        return view('accountability.index_pending',compact('accountabilities','title'));
+        return view('accountability.index_unpaid',compact('accountabilities','title'));
     } 
  
-    public function index_completed(){ 
+    public function index_paid(){ 
         $title = 'Paid Accountabilities';
 		       
 	         
         $accountabilities = Accountability::where('date_paid','!=',NULL)->get();
-        return view('accountability.index_completed',compact('accountabilities','title'));
+        return view('accountability.index_paid',compact('accountabilities','title'));
     } 
 
     public function DeleteMsg($id,Request $request)
@@ -102,15 +102,31 @@ class AccountabilityController extends Controller
         $date = date('F j, Y g:i A');   
         Accountability::where('id',$id)->update(['date_paid' => $date]); 
         
-        \Session::flash('success','Accountability has been settled.');
-        return redirect('accountability/pending');
+        $notif = 'toastr["info"]("Accountability #'.$id.' has been settled")';
+        $msg = '<script>$("#" + '.$id.').remove();'.$notif.'</script>';
+        
+        if($request->ajax())
+        {
+            return $msg;
+        }
+
+        // \Session::flash('success','Accountability has been settled.');
+        // return redirect('accountability/unpaid');
     }
 
     public function undo_payment($id, Request $request){
         Accountability::where('id',$id)->update(['date_paid' => NULL]); 
 
-        \Session::flash('info','Accountability #'.$id.' not yet settled.');
-        return redirect('accountability/completed');
+        $notif = 'toastr["info"]("Accountability #'.$id.' not yet settled")';
+        $msg = '<script>$("#" + '.$id.').remove();'.$notif.'</script>';
+        
+        if($request->ajax())
+        {
+            return $msg;
+        }
+
+        // \Session::flash('info','Accountability #'.$id.' not yet settled.');
+        // return redirect('accountability/paid');
     }
 
     public function paidCart($id, Request $request){

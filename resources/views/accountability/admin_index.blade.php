@@ -11,7 +11,7 @@
         <thead>			
 			<th style="width: 30px">TransID</th>
             <th>Name</th>
-			<th style="width: 30px">ItemID</th>
+			<th>Item</th>
 			<th>QTY</th>
             <th>Date Incurred</th>						
             <th>Date Paid</th>            
@@ -23,10 +23,14 @@
 				<tr id='{!!$accountability->id!!}'>
 					<td><a href="/transaction/{!!$accountability->trans_id!!}">{!!$accountability->trans_id!!}</a></td>								
 					<td>{!!$accountability->getOwner()!!}</td>		
-					<td><a href="/item/{!!$accountability->item_id!!}">{!!$accountability->item_id!!}</a></td>
+					<td><a href="/item/{!!$accountability->item_id!!}">{!!$accountability->getItemName()!!}</a></td>
 					<td>{!!$accountability->qty!!}</td>		
-					<td>{!!$accountability->date_incurred!!}</td>				
-					<td>{!!$accountability->date_paid!!}</td>				
+					<td>{!!date('F j, Y g:i A', strtotime($accountability->date_incurred))!!}</td>
+					@if($accountability->date_paid != NULL)	
+						<td>{!!date('F j, Y g:i A', strtotime($accountability->date_paid))!!}</td>				
+					@else
+						<td>UNPAID</td>				
+					@endif
 					<td>{!!$accountability->amount!!}</td>				
 				</tr>
 			@endforeach

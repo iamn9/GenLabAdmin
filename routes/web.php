@@ -43,8 +43,8 @@ Route::get('transaction/{id}/undo_complete','\App\Http\Controllers\TransactionCo
 Route::get('transaction/user/active','\App\Http\Controllers\TransactionController@user_active');
 Route::get('accountability/user/accountabilities','\App\Http\Controllers\AccountabilityController@user_accountabilities');
 Route::get('accountability/all','\App\Http\Controllers\AccountabilityController@index');
-Route::get('accountability/pending','\App\Http\Controllers\AccountabilityController@index_pending');
-Route::get('accountability/completed','\App\Http\Controllers\AccountabilityController@index_completed');
+Route::get('accountability/unpaid','\App\Http\Controllers\AccountabilityController@index_unpaid');
+Route::get('accountability/paid','\App\Http\Controllers\AccountabilityController@index_paid');
 Route::get('accountability/{id}/payItem','\App\Http\Controllers\AccountabilityController@payItem');
 
 //analytics

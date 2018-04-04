@@ -162,33 +162,6 @@ return [
             'text'        => 'Carts',
             'icon'        => 'shopping-cart',
             'url'         => 'transaction',
-            // 'submenu'   =>[
-            //     [
-            //         'text'       => 'Show All',
-            //         'icon_color' => 'white',
-            //         'url'         => 'transaction/all',
-            //     ],
-            //     [
-            //         'text'       => 'Pending',
-            //         'icon_color' => 'red',
-            //         'url'         => 'transaction/pending',
-            //     ],
-            //     [
-            //         'text'       => 'Prepared',
-            //         'icon_color' => 'orange',
-            //         'url'         => 'transaction/prepared',
-            //     ],
-            //     [
-            //         'text'       => 'Released',
-            //         'icon_color' => 'blue',
-            //         'url'         => 'transaction/released',
-            //     ],
-            //     [
-            //         'text'       => 'Completed',
-            //         'icon_color' => 'green',
-            //         'url'         => 'transaction/completed',
-            //     ],
-            // ]
         ],			
 		[
             'text'        => 'Accountabilites',
@@ -202,14 +175,14 @@ return [
                     'url'         => 'accountability/all',
                 ],                
                 [
-                    'text'       => 'Pending',
+                    'text'       => 'Unpaid',
                     'icon_color' => 'red',
-                    'url'         => 'accountability/pending',
+                    'url'         => 'accountability/unpaid',
                 ],                
                 [
-                    'text'       => 'Completed',
+                    'text'       => 'Paid',
                     'icon_color' => 'green',
-                    'url'         => 'accountability/completed',
+                    'url'         => 'accountability/paid',
                 ],
 			]
 		],
