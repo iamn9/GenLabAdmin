@@ -27,11 +27,10 @@ class HomeController extends Controller
     {
         $news = \App\News::orderBy('news.date_posted','desc')->limit(5)->get();
         if (Auth::user()->isAdmin){
-            $count_unactivatedUsers = DB::table('users')->where('isActivated','0')->count();
-            $count_newOrders = DB::table('carts')->where('status','Pending')->count();
-            $count_completed = DB::table('carts')->where('status','Completed')->count();
-            $transactions = DB::table('transactions')->join('carts','transactions.cart_id' ,'=', 'carts.id')->join('users','carts.borrower_id','=','users.id_no')->orderBy('transactions.submitted_at', 'desc')->limit(5)->get();
-            return view('admin_dashboard',compact('transactions','count_unactivatedUsers','count_newOrders','count_completed','news'));
+            $accountabilities = \App\Accountability::where('date_paid', NULL)->get();
+            $transactions = \App\Transaction::where('prepared_at', NULL)->get();
+            $users = DB::table('users')->where('isActivated','0')->get();
+            return view('admin_dashboard',compact('users','transactions','accountabilities'));
         }
         else  
         {
