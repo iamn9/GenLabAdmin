@@ -218,7 +218,7 @@
           type="submit">
           <i class="fa fa-book" aria-hidden="true"></i> Record Bill</button>
       </form>
-      <form method="POST" action='/accountability/{!!$cart->trans_id!!}/paidCart'>
+      <form method="POST" action='/accountability/{!!$transaction->id!!}/paidCart'>
         <input type='hidden' name='_token' value='{{Session::token()}}'>
         <button id="completeBtn" data-toggle="tooltip" title="Payment received." class="btn btn-success pull-right no-print" style="margin-right: 5px;"
           type="submit" disabled>

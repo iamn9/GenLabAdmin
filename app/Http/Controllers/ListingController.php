@@ -265,8 +265,12 @@ class ListingController extends Controller
         $itemID = Input::get('item_id');
         $listing_id = Input::get('listing_id');
         if ($listing_id == -1) {
+            $listNum = DB::table('listing')->where('name','like','List#%')->count() + 1;                
+            while(DB::table('listing')->where('name','List#'.$listNum)->count()!=0){
+                $listNum += 1;
+            }
             $listing_id = DB::table('listing')->insertGetId(
-                ['owner_id' => $userid, 'name' => 'My Listing']
+                ['owner_id' => $userid, 'name' => 'List#'.$listNum]
             );
         }
 
