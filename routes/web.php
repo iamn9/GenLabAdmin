@@ -55,6 +55,8 @@ Route::group(['middleware'=> 'web'],function(){
   Route::resource('users', '\App\Http\Controllers\UserController');
   Route::post('users/store/','\App\Http\Controllers\UserController@store');
   Route::post('users/update/','\App\Http\Controllers\UserController@update');
+  Route::get('users/{id}/activate','\App\Http\Controllers\UserController@activate');
+  Route::get('users/{id}/deactivate','\App\Http\Controllers\UserController@deactivate');
   Route::get('users/edit/{id}','\App\Http\Controllers\UserController@edit');
   Route::get('users/delete/{id}','\App\Http\Controllers\UserController@destroy');
   Route::get('users/{id}/deleteMsg','\App\Http\Controllers\UserController@DeleteMsg'); 

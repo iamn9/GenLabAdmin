@@ -213,4 +213,28 @@ class UserController extends Controller
             return redirect('home');
         }
     }
+
+    public function activate($id, Request $request){
+        $user = \App\User::findOrFail($id);
+        $user->isActivated = 1;
+        $user->save();
+        $notif = 'toastr["success"]("User <b>' . $user->name . '</b> was successfully activated")';
+        $msg = '<script>'.'$("#" + ' . $id . ').remove();'.$notif.'</script>';
+
+        if ($request->ajax()){
+            return $msg;
+        }
+    }
+
+    public function deactivate($id, Request $request){
+        $user = \App\User::findOrFail($id);
+        $user->isActivated = 0;
+        $user->save();
+        $notif = 'toastr["info"]("User <b>' . $user->name . '</b> was deactivated")';
+        $msg = '<script>'.'$("#" + ' . $id . ').remove();'.$notif.'</script>';
+
+        if ($request->ajax()) {
+            return $msg;
+        }
+    }
 }
