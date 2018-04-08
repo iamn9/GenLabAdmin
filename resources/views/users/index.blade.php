@@ -33,8 +33,13 @@
 						@endif
 					</td>
 					<td>
-						<a data-toggle="tooltip" title="Edit user information." href="{{url('users/edit')}}/{{$user->id}}" class = 'btn btn-primary btn-sm'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-						<a data-toggle="tooltip" title="Delete User." data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-sm' data-link = "/users/{{$user->id}}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+						<a data-toggle="tooltip" title="Edit user information." href="{{url('users/edit')}}/{{$user->id}}" class = 'btn btn-primary btn-m'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+						<a data-toggle="tooltip" title="Delete User." class = 'delete btn btn-danger btn-m' data-link = "/users/{{$user->id}}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+						@if($user->isActivated)
+							<a data-toggle="tooltip" title="Deactivate User." class = 'update btn btn-warning btn-m' data-link = "/users/{{$user->id}}/deactivate" ><i class="fa fa-question" aria-hidden="true"></i>  Deactivate</a>
+						@else
+							<a data-toggle="tooltip" title="Activate User." class = 'update btn btn-success btn-m' data-link = "/users/{{$user->id}}/activate" ><i class="fa fa-check" aria-hidden="true"></i>  Activate</a>							
+						@endif
 					</td>
 				</tr>
 				@endforeach

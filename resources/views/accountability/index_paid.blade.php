@@ -12,7 +12,7 @@
         <thead>	
 			<th style="width: 30px">TransID</th>
             <th>Name</th>
-			<th style="width: 30px">ItemID</th>
+			<th>Item</th>
 			<th style="width: 30px">QTY</th>		
             <th>Date Paid</th>            
             <th>Amount</th>
@@ -21,14 +21,14 @@
         <tbody>
 			@foreach($accountabilities as $accountability) 
 				<tr id='{!!$accountability->id!!}'>
-					<td><a href="transaction/{!!$accountability->trans_id!!}">{!!$accountability->trans_id!!}</a></td>								
+					<td><a href="/transaction/{!!$accountability->trans_id!!}">{!!$accountability->trans_id!!}</a></td>								
 					<td>{!!$accountability->getOwner()!!}</td>
-					<td><a href="item/{!!$accountability->item_id!!}">{!!$accountability->item_id!!}</a></td>
+					<td><a href="/item/{!!$accountability->item_id!!}">{!!$accountability->getItemName()!!}</a></td>
 					<td>{!!$accountability->qty!!}</td>			
-					<td>{!!$accountability->date_paid!!}</td>				
+					<td>{!!date('F j, Y g:i A', strtotime($accountability->date_paid))!!}</td>				
 					<td>{!!$accountability->amount!!}</td>				
 					<td>					 
-						<a data-toggle="tooltip" title="Undo payment." class = 'viewEdit btn btn-warning btn-xs' href = '/accountability/{!!$accountability->id!!}/undo_payment'><i class="fa fa-undo" aria-hidden="true"></i>  Undo</a>
+						<a data-toggle="tooltip" title="Undo payment." class = 'edit btn btn-warning btn-xs' data-link = '/accountability/{!!$accountability->id!!}/undo_payment'><i class="fa fa-undo" aria-hidden="true"></i>  Undo</a>
 					</td>
 				</tr>
 			@endforeach

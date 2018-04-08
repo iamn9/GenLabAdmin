@@ -12,7 +12,7 @@
         <thead>	
 			<th style="width: 30px">TransID</th>
             <th>Name</th>
-			<th style="width: 30px">ItemID</th>
+			<th>Item</th>
 			<th style="width: 30px">QTY</th>
             <th>Date Incurred</th>						        
             <th>Amount</th>
@@ -23,13 +23,13 @@
 				<tr id='{!!$accountability->id!!}'>
 					<td><a href="/transaction/{!!$accountability->trans_id!!}">{!!$accountability->trans_id!!}</a></td>								
 					<td>{!!$accountability->getOwner()!!}</td>
-					<td><a href="/item/{!!$accountability->item_id!!}">{!!$accountability->item_id!!}</a></td>
+					<td><a href="/item/{!!$accountability->item_id!!}">{!!$accountability->getItemName()!!}</a></td>
 					<td>{!!$accountability->qty!!}</td>
-					<td>{!!$accountability->date_incurred!!}</td>							
+					<td>{!!date('F j, Y g:i A', strtotime($accountability->date_incurred))!!}</td>							
 					<td>{!!$accountability->amount!!}</td>				
 					<td>					 
 						<a data-toggle="tooltip" title="Remove Accountability" class = 'delete btn btn-danger xs' data-link = "/accountability/{!!$accountability->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-						<a data-toggle="tooltip" title="Paid Fees, Replaced, or Returned" class = 'update btn btn-success xs' href = '/accountability/{!!$accountability->id!!}/payItem'><i class="fa fa-check" aria-hidden="true"></i> Paid</a>
+						<a data-toggle="tooltip" title="Paid Fees, Replaced, or Returned" class = 'update btn btn-success xs' data-link = '/accountability/{!!$accountability->id!!}/payItem'><i class="fa fa-check" aria-hidden="true"></i> Paid</a>
 					</td>
 				</tr>
 			@endforeach

@@ -16,6 +16,9 @@ $(document).on('click', '.display', function() {
 $(document).on('click', '.create', function() {
     GET($(this).attr('data-link'));
 })
+$(document).on('click', '.update', function() {
+    GET($(this).attr('data-link'));
+})
 $(document).on('click', '.destroy', function() {
     $.ajax({
         async: true,
