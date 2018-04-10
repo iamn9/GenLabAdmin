@@ -11,9 +11,9 @@
     <h3 class="box-title">General Summary</h3>
 
     <div class="box-tools pull-right">
-      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="collapse" ><i class="fa fa-minus"></i>
       </button>
-      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="close"><i class="fa fa-times"></i></button>
     </div>
   </div>
   
@@ -26,9 +26,9 @@
         <div class="icon">
           <i class="fa fa-bars"></i>
         </div>
-        <a href="#" class="small-box-footer">
+        <!-- <a href="#" class="small-box-footer">
           More info <i class="fa fa-arrow-circle-right"></i>
-        </a>
+        </a> -->
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-orange">
         <div class="inner">
@@ -38,9 +38,6 @@
         <div class="icon">
           <i class="fa fa-bars"></i>
         </div>
-        <a href="#" class="small-box-footer">
-          More info <i class="fa fa-arrow-circle-right"></i>
-        </a>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12 small-box bg-green">
         <div class="inner">
@@ -50,9 +47,6 @@
         <div class="icon">
           <i class="fa fa-bars"></i>
         </div>
-        <a href="#" class="small-box-footer">
-          More info <i class="fa fa-arrow-circle-right"></i>
-        </a>
       </div>
   </div>
 </div>
@@ -61,9 +55,9 @@
   <div class="box-header with-border">
     <h3 class="box-title">Fresh Announcements</h3>
     <div class="box-tools pull-right">
-      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="collapse" ><i class="fa fa-minus"></i>
       </button>
-      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="close"><i class="fa fa-times"></i></button>
     </div>
   </div>
   <div class="box-body">
@@ -71,15 +65,17 @@
       <table class="table no-margin">
         <thead>
             <tr>
-              <th style="width: 170px">Author</th>
-              <th style="width: 230px">Date Posted</th>
+              <th>ID</th>
+              <th>Author</th>
+              <th>Date Posted</th>
               <th>Details</th>
             </tr>
         </thead>
         <tbody>
            @foreach($news as $entry) 
             <tr>
-                <td>{!!$entry->name!!}</td>
+                <td><a href="/news/{!!$entry->id!!}">{!!$entry->id!!}</a></td>
+                <td>{!!$entry->getReporterName()!!}</td>
                 <td>{!!date('F j, Y g:i A', strtotime($entry->date_posted))!!}</td>
                 <td>{!!$entry->content!!}</td>
             </tr>
@@ -96,9 +92,9 @@
     <h3 class="box-title">My Latest Transactions</h3>
 
     <div class="box-tools pull-right">
-      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="collapse" ><i class="fa fa-minus"></i>
       </button>
-      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="close"><i class="fa fa-times"></i></button>
     </div>
   </div>
   <!-- /.box-header -->
@@ -108,7 +104,7 @@
         <thead>
           <tr>
            <th>Timestamp</th>
-           <th>Order ID</th>
+           <th style="width: 30px">OrderID</th>
            <th>Status</th>
          </tr>
        </thead>

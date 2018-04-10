@@ -56,6 +56,7 @@ Migrations are like version control for your database, allowing your team to eas
 - carts
 - cart_items
 - transactions
+- accountabilities
 
 ```bash
 php artisan migrate
@@ -104,3 +105,5 @@ If you discover any security related issues, please email nagarcia2@up.edu.ph or
 - [Jude Clarence Baguinang](#)
 - [Nelbert Binongo](#)
 
+**Version 3**
+- [Noel Garcia](https://gitlab.com/nagarcia2)

@@ -5,21 +5,17 @@
 <div class="box box-primary">
 <div class="box-header">
     <h1>{{$title}}</h1>
-    @include('search')
-    <br>
     <form class = 'col s3' method = 'get' action = '{!!url("cart")!!}/create'>
         <button class = 'btn btn-primary' type = 'submit'><i class="fa fa-plus fa-md" aria-hidden="true"></i>  Create New cart</button>
     </form>
 </div>
 <div class="box-body">
-    <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+    <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th style="width: 120px">status</th>
-            <th style="width:160px">borrower_id</th>
-            <th style="width:170px">Borrower Name</th>
-            <th style="width:90px"># of Items</th>
-            <th>Remarks</th>
-            <th style="width: 200px">actions</th>
+            <th>status</th>
+            <th>Borrower Name</th>
+            <th># of Items</th>
+            <th >actions</th>
         </thead>
         <tbody>
             @foreach($carts as $cart) 
@@ -39,10 +35,8 @@
                         <span class="label label-info">
                     @endif
                 {!!$cart->status!!}</span></td>
-                <td>{!!$cart->borrower_id!!}</td>
                 <td>{!!$cart->getOwner()!!}</td>
                 <td>{!!$cart->getSize()!!}</td>
-                <td>{!!$cart->remarks!!}</td>
                 <td>
                     @if($cart->status != "Completed" && $cart->status != "Released")
                         <a data-toggle="tooltip" title="Delete user request." href = '#' data-toggle="modal" data-target="#myModal" class = 'delete btn btn-danger btn-xs' data-link = "/cart/{!!$cart->id!!}/deleteMsg" ><i class="fa fa-trash-o" aria-hidden="true"></i>  Delete</a>
@@ -54,7 +48,6 @@
             @endforeach 
         </tbody>
     </table>
-    <div class='text-center'>{!! $carts->render() !!}</div>
 </div>
 </div>
 @endsection

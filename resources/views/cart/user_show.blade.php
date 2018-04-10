@@ -5,7 +5,7 @@
 <div class="box box-primary">
 <div class="box-header">
     <h1>{{$title}}</h1>
-    @include('search')
+    
     <br>
     <form method = 'get' action = '{!!url("cart")!!}'>
         <button class = 'btn btn-primary'>cart Index</button>
@@ -19,19 +19,19 @@
         <tbody>
             <tr>
                 <td>
-                    <b><i>borrower_id : </i></b>
+                    <b><i>Borrower ID : </i></b>
                 </td>
                 <td>{!!$cart->borrower_id!!}</td>
             </tr>
             <tr>
                 <td>
-                    <b><i>status : </i></b>
+                    <b><i>Status : </i></b>
                 </td>
                 <td>{!!$cart->status!!}</td>
             </tr>
             <tr>
                 <td>
-                    <b><i>remarks : </i></b>
+                    <b><i>Remarks : </i></b>
                 </td>
                 <td>{!!$cart->remarks!!}</td>
             </tr>
@@ -39,17 +39,17 @@
     </table>
 </div>
 <div class="box-body">
-    <table class = "table table-striped table-bordered table-hover" style = 'background:#fff'>
+    <table class = "dataTable table table-striped table-bordered table-hover" style = 'background:#fff'>
         <thead>
-            <th>item_id</th>
-            <th>name</th>
-            <th>qty</th>
-            <th>actions</th>
+            <th style="width: 30px">ItemID</th>
+            <th>Name</th>
+            <th style="width: 30px">Qty</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             @foreach($cart_items as $cart_item) 
             <tr>
-                <td>{!!$cart_item->item_id!!}</td>
+                <td><a href="item/{!!$cart_item->item_id!!}">{!!$cart_item->item_id!!}</a></td>
                 <td>{!!$cart_item->name!!}</td>
                 <td>{!!$cart_item->qty!!}</td>
                 <td>
@@ -63,7 +63,6 @@
             @endforeach 
         </tbody>
     </table>
-    <div class='text-center'>{!! $cart_items->render() !!}</div>
 </div>
 </div>
 @endsection

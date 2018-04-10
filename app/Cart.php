@@ -26,4 +26,25 @@ class Cart extends Model
         ->where('cart_id', $this->id)
         ->count();
     }
+
+    public function getTotalFee(){
+        $cart_items = Cart_item::where('cart_id','=',$this->id)->get();
+
+        $totalPayable = 0;
+        foreach($cart_items as $cart_item){
+            $totalPayable += $cart_item->getFee();
+        }
+
+        return number_format($totalPayable, 2);
+    }
+
+    public function getTotalQty(){
+        $cart_items = Cart_item::where('cart_id','=',$this->id)->get();
+        $totalQty = 0;
+        foreach($cart_items as $cart_item){
+            $totalQty += $cart_item->qty;
+        }
+
+        return $totalQty;
+    }
 }
