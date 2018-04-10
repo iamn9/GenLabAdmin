@@ -122,6 +122,19 @@ class UserController extends Controller
         return redirect('users');
     }
 
+    public function activate($id)
+    {
+        $user = \App\User::findOrfail($request->user_id);
+
+        if ($user->isActivated == 'on')
+            $user->isActivated = 1;
+        else
+            $user->isActivated = 0;
+        $user->save();
+
+        return redirect('users');
+    }
+
     public function DeleteMsg($id,Request $request)
     {
         $user = \App\User::findOrfail($id);
