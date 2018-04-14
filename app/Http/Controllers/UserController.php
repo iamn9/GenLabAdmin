@@ -230,25 +230,34 @@ class UserController extends Controller
 
     public function activate($id, Request $request){
         $user = \App\User::findOrFail($id);
-        $user->isActivated = 1;
-        $user->save();
-        $notif = 'toastr["success"]("User <b>' . $user->name . '</b> was successfully activated")';
-        $msg = '<script>'.$notif.'</script>';
+
+        if($user->isActivated == 0) {
+            $user->isActivated = 1;
+            $user->save();
+            $notif = 'toastr["success"]("User <b>' . $user->name . '</b> was successfully activated")';
+            $msg = '<script>'.'$("#" + ' . $id . ').attr('.'\'class\''.','.' \'update btn btn-warning btn-m\');'.'$("#" + ' . $id . ').find($(\'i\')).attr(\'class\', \'fa fa-question\');'.'$("#" + ' . $id . ').html(\'Deactivate\');'.$notif.'</script>';
+        } else {
+            $user->isActivated = 0;
+            $user->save();
+            $notif = 'toastr["info"]("User <b>' . $user->name . '</b> was deactivated")';
+            $msg = '<script>'.'$("#" + ' . $id . ').attr('.'\'class\''.','.' \'update btn btn-success btn-m\');'.'$("#" + ' . $id . ').find($(\'i\')).attr(\'class\', \'fa fa-check\');'.'$("#" + ' . $id . ').html(\'Activate\');'.$notif.'</script>';
+
+        }
 
         if ($request->ajax()){
-            return $msg.redirect('users');
+            return $msg;
         }
     }
 
-    public function deactivate($id, Request $request){
+/*    public function deactivate($id, Request $request){
         $user = \App\User::findOrFail($id);
         $user->isActivated = 0;
         $user->save();
         $notif = 'toastr["info"]("User <b>' . $user->name . '</b> was deactivated")';
-        $msg = '<script>'.$notif.'</script>';
+        $msg = '<script>'.'$("#" + ' . $id . ').attr('.'\'class\''.','.' \'update btn btn-success btn-m\');'.'$("#" + ' . $id . ').html(\'Activate\');'.$notif.'</script>';
 
         if ($request->ajax()) {
-            return $msg.redirect('users');
+            return $msg;
         }
-    }
+    }*/
 }
